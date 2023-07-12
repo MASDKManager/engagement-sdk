@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bucket
+   uuid = "42F0E938-8930-410A-A3E9-E094A22CF7C0"
+   type = "0"
+   version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "807FD776-72EF-495C-BF80-80B91EDA9815"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ENG/SDK/EMobi.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "120"
+            endingLineNumber = "120"
+            landmarkName = "requestIDFA()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "807FD776-72EF-495C-BF80-80B91EDA9815 - b033add0047e426b"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (__C.ATTrackingManagerAuthorizationStatus) -&gt; () in closure #1 @Swift.MainActor () -&gt; () in ENG.EMobi.requestIDFA() -&gt; ()"
+                  moduleName = "ENG"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Maarouf/Desktop/ios/ENG/ENG/SDK/EMobi.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "123"
+                  endingLineNumber = "123"
+                  offsetFromSymbolStart = "52">
+               </Location>
+               <Location
+                  uuid = "807FD776-72EF-495C-BF80-80B91EDA9815 - 2d215c2b8cff9ce8"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "ENG.EMobi.requestIDFA() -&gt; ()"
+                  moduleName = "ENG"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Maarouf/Desktop/ios/ENG/ENG/SDK/EMobi.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "124"
+                  endingLineNumber = "124"
+                  offsetFromSymbolStart = "64">
+               </Location>
+               <Location
+                  uuid = "807FD776-72EF-495C-BF80-80B91EDA9815 - e1fda11bafacb69f"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 @Swift.MainActor () -&gt; () in ENG.EMobi.requestIDFA() -&gt; ()"
+                  moduleName = "ENG"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Maarouf/Desktop/ios/ENG/ENG/SDK/EMobi.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "125"
+                  endingLineNumber = "125"
+                  offsetFromSymbolStart = "16">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "1D55519B-6C34-48A0-B55D-4836DC59F8F0"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ENG/SDK/AdjustDelegate.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "50"
+            endingLineNumber = "50"
+            landmarkName = "adjustSessionTrackingFailed(_:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "1D55519B-6C34-48A0-B55D-4836DC59F8F0 - edca2b624f86d882"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "ENG.EMobi.adjustSessionTrackingFailed(Swift.Optional&lt;__C.ADJSessionFailure&gt;) -&gt; ()"
+                  moduleName = "ENG"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Maarouf/Desktop/ios/ENG/ENG/SDK/AdjustDelegate.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "51"
+                  endingLineNumber = "51"
+                  offsetFromSymbolStart = "56">
+               </Location>
+               <Location
+                  uuid = "1D55519B-6C34-48A0-B55D-4836DC59F8F0 - edca2b624f86d8a1"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "ENG.EMobi.adjustSessionTrackingFailed(Swift.Optional&lt;__C.ADJSessionFailure&gt;) -&gt; ()"
+                  moduleName = "ENG"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Maarouf/Desktop/ios/ENG/ENG/SDK/AdjustDelegate.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "50"
+                  endingLineNumber = "50"
+                  offsetFromSymbolStart = "56">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "A6A805F3-F9A5-4132-B884-6AFF092E9F7D"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ENG/SDK/AdjustDelegate.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "45"
+            endingLineNumber = "45"
+            landmarkName = "adjustSessionTrackingSucceeded(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "ADE64F07-B756-42F4-8C31-1513E37810D1"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ENG/SDK/AdjustDelegate.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "40"
+            endingLineNumber = "40"
+            landmarkName = "adjustEventTrackingFailed(_:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "ADE64F07-B756-42F4-8C31-1513E37810D1 - bbed231aaeec9380"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "ENG.EMobi.adjustEventTrackingFailed(Swift.Optional&lt;__C.ADJEventFailure&gt;) -&gt; ()"
+                  moduleName = "ENG"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Maarouf/Desktop/ios/ENG/ENG/SDK/AdjustDelegate.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "41"
+                  endingLineNumber = "41"
+                  offsetFromSymbolStart = "56">
+               </Location>
+               <Location
+                  uuid = "ADE64F07-B756-42F4-8C31-1513E37810D1 - bbed231aaeec905f"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "ENG.EMobi.adjustEventTrackingFailed(Swift.Optional&lt;__C.ADJEventFailure&gt;) -&gt; ()"
+                  moduleName = "ENG"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Maarouf/Desktop/ios/ENG/ENG/SDK/AdjustDelegate.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "40"
+                  endingLineNumber = "40"
+                  offsetFromSymbolStart = "56">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "ECA49DDB-DFCB-42CA-849B-A2700BB02F56"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ENG/SDK/AdjustDelegate.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "35"
+            endingLineNumber = "35"
+            landmarkName = "adjustEventTrackingSucceeded(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "71D90F20-E199-47CC-81A4-348AB1E66509"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ENG/SDK/Constants.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "77"
+            endingLineNumber = "77"
+            landmarkName = "getValuesFromPlist()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "F5EBA5AC-2CAA-4C31-A4C6-DCA2EAFD52F5"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ENG/SDK/AdjustDelegate.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "15"
+            endingLineNumber = "15"
+            landmarkName = "adjustDeeplinkResponse(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "9836B2AD-FEA4-4B1F-8362-7EE4FB439F54"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ENG/SDK/AdjustDelegate.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "22"
+            endingLineNumber = "22"
+            landmarkName = "handleDeeplink(deeplink:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "FBBB8FC9-FFF4-4ADA-8191-E031139FDC3F"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ENG/SDK/EMobi.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "123"
+            endingLineNumber = "123"
+            landmarkName = "requestIDFA()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "FBBB8FC9-FFF4-4ADA-8191-E031139FDC3F - b033add0047e420e"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (__C.ATTrackingManagerAuthorizationStatus) -&gt; () in closure #1 @Swift.MainActor () -&gt; () in ENG.EMobi.requestIDFA() -&gt; ()"
+                  moduleName = "ENG"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Maarouf/Desktop/ios/ENG/ENG/SDK/EMobi.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "126"
+                  endingLineNumber = "126"
+                  offsetFromSymbolStart = "76">
+               </Location>
+               <Location
+                  uuid = "FBBB8FC9-FFF4-4ADA-8191-E031139FDC3F - b033add0047e420e"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (__C.ATTrackingManagerAuthorizationStatus) -&gt; () in closure #1 @Swift.MainActor () -&gt; () in ENG.EMobi.requestIDFA() -&gt; ()"
+                  moduleName = "ENG"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Maarouf/Desktop/ios/ENG/ENG/SDK/EMobi.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "126"
+                  endingLineNumber = "126"
+                  offsetFromSymbolStart = "52">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
+</Bucket>
