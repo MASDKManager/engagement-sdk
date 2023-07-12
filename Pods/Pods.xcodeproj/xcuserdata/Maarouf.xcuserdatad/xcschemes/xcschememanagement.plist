@@ -102,47 +102,54 @@
 			<key>orderHint</key>
 			<integer>13</integer>
 		</dict>
-		<key>OneSignalXCFramework.xcscheme</key>
+		<key>MailchimpSDK.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 			<key>orderHint</key>
-			<integer>15</integer>
+			<integer>14</integer>
 		</dict>
-		<key>Pods-ENG.xcscheme</key>
+		<key>OneSignalXCFramework.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 			<key>orderHint</key>
 			<integer>16</integer>
 		</dict>
-		<key>PromisesObjC.xcscheme</key>
+		<key>Pods-ENG.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 			<key>orderHint</key>
 			<integer>17</integer>
 		</dict>
-		<key>PromisesSwift.xcscheme</key>
+		<key>PromisesObjC.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 			<key>orderHint</key>
 			<integer>18</integer>
 		</dict>
-		<key>RevenueCat.xcscheme</key>
+		<key>PromisesSwift.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 			<key>orderHint</key>
 			<integer>19</integer>
 		</dict>
+		<key>RevenueCat.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+			<key>orderHint</key>
+			<integer>20</integer>
+		</dict>
 		<key>nanopb.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 			<key>orderHint</key>
-			<integer>14</integer>
+			<integer>15</integer>
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>

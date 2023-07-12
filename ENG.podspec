@@ -1,16 +1,16 @@
 Pod::Spec.new do |spec|
 
   spec.platform = :ios
-  spec.name         = "ENGSDK"
+  spec.name         = "ENG"
   spec.version      = "0.0.1"
   spec.requires_arc =  true
-  spec.summary      = "ENGSDK - Boost User Engagement."
+  spec.summary      = "ENG - Boost User Engagement."
   spec.description  = <<-DESC
-  ENGSDK is a powerful engagement toolkit designed to elevate user interaction and connectivity within your app and mobibox.
+  ENG is a powerful engagement toolkit designed to elevate user interaction and connectivity within your app and mobibox.
                       DESC
   spec.homepage     = 'https://github.com/MASDKManager/engagement-sdk'
   spec.license = { :type => "MIT", :file => "LICENSE" }
-  spec.author       = { "ENGSDK" => "mobsdk10@gmail.com" }
+  spec.author       = { "ENG" => "mobsdk10@gmail.com" }
   spec.source = {
     :git => 'https://github.com/MASDKManager/engagement-sdk.git',
     :tag => spec.version.to_s
@@ -25,9 +25,9 @@ Pod::Spec.new do |spec|
   spec.dependency 'OneSignalXCFramework'   
  
   spec.source_files  = "ENG/SDK/**/*.{h,m,swift}"
-  spec.resource_bundles = {
-    'ENGSDK' => ['ENG/SDK/**/*.{storyboard,xib,xcassets,lproj,png}']
-  }
+  # spec.resource_bundles = {
+  #   'ENG' => ['ENG/SDK/**/*.storyboard', 'ENG/SDK/**/*.xib', 'ENG/SDK/**/*.xcassets', 'ENG/SDK/**/*.lproj', 'ENG/SDK/**/*.png']
+  # }
   spec.swift_version = '5'
   spec.ios.deployment_target = '14.0'
 

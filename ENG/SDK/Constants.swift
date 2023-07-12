@@ -10,6 +10,8 @@ final class Constant {
     var annualProductID = String()
     var restoreToken = String()
     var adjustAppToken = String()
+    var adjustEventToken = String()
+    var adjustSubscriptionToken = String()
     var purchaseToken = String()
     var openPaywallToken = String()
     var monthlyClickToken = String()
@@ -21,7 +23,11 @@ final class Constant {
     var yearlyClickToken = String()
     var yearlyFailedToken = String()
     var yearlySuccessToken = String()
-    var appPushToken = String()
+    var facebookAppID = String()
+    var facebookDisplayName = String()
+    var facebookClientToken = String()
+    var mailchimpKey = String()
+    var oneSignalKey = String()
 
     func getValuesFromPlist() {
         if let plistPath = Bundle.main.path(forResource: "Constants", ofType: "plist"),
@@ -65,6 +71,16 @@ final class Constant {
             }
             self.adjustAppToken = appTokenTemp
             
+            guard let adjustEventToken = plist["Adjust Event Token"] as? String  else {
+                fatalError("Adjust token not exist in Constants.plist")
+            }
+            self.adjustEventToken = adjustEventToken
+            
+            guard let adjustSubscriptionToken = plist["Adjust Subscription Token"] as? String  else {
+                fatalError("Adjust token not exist in Constants.plist")
+            }
+            self.adjustSubscriptionToken = adjustSubscriptionToken
+             
             guard let restoreTokenTemp = plist["app_restored_store_purchase"] as? String  else {
                 fatalError("Adjust token not exist in Constants.plist")
             }
@@ -124,11 +140,33 @@ final class Constant {
                 fatalError("Adjust token not exist in Constants.plist")
             }
             self.yearlySuccessToken = yearlySuccessTemp
-            
-            guard let appPushTemp = plist["app_push_token"] as? String  else {
-                fatalError("Adjust token not exist in Constants.plist")
+                
+            guard let facebookAppID = plist["FacebookAppID"] as? String  else {
+                fatalError("Facebook App ID not exist in Constants.plist")
             }
-            self.appPushToken = appPushTemp
+            self.facebookAppID = facebookAppID
+            
+            guard let facebookDisplayName = plist["FacebookDisplayName"] as? String  else {
+                fatalError("Facebook Display Name token not exist in Constants.plist")
+            }
+            self.facebookDisplayName = facebookDisplayName
+            
+            guard let facebookClientToken = plist["FacebookClientToken"] as? String  else {
+                fatalError("Facebook Client Token not exist in Constants.plist")
+            }
+            self.facebookClientToken = facebookClientToken
+            
+            guard let mailchimpKey = plist["MailchimpKey"] as? String  else {
+                fatalError("Mailchimp Key not exist in Constants.plist")
+            }
+            self.mailchimpKey = mailchimpKey
+            
+            guard let oneSignalKey = plist["OneSignalKey"] as? String  else {
+                fatalError("oneSignalKey Key not exist in Constants.plist")
+            }
+            self.oneSignalKey = oneSignalKey
+        
+             
         }
     }
 }

@@ -14,35 +14,46 @@ import FBSDKCoreKit
 import AppTrackingTransparency
 import OneSignal
 import RevenueCat
+import MailchimpSDK
  
-public class EMobi: NSObject, PurchasesDelegate , OSSubscriptionObserver{
+public class EMobi: NSObject, PurchasesDelegate {
   
     
     public static let shared = EMobi()
+    public var isSubscribed = false
+    public var isPremium = false
     
-    private override init() {
-        // Private initializer to enforce singleton pattern
+    public override init() {
+        
     }
+    
     
     public func start(withConstantPlist plistData: NSDictionary, launchOptions: [UIApplication.LaunchOptionsKey: Any]?  ) {
         print("EMobi SDK started.")
 
         Constant.shared.getValuesFromPlist()
         
-        let adjustToken = Constant.shared.adjustAppToken
-        let revenueCatAPIKey = Constant.shared.rcAPIKey
-        let appPushToken = Constant.shared.appPushToken
-         
-        configureRevenueCat(apiKey: revenueCatAPIKey,appPushToken: appPushToken)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+           self.requestIDFA()
+        }
+        
+        checkPremiumUser()
+           
         configureFirebase()
-        configureAdjust(token: adjustToken)
-        configureOneSignal(appPushToken: appPushToken,launchOptions: launchOptions)
+        configureAdjust()
+        configureRevenueCat()
+        configureOneSignal(launchOptions: launchOptions)
         configureFacebook()
+        configureMailchimp()
+    }
+   
+    private func checkPremiumUser(){
+        isPremium =  checkPremiumStatus() 
     }
     
-    private func configureOneSignal(appPushToken: String,launchOptions : [UIApplication.LaunchOptionsKey: Any]?  ) {
+    private func configureOneSignal( launchOptions : [UIApplication.LaunchOptionsKey: Any]?  ) {
         
-        if appPushToken == "" {
+        guard !Constant.shared.oneSignalKey.isEmpty else {
             return
         }
          
@@ -50,7 +61,7 @@ public class EMobi: NSObject, PurchasesDelegate , OSSubscriptionObserver{
         
         // OneSignal initialization
         OneSignal.initWithLaunchOptions(launchOptions)
-        OneSignal.setAppId(appPushToken)
+        OneSignal.setAppId( Constant.shared.oneSignalKey)
         
         // promptForPushNotifications will show the native iOS notification permission prompt.
         // We recommend removing the following code and instead using an In-App Message to prompt for notification permission (See step 8)
@@ -61,27 +72,18 @@ public class EMobi: NSObject, PurchasesDelegate , OSSubscriptionObserver{
         if let onesignalId = OneSignal.getDeviceState().userId {
             Purchases.shared.attribution.setOnesignalID(onesignalId)
         }
-        
-        
+         
     }
-    
-    public func onOSSubscriptionChanged(_ stateChanges: OSSubscriptionStateChanges) {
-        if !stateChanges.from.isSubscribed && stateChanges.to.isSubscribed {
-             // The user is subscribed
-             // Either the user subscribed for the first time
-             Purchases.shared.attribution.setOnesignalID(stateChanges.to.userId)
-         }
-    }
-     
+ 
     private func configureFirebase() {
         FirebaseApp.configure()
     }
     
-    private func configureRevenueCat(apiKey: String,appPushToken: String) {
+    private func configureRevenueCat() {
         let appUserID = getUserID()
-        
+        // "1558B846-6821-4D72-8D1A-C24F74BCD49C"
         Purchases.logLevel = .debug
-        Purchases.configure(withAPIKey: apiKey, appUserID: appUserID)
+        Purchases.configure(withAPIKey: Constant.shared.rcAPIKey, appUserID: appUserID)
         
         checkSubscription()
 
@@ -94,7 +96,7 @@ public class EMobi: NSObject, PurchasesDelegate , OSSubscriptionObserver{
             Purchases.shared.attribution.setAdjustID(adjustId)
         }
         
-        Purchases.shared.attribution.setOnesignalID(appPushToken)
+        Purchases.shared.attribution.setOnesignalID(Constant.shared.adjustEventToken)
          
         Purchases.shared.delegate = self
 
@@ -109,58 +111,61 @@ public class EMobi: NSObject, PurchasesDelegate , OSSubscriptionObserver{
          }
         
         Purchases.shared.attribution.setAttributes(["user_uuid" : getUserID()])
-         
-        // Check the ATT consent status.
-        let status = ATTrackingManager.trackingAuthorizationStatus
 
-        // If the status is not determined, show the prompt.
-    
+    }
+     
+    func requestIDFA() {
+        if #available(iOS 14.3, *) {
+            // Check the ATT consent status.
         
-        if status == .notDetermined {
-            ATTrackingManager.requestTrackingAuthorization { status in
-                
-                var statusCase = ""
-                
-                switch status {
-                case .authorized:
-                    statusCase = "The user has granted consent."
-                case .denied:
-                    statusCase = "The user has denied consent."
-                case .notDetermined:
-                    statusCase = "The user has not yet been asked for consent."
-                case .restricted:
-                    statusCase = "The user is restricted from granting consent."
-                @unknown default:
+            DispatchQueue.main.async {
+                ATTrackingManager.requestTrackingAuthorization { status in
+                    var statusCase = ""
+                    
+                    switch status {
+                    case .authorized:
+                        statusCase = "The user has granted consent."
+                    case .denied:
+                        statusCase = "The user has denied consent."
+                    case .notDetermined:
+                        statusCase = "The user has not yet been asked for consent."
+                    case .restricted:
+                        statusCase = "The user is restricted from granting consent."
+                    @unknown default:
                         return
+                    }
+                    
+                    Purchases.shared.attribution.setAttributes(["ATTrackingManagerStatus": statusCase])
+                    Purchases.shared.attribution.enableAdServicesAttributionTokenCollection()
                 }
-                
-                Purchases.shared.attribution.setAttributes(["ATTrackingManagerStatus" : statusCase])
             }
         }
     }
+
     
     private func setPurchasesEmail(email : String){
         Purchases.shared.attribution.setEmail(email)
     }
     
     private func checkSubscription(){
-        
-        // Using Completion Blocks
+          
         Purchases.shared.getCustomerInfo { (customerInfo, error) in
-//            if customerInfo?.entitlements.all[<your_entitlement_id>]?.isActive == true {
-//                   // User is "premium"
-//            }
+            if ((customerInfo?.activeSubscriptions.count ?? 0) != 0){
+                self.isSubscribed = true
+            }
         }
         
     }
     
-    private func configureAdjust(token: String) {
+    private func configureAdjust() {
         print("Adjust initiate called with token")
         
-        let adjustConfig = ADJConfig(appToken: token, environment: ADJEnvironmentProduction)
+        let adjustConfig = ADJConfig(appToken: Constant.shared.adjustAppToken, environment: ADJEnvironmentSandbox)
         
         adjustConfig?.sendInBackground = true
         adjustConfig?.linkMeEnabled = true
+        
+        adjustConfig?.delegate = self
         
         Adjust.appDidLaunch(adjustConfig)
          
@@ -170,22 +175,81 @@ public class EMobi: NSObject, PurchasesDelegate , OSSubscriptionObserver{
         Adjust.addSessionCallbackParameter("user_uuid", value: getUserID())
         
         let faid = Analytics.appInstanceID() ?? ""
-        let adjustEvent = ADJEvent(eventToken: token)
+        let adjustEvent = ADJEvent(eventToken: Constant.shared.adjustEventToken)
         adjustEvent?.addCallbackParameter("eventValue", value: faid) // Firebase Instance Id
         adjustEvent?.addCallbackParameter("click_id", value: getUserID())
         
         Adjust.trackEvent(adjustEvent)
+         
     }
     
-   private func configureFacebook() {
-       let sdkSettings = FBSDKCoreKit.Settings()
-       sdkSettings.appID = "798130175032196"
-       sdkSettings.displayName = "App"
-        
+    private func configureFacebook() {
+        let sdkSettings = FBSDKCoreKit.Settings()
+        sdkSettings.appID = Constant.shared.facebookAppID
+        sdkSettings.displayName = Constant.shared.facebookDisplayName
+        sdkSettings.clientToken = Constant.shared.facebookClientToken
  
    }
     
-    public func logAnalyticsEvent(name: String, parameter: String) {
-        logEvent(eventName: name, log: parameter)
+    
+   private func configureMailchimp() {
+       try? Mailchimp.initialize(token: Constant.shared.mailchimpKey, autoTagContacts: true, debugMode: true)
+       
+       //registerMailchimpEmail(email: "test@mobile.com")
+        
+   }
+    
+    func trackPurchaseEvent(purchaseToken: String, productID: String, transactionID: String) {
+        let event = ADJEvent(eventToken: Constant.shared.adjustSubscriptionToken)
+      
+        event?.addCallbackParameter("user_uuid", value: getUserID())
+        event?.addCallbackParameter("purchaseToken", value: purchaseToken)
+        event?.addCallbackParameter("purchaseTime", value: "\(Date())")
+        event?.addCallbackParameter("transactionId", value: transactionID)
+        event?.addCallbackParameter("productId", value: productID)
+        
+        Adjust.trackEvent(event)
     }
+    
+    public func registerMailchimpEmail(email: String) {
+       
+     
+        var contact: Contact = Contact(emailAddress: email)
+      //  contact.marketingPermissions = [emailPermission, mailPermission, advertisingPermission]
+      
+        let mergeFields = ["mobile": MergeFieldValue.string("signup") ]
+        contact.status = .subscribed
+        contact.mergeFields = mergeFields
+        contact.tags = [Contact.Tag(name: "mobile-signup", status: .active)]
+        Mailchimp.createOrUpdate(contact: contact) { result in
+            switch result {
+            case .success:
+                print("Successfully added or updated contact")
+            case .failure(let error):
+                print("Error: \(error.localizedDescription)")
+            }
+        }
+         
+    }
+    
+    public func logAnalyticsEvent(name: String, parameter: [String: Any]) {
+        logEvent(eventName: name, parameters: parameter)
+    }
+     
+    public func isActiveUser( )  -> Bool {
+       return  isSubscribed
+    }
+    
+    public func getAllPurchasedProductIdentifiers(completion: @escaping (Set<String>?) -> Void) {
+        Purchases.shared.getCustomerInfo { (customerInfo, error) in
+            if let customerInfo = customerInfo {
+                completion(customerInfo.allPurchasedProductIdentifiers)
+            } else {
+                completion(nil)
+            }
+        }
+    }
+
+
+     
 }

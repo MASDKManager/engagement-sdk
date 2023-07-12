@@ -12,8 +12,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
 
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions  : [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+      
+        guard let url = Bundle.main.url(forResource: "Constants", withExtension: "plist") else {
+            fatalError("SwiftyAds could not find SwiftyAds.plist in the main bundle.")
+        }
+     
+        if let plistData = NSDictionary(contentsOf: url) {
+            EMobi.shared.start(withConstantPlist: plistData, launchOptions: launchOptions)
+        } else {
+            print("Unable to read Constants.plist file.")
+        }
+  
         return true
     }
 

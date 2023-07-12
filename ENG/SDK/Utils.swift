@@ -19,7 +19,17 @@ func getUserID() -> String {
     }
 }
 
-func logEvent(eventName: String, log: String) {
-    let parameters = ["parameter": log]
-    Analytics.logEvent(eventName, parameters: parameters as [String: Any])
+func logEvent(eventName: String, parameters: [String: Any]) {
+    Analytics.logEvent(eventName, parameters: parameters)
 }
+
+func savePremiumStatus(isPremium: Bool) {
+    let defaults = UserDefaults.standard
+    defaults.set(isPremium, forKey: "IsPremium")
+}
+
+func checkPremiumStatus() -> Bool {
+    let defaults = UserDefaults.standard
+    return defaults.bool(forKey: "IsPremium")
+}
+

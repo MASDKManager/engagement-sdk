@@ -12,6 +12,8 @@ target 'ENG' do
   pod 'FirebaseAnalytics'
   pod 'FirebaseCrashlytics'
   pod 'FBSDKCoreKit'
-  pod 'OneSignalXCFramework' 
+  pod 'OneSignalXCFramework'
+  pod 'MailchimpSDK'
 
+ 
 end
