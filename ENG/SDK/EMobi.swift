@@ -15,27 +15,27 @@ import AppTrackingTransparency
 import OneSignal
 import RevenueCat
 import MailchimpSDK
+import AppLovinSDK
+
  
 public class EMobi: NSObject, PurchasesDelegate {
-  
-    
+   
     public static let shared = EMobi()
-    public var isSubscribed = false
-    public var isPremium = false
+    private var isSubscribed = false
+    private var isPremium = false
+     
+    private var adjustDelegateHandler: AdjustDelegateHandler?
     
     public override init() {
-        
+        adjustDelegateHandler = AdjustDelegateHandler()
     }
-    
-    
+     
     public func start(withConstantPlist plistData: NSDictionary, launchOptions: [UIApplication.LaunchOptionsKey: Any]?  ) {
-        print("EMobi SDK started.")
+        print( tag + "EMobi SDK started.")
 
         Constant.shared.getValuesFromPlist()
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-           self.requestIDFA()
-        }
+         
+        self.requestIDFA()
         
         checkPremiumUser()
            
@@ -45,6 +45,17 @@ public class EMobi: NSObject, PurchasesDelegate {
         configureOneSignal(launchOptions: launchOptions)
         configureFacebook()
         configureMailchimp()
+        
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 6.5) {
+            AppLovinManager.shared.initializeAppLovin()
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 6.5) {
+                AppLovinManager.shared.showInterestialAd { closed in
+                    let a = ""
+                }
+            }
+        }
     }
    
     private func checkPremiumUser(){
@@ -65,9 +76,12 @@ public class EMobi: NSObject, PurchasesDelegate {
         
         // promptForPushNotifications will show the native iOS notification permission prompt.
         // We recommend removing the following code and instead using an In-App Message to prompt for notification permission (See step 8)
-        OneSignal.promptForPushNotifications(userResponse: { accepted in
-          print("User accepted notifications: \(accepted)")
-        })
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
+            OneSignal.promptForPushNotifications(userResponse: { accepted in
+                print( tag + "User accepted notifications: \(accepted)")
+            })
+        }
         
         if let onesignalId = OneSignal.getDeviceState().userId {
             Purchases.shared.attribution.setOnesignalID(onesignalId)
@@ -81,7 +95,7 @@ public class EMobi: NSObject, PurchasesDelegate {
     
     private func configureRevenueCat() {
         let appUserID = getUserID()
-        // "1558B846-6821-4D72-8D1A-C24F74BCD49C"
+     
         Purchases.logLevel = .debug
         Purchases.configure(withAPIKey: Constant.shared.rcAPIKey, appUserID: appUserID)
         
@@ -103,11 +117,11 @@ public class EMobi: NSObject, PurchasesDelegate {
         // Set the reserved $firebaseAppInstanceId subscriber attribute from Firebase Analytics
         let instanceID = Analytics.appInstanceID();
         if let unwrapped = instanceID {
-          print("Instance ID -> " + unwrapped);
-            print("Setting Attributes");
+            print( tag + "Instance ID -> " + unwrapped);
+            print( tag + "Setting Attributes");
           Purchases.shared.attribution.setFirebaseAppInstanceID(unwrapped)
          } else {
-            print("Instance ID -> NOT FOUND!");
+             print( tag + "Instance ID -> NOT FOUND!");
          }
         
         Purchases.shared.attribution.setAttributes(["user_uuid" : getUserID()])
@@ -118,7 +132,7 @@ public class EMobi: NSObject, PurchasesDelegate {
         if #available(iOS 14.3, *) {
             // Check the ATT consent status.
         
-            DispatchQueue.main.async {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                 ATTrackingManager.requestTrackingAuthorization { status in
                     var statusCase = ""
                     
@@ -141,8 +155,7 @@ public class EMobi: NSObject, PurchasesDelegate {
             }
         }
     }
-
-    
+ 
     private func setPurchasesEmail(email : String){
         Purchases.shared.attribution.setEmail(email)
     }
@@ -158,14 +171,15 @@ public class EMobi: NSObject, PurchasesDelegate {
     }
     
     private func configureAdjust() {
-        print("Adjust initiate called with token")
+        print("Adjust initiate called")
         
         let adjustConfig = ADJConfig(appToken: Constant.shared.adjustAppToken, environment: ADJEnvironmentSandbox)
         
         adjustConfig?.sendInBackground = true
         adjustConfig?.linkMeEnabled = true
-        
-        adjustConfig?.delegate = self
+        adjustConfig?.delegate = adjustDelegateHandler
+ 
+     //   adjustConfig?.delegate = self
         
         Adjust.appDidLaunch(adjustConfig)
          
@@ -188,14 +202,13 @@ public class EMobi: NSObject, PurchasesDelegate {
         sdkSettings.appID = Constant.shared.facebookAppID
         sdkSettings.displayName = Constant.shared.facebookDisplayName
         sdkSettings.clientToken = Constant.shared.facebookClientToken
- 
+        print( tag + "Facebook sdk init")
    }
-    
-    
+     
    private func configureMailchimp() {
        try? Mailchimp.initialize(token: Constant.shared.mailchimpKey, autoTagContacts: true, debugMode: true)
        
-       //registerMailchimpEmail(email: "test@mobile.com")
+       print( tag + "Mailchimp sdk init")
         
    }
     
@@ -209,6 +222,8 @@ public class EMobi: NSObject, PurchasesDelegate {
         event?.addCallbackParameter("productId", value: productID)
         
         Adjust.trackEvent(event)
+         
+        print( tag + "trackPurchaseEvent sent init")
     }
     
     public func registerMailchimpEmail(email: String) {
@@ -224,9 +239,9 @@ public class EMobi: NSObject, PurchasesDelegate {
         Mailchimp.createOrUpdate(contact: contact) { result in
             switch result {
             case .success:
-                print("Successfully added or updated contact")
+                print( tag + "Mailchimp Successfully added or updated contact")
             case .failure(let error):
-                print("Error: \(error.localizedDescription)")
+                print( tag + "Mailchimp Error: \(error.localizedDescription)")
             }
         }
          
@@ -234,12 +249,18 @@ public class EMobi: NSObject, PurchasesDelegate {
     
     public func logAnalyticsEvent(name: String, parameter: [String: Any]) {
         logEvent(eventName: name, parameters: parameter)
+        
+        print( tag + "Firebase logEvent sent")
     }
      
     public func isActiveUser( )  -> Bool {
        return  isSubscribed
     }
-    
+     
+    public func isPremiumUser( )  -> Bool {
+      return  isPremium
+    }
+
     public func getAllPurchasedProductIdentifiers(completion: @escaping (Set<String>?) -> Void) {
         Purchases.shared.getCustomerInfo { (customerInfo, error) in
             if let customerInfo = customerInfo {
@@ -249,7 +270,5 @@ public class EMobi: NSObject, PurchasesDelegate {
             }
         }
     }
-
-
-     
+ 
 }

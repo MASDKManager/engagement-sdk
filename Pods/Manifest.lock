@@ -2,6 +2,7 @@ PODS:
   - Adjust (4.33.4):
     - Adjust/Core (= 4.33.4)
   - Adjust/Core (4.33.4)
+  - AppLovinSDK (11.10.1)
   - FBAEMKit (16.1.2):
     - FBSDKCoreKit_Basics (= 16.1.2)
   - FBSDKCoreKit (16.1.2):
@@ -121,6 +122,7 @@ PODS:
 
 DEPENDENCIES:
   - Adjust
+  - AppLovinSDK
   - FBSDKCoreKit
   - FirebaseAnalytics
   - FirebaseCrashlytics
@@ -131,6 +133,7 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - Adjust
+    - AppLovinSDK
     - FBAEMKit
     - FBSDKCoreKit
     - FBSDKCoreKit_Basics
@@ -153,6 +156,7 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
   Adjust: 4690e07ea401ee56d4d3f4f5bdad86c94f51903f
+  AppLovinSDK: a76e8ec3d34fb172c7a32c15efe6805e070c918a
   FBAEMKit: 1d6160f527eef3e5cc18c28e6afc7f1168d86332
   FBSDKCoreKit: 05ec20fc0fd61dc4e14cc6905360ca976ff4c9e1
   FBSDKCoreKit_Basics: c95336ffe7299dac5224e8e6154154f52917f20d
@@ -173,6 +177,6 @@ SPEC CHECKSUMS:
   PromisesSwift: cf9eb58666a43bbe007302226e510b16c1e10959
   RevenueCat: 8e5da200b5a5f45688aead5d803654c19f739914
 
-PODFILE CHECKSUM: 6203da92f5725ab260e875817c498abce78eadfc
+PODFILE CHECKSUM: d6e095c3b10d7ed91fdbe3affa48d70014987457
 
 COCOAPODS: 1.12.1

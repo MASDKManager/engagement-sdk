@@ -14,6 +14,7 @@ target 'ENG' do
   pod 'FBSDKCoreKit'
   pod 'OneSignalXCFramework'
   pod 'MailchimpSDK'
+  pod 'AppLovinSDK'
 
  
 end

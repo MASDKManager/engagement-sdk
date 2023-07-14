@@ -7,9 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0D3A01402A5C3423001D974E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0D3A013F2A5C3423001D974E /* GoogleService-Info.plist */; };
-		0D3A01442A5D458B001D974E /* AdjustDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D3A01432A5D458B001D974E /* AdjustDelegate.swift */; };
+		0D3801AE2A6124F400EFE050 /* AppLovinManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D3801AD2A6124F400EFE050 /* AppLovinManager.swift */; };
+		0D3A01442A5D458B001D974E /* AdjustDelegateHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D3A01432A5D458B001D974E /* AdjustDelegateHandler.swift */; };
 		0D3A01462A5D7C40001D974E /* OSSubscription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D3A01452A5D7C40001D974E /* OSSubscription.swift */; };
+		0D3A01482A5E8FB4001D974E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0D3A01472A5E8FB4001D974E /* GoogleService-Info.plist */; };
 		0DAEB3642A5AF08A00C38DD9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DAEB3632A5AF08A00C38DD9 /* AppDelegate.swift */; };
 		0DAEB3662A5AF08A00C38DD9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DAEB3652A5AF08A00C38DD9 /* SceneDelegate.swift */; };
 		0DAEB3682A5AF08A00C38DD9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DAEB3672A5AF08A00C38DD9 /* ViewController.swift */; };
@@ -26,9 +27,10 @@
 
 /* Begin PBXFileReference section */
 		0D1AF38682C1413CADB82792 /* Pods_ENG.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ENG.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		0D3A013F2A5C3423001D974E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/engagement-sdk-main/ENG SDK APP/GoogleService-Info.plist"; sourceTree = "<group>"; };
-		0D3A01432A5D458B001D974E /* AdjustDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdjustDelegate.swift; sourceTree = "<group>"; };
+		0D3801AD2A6124F400EFE050 /* AppLovinManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLovinManager.swift; sourceTree = "<group>"; };
+		0D3A01432A5D458B001D974E /* AdjustDelegateHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdjustDelegateHandler.swift; sourceTree = "<group>"; };
 		0D3A01452A5D7C40001D974E /* OSSubscription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSSubscription.swift; sourceTree = "<group>"; };
+		0D3A01472A5E8FB4001D974E /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
 		0DAEB3602A5AF08A00C38DD9 /* ENG.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ENG.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0DAEB3632A5AF08A00C38DD9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0DAEB3652A5AF08A00C38DD9 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -83,7 +85,7 @@
 			children = (
 				0DAEB3712A5AF08B00C38DD9 /* Info.plist */,
 				0DAEB37A2A5AF14E00C38DD9 /* Constants.plist */,
-				0D3A013F2A5C3423001D974E /* GoogleService-Info.plist */,
+				0D3A01472A5E8FB4001D974E /* GoogleService-Info.plist */,
 				0DAEB3802A5AF18A00C38DD9 /* ENG.entitlements */,
 				0DAEB3772A5AF10900C38DD9 /* SDK */,
 				0DAEB3632A5AF08A00C38DD9 /* AppDelegate.swift */,
@@ -102,8 +104,9 @@
 				0DAEB37B2A5AF14E00C38DD9 /* EMobi.swift */,
 				0DAEB3782A5AF14E00C38DD9 /* Utils.swift */,
 				0DAEB3792A5AF14E00C38DD9 /* Constants.swift */,
-				0D3A01432A5D458B001D974E /* AdjustDelegate.swift */,
+				0D3A01432A5D458B001D974E /* AdjustDelegateHandler.swift */,
 				0D3A01452A5D7C40001D974E /* OSSubscription.swift */,
+				0D3801AD2A6124F400EFE050 /* AppLovinManager.swift */,
 			);
 			path = SDK;
 			sourceTree = "<group>";
@@ -138,6 +141,7 @@
 				0DAEB35D2A5AF08A00C38DD9 /* Frameworks */,
 				0DAEB35E2A5AF08A00C38DD9 /* Resources */,
 				7EB9E32CCB21C17CE214E484 /* [CP] Embed Pods Frameworks */,
+				DA9253669D8AEA25DB5FF908 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -188,7 +192,7 @@
 			files = (
 				0DAEB3702A5AF08B00C38DD9 /* LaunchScreen.storyboard in Resources */,
 				0DAEB36D2A5AF08B00C38DD9 /* Assets.xcassets in Resources */,
-				0D3A01402A5C3423001D974E /* GoogleService-Info.plist in Resources */,
+				0D3A01482A5E8FB4001D974E /* GoogleService-Info.plist in Resources */,
 				0DAEB37E2A5AF14E00C38DD9 /* Constants.plist in Resources */,
 				0DAEB36B2A5AF08A00C38DD9 /* Main.storyboard in Resources */,
 			);
@@ -236,6 +240,23 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ENG/Pods-ENG-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		DA9253669D8AEA25DB5FF908 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-ENG/Pods-ENG-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-ENG/Pods-ENG-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ENG/Pods-ENG-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -243,7 +264,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0D3A01442A5D458B001D974E /* AdjustDelegate.swift in Sources */,
+				0D3801AE2A6124F400EFE050 /* AppLovinManager.swift in Sources */,
+				0D3A01442A5D458B001D974E /* AdjustDelegateHandler.swift in Sources */,
 				0DAEB37F2A5AF14E00C38DD9 /* EMobi.swift in Sources */,
 				0DAEB37D2A5AF14E00C38DD9 /* Constants.swift in Sources */,
 				0DAEB3682A5AF08A00C38DD9 /* ViewController.swift in Sources */,

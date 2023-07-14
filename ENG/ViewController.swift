@@ -11,6 +11,7 @@ class ViewController: UIViewController {
 
      var eventLabel: UILabel!
      var activeUserLabel: UILabel!
+     var premUserLabel:UILabel!
      var purchasedProductsLabel: UILabel!
        
      override func viewDidLoad() {
@@ -34,13 +35,22 @@ class ViewController: UIViewController {
              activeUserLabel.topAnchor.constraint(equalTo: eventLabel.bottomAnchor, constant: 20)
          ])
          
+         // Create and configure the activeUserLabel
+         premUserLabel = UILabel()
+         premUserLabel.translatesAutoresizingMaskIntoConstraints = false
+         view.addSubview(premUserLabel)
+         NSLayoutConstraint.activate([
+            premUserLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            premUserLabel.topAnchor.constraint(equalTo: activeUserLabel.bottomAnchor, constant: 20)
+         ])
+         
          // Create and configure the purchasedProductsLabel
          purchasedProductsLabel = UILabel()
          purchasedProductsLabel.translatesAutoresizingMaskIntoConstraints = false
          view.addSubview(purchasedProductsLabel)
          NSLayoutConstraint.activate([
              purchasedProductsLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-             purchasedProductsLabel.topAnchor.constraint(equalTo: activeUserLabel.bottomAnchor, constant: 20)
+             purchasedProductsLabel.topAnchor.constraint(equalTo: premUserLabel.bottomAnchor, constant: 20)
          ])
          
          // Call the logAnalyticsEvent function and update the eventLabel
@@ -49,6 +59,10 @@ class ViewController: UIViewController {
          // Call the isActiveUser function and update the activeUserLabel
          let isActive = EMobi.shared.isActiveUser()
          activeUserLabel.text = "Is Active User: \(isActive)"
+         
+         let isPremium = EMobi.shared.isPremiumUser()
+         premUserLabel.text = "Is Premium User: \(isPremium)"
+          
          
          EMobi.shared.getAllPurchasedProductIdentifiers { ids in
              if let ids = ids {

@@ -26,6 +26,15 @@ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 
+## AppLovinSDK
+
+
+Copyright 2023 AppLovin Corp. All rights reserved.
+
+The AppLovin SDK is available under a commercial license (https://www.applovin.com/eula).
+
+
+
 ## FBAEMKit
 
 Copyright (c) Meta Platforms, Inc. and affiliates. All rights reserved.

@@ -8,28 +8,16 @@
 import Foundation
 import Adjust
 
-extension EMobi: AdjustDelegate
-{
+class AdjustDelegateHandler: NSObject, AdjustDelegate {
+ 
     public func adjustDeeplinkResponse(_ deeplink: URL?) -> Bool
     {
-        handleDeeplink(deeplink: deeplink)
+        UserDefaults.standard.setValue(true, forKey: "IsPremium")
+        UserDefaults.standard.synchronize()
+       
         return true
     }
-    
-    // MARK: - HANDLE Deeplink response
-    private func handleDeeplink(deeplink url: URL?)
-    {
-        print("Handling Deeplink")
-        print(url?.absoluteString ?? "Not found")
-        
-        UserDefaults.standard.setValue(url?.absoluteString, forKey: "deeplinkURL")
-        UserDefaults.standard.synchronize()
-
-    }
-    
-     
-    
-    
+      
     public func adjustEventTrackingSucceeded(_ eventSuccessResponseData: ADJEventSuccess?)
     {
         print(eventSuccessResponseData?.jsonResponse ?? [:])

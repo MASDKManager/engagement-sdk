@@ -5,12 +5,11 @@
 //  Created by Maarouf on 7/9/23.
 //
 
-import UIKit
+import UIKit 
 
 @main
-class AppDelegate: UIResponder, UIApplicationDelegate {
-
-
+class AppDelegate: UIResponder, UIApplicationDelegate  {
+ 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions  : [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
@@ -24,9 +23,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         } else {
             print("Unable to read Constants.plist file.")
         }
-  
+   
         return true
     }
+  
 
     // MARK: UISceneSession Lifecycle
 

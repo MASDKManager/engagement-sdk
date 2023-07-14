@@ -7,7 +7,8 @@
 
 import Foundation
 import FirebaseAnalytics
-
+ 
+let tag = "ENGSDK"
 
 func getUserID() -> String {
     if let userID = UserDefaults.standard.string(forKey: "userID") {
