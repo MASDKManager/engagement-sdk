@@ -34,3 +34,7 @@ func checkPremiumStatus() -> Bool {
     return defaults.bool(forKey: "IsPremium")
 }
 
+enum BannerPosition {
+    case top
+    case bottom
+}

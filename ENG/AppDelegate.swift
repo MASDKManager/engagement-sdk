@@ -8,9 +8,9 @@
 import UIKit 
 
 @main
-class AppDelegate: UIResponder, UIApplicationDelegate  {
- 
-
+class AppDelegate: UIResponder, UIApplicationDelegate, EMobiDelegate {
+  
+  
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions  : [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
       
@@ -20,14 +20,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate  {
      
         if let plistData = NSDictionary(contentsOf: url) {
             EMobi.shared.start(withConstantPlist: plistData, launchOptions: launchOptions)
+            EMobi.shared.delegate = self
         } else {
             print("Unable to read Constants.plist file.")
         }
    
         return true
     }
-  
-
+    
+    func bannerAdDidFailToLoad(adUnitIdentifier: String, error: String) {
+        // Callback triggered when the banner ad fails to load
+        // Access the adUnitIdentifier and error parameters here
+        print("Banner ad failed to load for adUnitIdentifier: \(adUnitIdentifier)")
+        print("Error: \(error  )")
+    }
+     
+ 
     // MARK: UISceneSession Lifecycle
 
     func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {

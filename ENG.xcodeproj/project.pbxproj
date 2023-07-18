@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0D0C049D2A6521AF003FADC8 /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D0C049C2A6521AF003FADC8 /* SecondViewController.swift */; };
+		0D0C04A12A657EB3003FADC8 /* EMobiDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D0C04A02A657EB3003FADC8 /* EMobiDelegate.swift */; };
 		0D3801AE2A6124F400EFE050 /* AppLovinManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D3801AD2A6124F400EFE050 /* AppLovinManager.swift */; };
 		0D3A01442A5D458B001D974E /* AdjustDelegateHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D3A01432A5D458B001D974E /* AdjustDelegateHandler.swift */; };
 		0D3A01462A5D7C40001D974E /* OSSubscription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D3A01452A5D7C40001D974E /* OSSubscription.swift */; };
@@ -26,6 +28,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0D0C049C2A6521AF003FADC8 /* SecondViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondViewController.swift; sourceTree = "<group>"; };
+		0D0C04A02A657EB3003FADC8 /* EMobiDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EMobiDelegate.swift; sourceTree = "<group>"; };
 		0D1AF38682C1413CADB82792 /* Pods_ENG.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ENG.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0D3801AD2A6124F400EFE050 /* AppLovinManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLovinManager.swift; sourceTree = "<group>"; };
 		0D3A01432A5D458B001D974E /* AdjustDelegateHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdjustDelegateHandler.swift; sourceTree = "<group>"; };
@@ -91,6 +95,7 @@
 				0DAEB3632A5AF08A00C38DD9 /* AppDelegate.swift */,
 				0DAEB3652A5AF08A00C38DD9 /* SceneDelegate.swift */,
 				0DAEB3672A5AF08A00C38DD9 /* ViewController.swift */,
+				0D0C049C2A6521AF003FADC8 /* SecondViewController.swift */,
 				0DAEB3692A5AF08A00C38DD9 /* Main.storyboard */,
 				0DAEB36C2A5AF08B00C38DD9 /* Assets.xcassets */,
 				0DAEB36E2A5AF08B00C38DD9 /* LaunchScreen.storyboard */,
@@ -107,6 +112,7 @@
 				0D3A01432A5D458B001D974E /* AdjustDelegateHandler.swift */,
 				0D3A01452A5D7C40001D974E /* OSSubscription.swift */,
 				0D3801AD2A6124F400EFE050 /* AppLovinManager.swift */,
+				0D0C04A02A657EB3003FADC8 /* EMobiDelegate.swift */,
 			);
 			path = SDK;
 			sourceTree = "<group>";
@@ -264,6 +270,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0D0C04A12A657EB3003FADC8 /* EMobiDelegate.swift in Sources */,
 				0D3801AE2A6124F400EFE050 /* AppLovinManager.swift in Sources */,
 				0D3A01442A5D458B001D974E /* AdjustDelegateHandler.swift in Sources */,
 				0DAEB37F2A5AF14E00C38DD9 /* EMobi.swift in Sources */,
@@ -272,6 +279,7 @@
 				0DAEB3642A5AF08A00C38DD9 /* AppDelegate.swift in Sources */,
 				0DAEB3662A5AF08A00C38DD9 /* SceneDelegate.swift in Sources */,
 				0D3A01462A5D7C40001D974E /* OSSubscription.swift in Sources */,
+				0D0C049D2A6521AF003FADC8 /* SecondViewController.swift in Sources */,
 				0DAEB37C2A5AF14E00C38DD9 /* Utils.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -22,7 +22,8 @@ public class EMobi: NSObject, PurchasesDelegate {
    
     public static let shared = EMobi()
     private var isSubscribed = false
-    private var isPremium = false
+    private var isPremium = false 
+    weak var delegate: EMobiDelegate?
      
     private var adjustDelegateHandler: AdjustDelegateHandler?
     
@@ -45,17 +46,9 @@ public class EMobi: NSObject, PurchasesDelegate {
         configureOneSignal(launchOptions: launchOptions)
         configureFacebook()
         configureMailchimp()
-        
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 6.5) {
-            AppLovinManager.shared.initializeAppLovin()
-            
-            DispatchQueue.main.asyncAfter(deadline: .now() + 6.5) {
-                AppLovinManager.shared.showInterestialAd { closed in
-                    let a = ""
-                }
-            }
-        }
+        AppLovinManager.shared.initializeAppLovin()
+       
+
     }
    
     private func checkPremiumUser(){
@@ -269,6 +262,18 @@ public class EMobi: NSObject, PurchasesDelegate {
                 completion(nil)
             }
         }
+    }
+     
+    public  func loadBannerAd(vc : UIViewController, bannerView: UIView  ) {
+        AppLovinManager.shared.loadBannerAd(vc: vc, adViewContainer: bannerView )
+    }
+    
+    public func showInterestialAd(onClose: @escaping (Bool) -> ()) { 
+        AppLovinManager.shared.showInterestialAd(onClose: onClose)
+    }
+    
+    public func distroyAds(){
+        AppLovinManager.shared.unloadBannerAd()
     }
  
 }

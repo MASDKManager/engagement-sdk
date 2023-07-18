@@ -63,26 +63,18 @@ extension AppLovinManager {
         })
     }
     
-    func loadBannerAd(vc : UIViewController) {
+    func loadBannerAd(vc: UIViewController, adViewContainer: UIView) {
         AppLovinManager.shared.adView = MAAdView(adUnitIdentifier: AdType.banner.rawValue)
         AppLovinManager.shared.adView.delegate = self
-        
-        // Banner height on iPhone and iPad is 50 and 90, respectively
-        let height: CGFloat = (UIDevice.current.userInterfaceIdiom == .pad) ? 90 : 50
-        
-        // Stretch to the width of the screen for banners to be fully functional
-        let width: CGFloat = UIScreen.main.bounds.width
-        
-        AppLovinManager.shared.adView.frame = CGRect(x: 0, y: UIScreen.main.bounds.height - height - 15, width: width, height: height)
-        
-        // Set background or background color for banners to be fully functional
+         
+        AppLovinManager.shared.adView.frame = adViewContainer.frame
         AppLovinManager.shared.adView.backgroundColor = .clear
         
         vc.view.addSubview(AppLovinManager.shared.adView)
-        
-        // Load the first ad
+         
         AppLovinManager.shared.adView.loadAd()
     }
+
     
     private func loadInterestialAd() {
         AppLovinManager.shared.interestialAdView = MAInterstitialAd(adUnitIdentifier: AdType.interestial.rawValue)
@@ -106,26 +98,27 @@ extension AppLovinManager {
         }
     }
     
-    func showRewardedAd(onClose : @escaping (Bool) -> ()) {
-        if (AppLovinManager.shared.rewardedAdView?.isReady ?? false) {
-            AppLovinManager.shared.rewardUser = false
-            AppLovinManager.shared.rewardedAdView?.show()
-            AppLovinManager.shared.onClose = onClose
-        } else {
-            print("rewarded ads failed to show")
-            onClose(false)
-        }
-        
+    func unloadBannerAd() {
+        // 1. Remove the loaded ad
+        AppLovinManager.shared.adView?.removeFromSuperview()
+        AppLovinManager.shared.adView = nil
+         
     }
+
+ 
+
 }
 
 extension AppLovinManager: MAAdDelegate {
     
     func didLoad(_ ad: MAAd) {
         print("Ad didLoad id: \(ad.adUnitIdentifier)")
+      //  EMobi.shared.delegate?.bannerAdDidLoad(adUnitIdentifier: ad.adUnitIdentifier)
     }
     
     func didFailToLoadAd(forAdUnitIdentifier adUnitIdentifier: String, withError error: MAError) {
+        EMobi.shared.delegate?.bannerAdDidFailToLoad(adUnitIdentifier: adUnitIdentifier, error: error.description)
+
         print("Ad didFailToLoadAd with id:\(adUnitIdentifier)")
         if (adUnitIdentifier == AdType.interestial.rawValue) {
             // Interstitial ad failed to load

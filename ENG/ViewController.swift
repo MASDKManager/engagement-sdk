@@ -13,6 +13,7 @@ class ViewController: UIViewController {
      var activeUserLabel: UILabel!
      var premUserLabel:UILabel!
      var purchasedProductsLabel: UILabel!
+     var showButton: UIButton!
        
      override func viewDidLoad() {
          super.viewDidLoad()
@@ -69,9 +70,47 @@ class ViewController: UIViewController {
                  self.purchasedProductsLabel.text = "Purchased Products: \(ids)"
              }  
          }
-
+          
+         DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
+             
+             // Banner height on iPhone and iPad is 50 and 90, respectively
+             let height: CGFloat = (UIDevice.current.userInterfaceIdiom == .pad) ? 90 : 50
+             
+             // Stretch to the width of the screen for banners to be fully functional
+             let width: CGFloat = UIScreen.main.bounds.width
+             
+             let frame = CGRect(x: 0, y: UIScreen.main.bounds.height - height - 15, width: width, height: height)
+             
+             let bannerView = UIView(frame: frame)
+             bannerView.backgroundColor = UIColor.red // Set your desired background color
+             
+             
+             EMobi.shared.loadBannerAd(vc: self, bannerView: bannerView  )
+         }
+          
+         DispatchQueue.main.asyncAfter(deadline: .now() + 5.5) {
+             EMobi.shared.distroyAds()
+             EMobi.shared.showInterestialAd{ success in
+                 print("ad closed")
+             }
+         }
+          
+         // Create and configure the showButton
+         showButton = UIButton(type: .system)
+         showButton.translatesAutoresizingMaskIntoConstraints = false
+         showButton.setTitle("Show Second View", for: .normal)
+         showButton.addTarget(self, action: #selector(showButtonTapped), for: .touchUpInside)
+         view.addSubview(showButton)
+         NSLayoutConstraint.activate([
+             showButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+             showButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -40)
+         ])
+         
     }
-
-
+    
+    @objc func showButtonTapped() {
+        performSegue(withIdentifier: "showSVC", sender: self)
+    }
+     
 }
 

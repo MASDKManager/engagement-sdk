@@ -158,8 +158,8 @@
             filePath = "ENG/SDK/EMobi.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "110"
-            endingLineNumber = "110"
+            startingLineNumber = "103"
+            endingLineNumber = "103"
             landmarkName = "configureRevenueCat()"
             landmarkType = "7">
          </BreakpointContent>
@@ -209,118 +209,6 @@
             startingLineNumber = "15"
             endingLineNumber = "15"
             landmarkName = "adjustDeeplinkResponse(_:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "1290D7DF-79B1-4B84-A293-2218BF577419"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "ENG/SDK/EMobi.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "55"
-            endingLineNumber = "55"
-            landmarkName = "start(withConstantPlist:launchOptions:)"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "1290D7DF-79B1-4B84-A293-2218BF577419 - 2c7d94db0372e097"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 @Swift.MainActor () -&gt; () in ENG.EMobi.start(withConstantPlist: __C.NSDictionary, launchOptions: Swift.Optional&lt;Swift.Dictionary&lt;__C.UIApplicationLaunchOptionsKey, Any&gt;&gt;) -&gt; ()"
-                  moduleName = "ENG"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/Maarouf/Desktop/ios/ENG/ENG/SDK/EMobi.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "55"
-                  endingLineNumber = "55"
-                  offsetFromSymbolStart = "96">
-               </Location>
-               <Location
-                  uuid = "1290D7DF-79B1-4B84-A293-2218BF577419 - 1bb5c8cc5bf7b3ed"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Swift.Bool) -&gt; () in closure #1 @Swift.MainActor () -&gt; () in closure #1 @Swift.MainActor () -&gt; () in ENG.EMobi.start(withConstantPlist: __C.NSDictionary, launchOptions: Swift.Optional&lt;Swift.Dictionary&lt;__C.UIApplicationLaunchOptionsKey, Any&gt;&gt;) -&gt; ()"
-                  moduleName = "ENG"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/Maarouf/Desktop/ios/ENG/ENG/SDK/EMobi.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "55"
-                  endingLineNumber = "55"
-                  offsetFromSymbolStart = "52">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "E14F4714-7620-4887-A53F-6D7C2791A154"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "ENG/SDK/AppLovinManager.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "110"
-            endingLineNumber = "110"
-            landmarkName = "showRewardedAd(onClose:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "4E9DA635-7052-4EE6-982C-18E187F0E11E"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "ENG/SDK/AppLovinManager.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "130"
-            endingLineNumber = "130"
-            landmarkName = "didFailToLoadAd(forAdUnitIdentifier:withError:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "4F7CEA79-C482-4534-93D5-031B13A126B7"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "ENG/SDK/AppLovinManager.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "45"
-            endingLineNumber = "45"
-            landmarkName = "initializeAppLovin()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "DFA340DA-A850-4A72-B4DF-5A60E7F5E08B"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "ENG/SDK/AppLovinManager.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "44"
-            endingLineNumber = "44"
-            landmarkName = "initializeAppLovin()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
