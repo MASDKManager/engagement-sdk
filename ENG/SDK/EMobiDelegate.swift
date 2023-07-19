@@ -7,6 +7,6 @@
 
 import Foundation 
 
-protocol EMobiDelegate: AnyObject { 
+public protocol EMobiDelegate: AnyObject { 
     func bannerAdDidFailToLoad(adUnitIdentifier: String, error: String)
 }
