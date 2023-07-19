@@ -209,11 +209,16 @@ public class EMobi: NSObject, PurchasesDelegate {
         let event = ADJEvent(eventToken: Constant.shared.adjustSubscriptionToken)
       
         event?.addCallbackParameter("user_uuid", value: getUserID())
-        event?.addCallbackParameter("purchaseToken", value: purchaseToken)
-        event?.addCallbackParameter("purchaseTime", value: "\(Date())")
-        event?.addCallbackParameter("transactionId", value: transactionID)
-        event?.addCallbackParameter("productId", value: productID)
+        event?.addCallbackParameter("inAppPurchaseTime", value: "\(Date())")
+        event?.addCallbackParameter("inAppTransactionId", value: transactionID)
+        event?.addCallbackParameter("inAppProductId", value: productID)
         
+        if let bundleIdentifier = Bundle.main.bundleIdentifier {
+            event?.addCallbackParameter("inAppPackageName", value: bundleIdentifier)
+        } else {
+            print("Unable to retrieve the bundle identifier.")
+        }
+ 
         Adjust.trackEvent(event)
          
         print( tag + "trackPurchaseEvent sent init")
@@ -273,7 +278,7 @@ public class EMobi: NSObject, PurchasesDelegate {
     }
     
     public func distroyAds(){
-        AppLovinManager.shared.unloadBannerAd()
+        AppLovinManager.shared.unloadAds()
     }
  
 }

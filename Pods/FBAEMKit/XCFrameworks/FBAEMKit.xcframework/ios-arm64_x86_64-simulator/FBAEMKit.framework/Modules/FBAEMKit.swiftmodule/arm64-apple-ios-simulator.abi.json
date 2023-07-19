@@ -17403,7 +17403,7 @@
       "kind": "StringLiteral",
       "offset": 539,
       "length": 8,
-      "value": "\"16.1.2\""
+      "value": "\"16.1.3\""
     },
     {
       "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMNetworker.swift",

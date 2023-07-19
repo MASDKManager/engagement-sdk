@@ -30099,7 +30099,7 @@
               {
                 "kind": "TypeNominal",
                 "name": "Dictionary",
-                "printedName": "[Swift.String : Swift.String]",
+                "printedName": "[Swift.String : Any]",
                 "children": [
                   {
                     "kind": "TypeNominal",
@@ -30109,9 +30109,8 @@
                   },
                   {
                     "kind": "TypeNominal",
-                    "name": "String",
-                    "printedName": "Swift.String",
-                    "usr": "s:SS"
+                    "name": "ProtocolComposition",
+                    "printedName": "Any"
                   }
                 ],
                 "usr": "s:SD"
@@ -30137,8 +30136,8 @@
               }
             ],
             "declKind": "Func",
-            "usr": "s:12FBSDKCoreKit23MACARuleMatchingManagerC16stringComparison8variable6values4dataSbSS_SDyS2SGSDySSypGtF",
-            "mangledName": "$s12FBSDKCoreKit23MACARuleMatchingManagerC16stringComparison8variable6values4dataSbSS_SDyS2SGSDySSypGtF",
+            "usr": "s:12FBSDKCoreKit23MACARuleMatchingManagerC16stringComparison8variable6values4dataSbSS_SDySSypGAHtF",
+            "mangledName": "$s12FBSDKCoreKit23MACARuleMatchingManagerC16stringComparison8variable6values4dataSbSS_SDySSypGAHtF",
             "moduleName": "FBSDKCoreKit",
             "declAttributes": [
               "Final",

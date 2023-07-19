@@ -24,6 +24,7 @@ Pod::Spec.new do |spec|
   spec.dependency 'FBSDKCoreKit'  
   spec.dependency 'OneSignalXCFramework'   
   spec.dependency 'MailchimpSDK'   
+  spec.dependency 'AppLovinSDK'   
  
   spec.source_files  = "ENG/SDK/**/*.{h,m,swift}"
   # spec.resource_bundles = {

@@ -167,12 +167,14 @@ extension PeriodType: DefaultValueProvider {
     @objc public var ownershipType: PurchaseOwnershipType { self.contents.ownershipType }
 
     /// Whether this entitlement was verified.
+    /// 
+    /// ### Related Articles
+    /// - [Documentation](https://rev.cat/trusted-entitlements)
     ///
     /// ### Related Symbols
     /// - ``VerificationResult``
-    // Trusted Entitlements: internal until ready to be made public.
     @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.2, *)
-    @objc internal var verification: VerificationResult { self.contents.verification }
+    @objc public var verification: VerificationResult { self.contents.verification }
 
     // Docs inherited from protocol
     // swiftlint:disable:next missing_docs

@@ -68,7 +68,7 @@ class ViewController: UIViewController {
          EMobi.shared.getAllPurchasedProductIdentifiers { ids in
              if let ids = ids {
                  self.purchasedProductsLabel.text = "Purchased Products: \(ids)"
-             }  
+             }
          }
           
          DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
@@ -88,29 +88,15 @@ class ViewController: UIViewController {
              EMobi.shared.loadBannerAd(vc: self, bannerView: bannerView  )
          }
           
-         DispatchQueue.main.asyncAfter(deadline: .now() + 5.5) {
-             EMobi.shared.distroyAds()
+         DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
              EMobi.shared.showInterestialAd{ success in
                  print("ad closed")
              }
          }
-          
-         // Create and configure the showButton
-         showButton = UIButton(type: .system)
-         showButton.translatesAutoresizingMaskIntoConstraints = false
-         showButton.setTitle("Show Second View", for: .normal)
-         showButton.addTarget(self, action: #selector(showButtonTapped), for: .touchUpInside)
-         view.addSubview(showButton)
-         NSLayoutConstraint.activate([
-             showButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-             showButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -40)
-         ])
+         
+     
          
     }
-    
-    @objc func showButtonTapped() {
-        performSegue(withIdentifier: "showSVC", sender: self)
-    }
+ 
      
 }
-

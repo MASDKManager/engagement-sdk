@@ -31,18 +31,20 @@ import Foundation
 /// )
 ///
 /// let customerInfo = try await purchases.customerInfo()
-/// if customerInfo.entitlements.verification != .verified {
+/// if !customerInfo.entitlements.verification.isVerified {
 ///   print("Entitlements could not be verified")
 /// }
 /// ```
+///
+/// ### Related Articles
+/// - [Documentation](https://rev.cat/trusted-entitlements)
 ///
 /// ### Related Symbols
 /// - ``Configuration/EntitlementVerificationMode``
 /// - ``Configuration/Builder/with(entitlementVerificationMode:)``
 /// - ``EntitlementInfos/verification``
-// Trusted Entitlements: internal until ready to be made public.
 @objc(RCVerificationResult)
-internal enum VerificationResult: Int {
+public enum VerificationResult: Int {
 
     /// No verification was done.
     ///
@@ -66,6 +68,20 @@ internal enum VerificationResult: Int {
 
 extension VerificationResult: Sendable, Codable {}
 
+extension VerificationResult {
+
+    /// Whether the result is ``VerificationResult/verified`` or ``VerificationResult/verifiedOnDevice``.
+    public var isVerified: Bool {
+        switch self {
+        case .verified, .verifiedOnDevice:
+            return true
+        case .notRequested, .failed:
+            return false
+        }
+    }
+
+}
+
 extension VerificationResult: DefaultValueProvider {
 
     static let defaultValue: Self = .notRequested
@@ -74,7 +90,8 @@ extension VerificationResult: DefaultValueProvider {
 
 extension VerificationResult: CustomDebugStringConvertible {
 
-    var debugDescription: String {
+    // swiftlint:disable:next missing_docs
+    public var debugDescription: String {
         let prefix = "\(type(of: self))"
 
         switch self {

@@ -98,14 +98,14 @@ extension AppLovinManager {
         }
     }
     
-    func unloadBannerAd() {
+    func unloadAds() {
         // 1. Remove the loaded ad
         AppLovinManager.shared.adView?.removeFromSuperview()
         AppLovinManager.shared.adView = nil
          
+        AppLovinManager.shared.interestialAdView = nil
+         
     }
-
- 
 
 }
 
