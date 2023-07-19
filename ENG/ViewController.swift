@@ -94,9 +94,8 @@ class ViewController: UIViewController {
              }
          }
          
-     
-         
+         EMobi.shared.registerMailchimpEmail(email: "test@email.com")
+          
     }
- 
-     
+  
 }

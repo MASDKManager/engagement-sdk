@@ -23,7 +23,7 @@ public class EMobi: NSObject, PurchasesDelegate {
     public static let shared = EMobi()
     private var isSubscribed = false
     private var isPremium = false 
-    weak var delegate: EMobiDelegate?
+    public weak var delegate: EMobiDelegate?
      
     private var adjustDelegateHandler: AdjustDelegateHandler?
     
