@@ -10,13 +10,13 @@ import FirebaseCore
 import Adjust
 import FirebaseAnalytics
 import FirebaseInstallations
+import FirebaseRemoteConfig
 import FBSDKCoreKit
 import AppTrackingTransparency
 import OneSignal
 import RevenueCat
 import MailchimpSDK
 import AppLovinSDK
-
  
 public class EMobi: NSObject, PurchasesDelegate {
    
@@ -37,20 +37,74 @@ public class EMobi: NSObject, PurchasesDelegate {
         Constant.shared.getValuesFromPlist()
          
         self.requestIDFA()
-        
+        configureFirebaseAndFetchRemoteConfig()
         checkPremiumUser()
-           
-        configureFirebase()
+            
         configureAdjust()
         configureRevenueCat()
         configureOneSignal(launchOptions: launchOptions)
         configureFacebook()
         configureMailchimp()
         AppLovinManager.shared.initializeAppLovin()
-       
-
+        PurchaselyManager.shared.initializePurchasely()
+        
     }
    
+
+    func configureFirebaseAndFetchRemoteConfig() {
+        // Step 1: Configure FirebaseApp (if not already configured)
+        if FirebaseApp.app() == nil {
+            FirebaseApp.configure()
+        }
+        
+        // Step 2: Set default values for RemoteConfig
+        let appDefaults: [String: Any] = [
+            "run": true,
+        ]
+        
+        RemoteConfig.remoteConfig().setDefaults(appDefaults as? [String: NSObject])
+        
+        
+        let settings = RemoteConfigSettings()
+        settings.minimumFetchInterval = 0
+        RemoteConfig.remoteConfig().configSettings = settings
+        
+        // Step 3: Fetch RemoteConfig values from the server
+        RemoteConfig.remoteConfig().fetch { (status, error) in
+            if status == .success {
+                // Step 4: Activate fetched values
+                RemoteConfig.remoteConfig().activate { (changed, error) in
+                    DispatchQueue.main.async {
+                        if let error = error {
+                            print("Error activating RemoteConfig: \(error.localizedDescription)")
+                            // Handle any potential error here, if needed
+                            return
+                        }
+                        
+                        // Step 5: Apply fetched values to appropriate properties
+                        self.applyFetchedValues()
+                    }
+                }
+            } else {
+                // Handle error during fetch
+                print("Config not fetched")
+                if let error = error {
+                    print("Error: \(error.localizedDescription)")
+                } else {
+                    print("Unknown error occurred.")
+                }
+            }
+        }
+    }
+
+    private func applyFetchedValues() {
+      
+        PurchaselyManager.shared.onboardPaywallPlacementID = RemoteConfig.remoteConfig()["onboardPaywallPlacementID"].stringValue ?? ""
+        PurchaselyManager.shared.premiumPaywallPlacementID = RemoteConfig.remoteConfig()["premiumPaywallPlacementID"].stringValue ?? ""
+        PurchaselyManager.shared.showPurchaselyPaywall = RemoteConfig.remoteConfig()["showPurchaselyPaywall"].boolValue
+        PurchaselyManager.shared.firebaseRemoteConfigLoaded = true
+    }
+ 
     private func checkPremiumUser(){
         isPremium =  checkPremiumStatus() 
     }
@@ -81,10 +135,7 @@ public class EMobi: NSObject, PurchasesDelegate {
         }
          
     }
- 
-    private func configureFirebase() {
-        FirebaseApp.configure()
-    }
+  
     
     private func configureRevenueCat() {
         let appUserID = getUserID()
@@ -279,6 +330,10 @@ public class EMobi: NSObject, PurchasesDelegate {
     
     public func distroyAds(){
         AppLovinManager.shared.unloadAds()
+    }
+    
+    func showPurchaselyPaywall(type: PaywallType = .paywall, completionSuccess: (() -> ())?, completionFailure: (() -> ())?)-> UIViewController? { 
+        PurchaselyManager.shared.showPurchaselyPaywall(completionSuccess: completionSuccess, completionFailure: completionFailure)
     }
  
 }

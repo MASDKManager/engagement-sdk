@@ -12,7 +12,9 @@
 		0D3801AE2A6124F400EFE050 /* AppLovinManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D3801AD2A6124F400EFE050 /* AppLovinManager.swift */; };
 		0D3A01442A5D458B001D974E /* AdjustDelegateHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D3A01432A5D458B001D974E /* AdjustDelegateHandler.swift */; };
 		0D3A01462A5D7C40001D974E /* OSSubscription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D3A01452A5D7C40001D974E /* OSSubscription.swift */; };
-		0D3A01482A5E8FB4001D974E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0D3A01472A5E8FB4001D974E /* GoogleService-Info.plist */; };
+		0D4114422A694633005E5AF9 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0D4114412A694633005E5AF9 /* GoogleService-Info.plist */; };
+		0D4B91A02A6814DF004EC582 /* PurchaselyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D4B919F2A6814DF004EC582 /* PurchaselyManager.swift */; };
+		0D4B91A22A681877004EC582 /* AdjustManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D4B91A12A681877004EC582 /* AdjustManager.swift */; };
 		0DAEB3642A5AF08A00C38DD9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DAEB3632A5AF08A00C38DD9 /* AppDelegate.swift */; };
 		0DAEB3662A5AF08A00C38DD9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DAEB3652A5AF08A00C38DD9 /* SceneDelegate.swift */; };
 		0DAEB3682A5AF08A00C38DD9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DAEB3672A5AF08A00C38DD9 /* ViewController.swift */; };
@@ -34,7 +36,9 @@
 		0D3801AD2A6124F400EFE050 /* AppLovinManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLovinManager.swift; sourceTree = "<group>"; };
 		0D3A01432A5D458B001D974E /* AdjustDelegateHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdjustDelegateHandler.swift; sourceTree = "<group>"; };
 		0D3A01452A5D7C40001D974E /* OSSubscription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSSubscription.swift; sourceTree = "<group>"; };
-		0D3A01472A5E8FB4001D974E /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
+		0D4114412A694633005E5AF9 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		0D4B919F2A6814DF004EC582 /* PurchaselyManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaselyManager.swift; sourceTree = "<group>"; };
+		0D4B91A12A681877004EC582 /* AdjustManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdjustManager.swift; sourceTree = "<group>"; };
 		0DAEB3602A5AF08A00C38DD9 /* ENG.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ENG.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0DAEB3632A5AF08A00C38DD9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0DAEB3652A5AF08A00C38DD9 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -89,7 +93,7 @@
 			children = (
 				0DAEB3712A5AF08B00C38DD9 /* Info.plist */,
 				0DAEB37A2A5AF14E00C38DD9 /* Constants.plist */,
-				0D3A01472A5E8FB4001D974E /* GoogleService-Info.plist */,
+				0D4114412A694633005E5AF9 /* GoogleService-Info.plist */,
 				0DAEB3802A5AF18A00C38DD9 /* ENG.entitlements */,
 				0DAEB3772A5AF10900C38DD9 /* SDK */,
 				0DAEB3632A5AF08A00C38DD9 /* AppDelegate.swift */,
@@ -113,6 +117,8 @@
 				0D3A01452A5D7C40001D974E /* OSSubscription.swift */,
 				0D3801AD2A6124F400EFE050 /* AppLovinManager.swift */,
 				0D0C04A02A657EB3003FADC8 /* EMobiDelegate.swift */,
+				0D4B919F2A6814DF004EC582 /* PurchaselyManager.swift */,
+				0D4B91A12A681877004EC582 /* AdjustManager.swift */,
 			);
 			path = SDK;
 			sourceTree = "<group>";
@@ -198,9 +204,9 @@
 			files = (
 				0DAEB3702A5AF08B00C38DD9 /* LaunchScreen.storyboard in Resources */,
 				0DAEB36D2A5AF08B00C38DD9 /* Assets.xcassets in Resources */,
-				0D3A01482A5E8FB4001D974E /* GoogleService-Info.plist in Resources */,
 				0DAEB37E2A5AF14E00C38DD9 /* Constants.plist in Resources */,
 				0DAEB36B2A5AF08A00C38DD9 /* Main.storyboard in Resources */,
+				0D4114422A694633005E5AF9 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -274,7 +280,9 @@
 				0D3801AE2A6124F400EFE050 /* AppLovinManager.swift in Sources */,
 				0D3A01442A5D458B001D974E /* AdjustDelegateHandler.swift in Sources */,
 				0DAEB37F2A5AF14E00C38DD9 /* EMobi.swift in Sources */,
+				0D4B91A22A681877004EC582 /* AdjustManager.swift in Sources */,
 				0DAEB37D2A5AF14E00C38DD9 /* Constants.swift in Sources */,
+				0D4B91A02A6814DF004EC582 /* PurchaselyManager.swift in Sources */,
 				0DAEB3682A5AF08A00C38DD9 /* ViewController.swift in Sources */,
 				0DAEB3642A5AF08A00C38DD9 /* AppDelegate.swift in Sources */,
 				0DAEB3662A5AF08A00C38DD9 /* SceneDelegate.swift in Sources */,

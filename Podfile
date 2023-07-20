@@ -11,10 +11,11 @@ target 'ENG' do
   pod 'RevenueCat'
   pod 'FirebaseAnalytics'
   pod 'FirebaseCrashlytics'
+  pod 'FirebaseRemoteConfig'
   pod 'FBSDKCoreKit'
   pod 'OneSignalXCFramework'
   pod 'MailchimpSDK'
   pod 'AppLovinSDK'
-
+  pod 'Purchasely'
  
 end

@@ -2,6 +2,7 @@ import Foundation
 
 final class Constant {
     static let shared = Constant()
+    var purchaselyAPIKey = String()
     var rcAPIKey = String()
     var termOfUseLink = URL(string: "")
     var privacyPolicyLink = URL(string: "")
@@ -35,6 +36,11 @@ final class Constant {
            let plist = try? PropertyListSerialization.propertyList(from: plistData, options: [], format: nil) as? [String: Any]{
            
             
+             
+             guard let sharedPurchaselyAPIKey = plist["Purchasely API Key"] as? String else {
+                 fatalError("Adjust token not exist in Constants.plist")
+             }
+             self.purchaselyAPIKey = sharedPurchaselyAPIKey
 
             guard let sharedRCAPIKey = plist["RevenueCat API Key"] as? String else {
                 fatalError("Adjust token not exist in Constants.plist")

@@ -62,5 +62,7 @@
 	<string>f39ff004-ec48-4da0-8038-b57760074ffd</string>
 	<key>MailchimpKey</key>
 	<string>7fb3a525c9263da65b1ba06a39e91bb9-us12</string>
+	<key>Purchasely API Key</key>
+	<string>7389d864-34e8-426b-a588-4d32546e3412</string>
 </dict>
 </plist>
