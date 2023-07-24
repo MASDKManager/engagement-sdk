@@ -93,26 +93,7 @@ class PurchaselyManager {
                 break
             }
         })
-        
-        
-        Purchasely.setPaywallActionsInterceptor { [weak self] (action, parameters, presentationInfos, proceed) in
-            switch action {
-                // Intercept the tap on purchase to display the terms and condition
-                case .purchase:
-                    // Grab the plan to purchase
-                    guard let plan = parameters?.plan, let appleProductId = plan.appleProductId else {
-                        proceed(false)
-                        return
-                    }
-
-                  
-                
-                default:
-                    proceed(true)
-            }
-        }
-        
-        
+          
         return purhchasely
         
     }
