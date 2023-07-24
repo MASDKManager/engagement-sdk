@@ -11,6 +11,7 @@ import Adjust
 class AdjustManager {
     static let shared = AdjustManager()
     
+    
     func trackPurchaseEvent(purchaseToken: String, productID: String, transactionID: String) {
         let event = ADJEvent(eventToken: Constant.shared.adjustSubscriptionToken)
         

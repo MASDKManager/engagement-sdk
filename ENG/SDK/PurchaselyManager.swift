@@ -7,6 +7,9 @@
 
 import Foundation
 import Purchasely
+import StoreKit
+
+
 
 enum PaywallType : String {
     case onboarding
@@ -40,6 +43,7 @@ class PurchaselyManager {
                 print("purchasely initiaisation: failed")
             }
         }
+         
     }
  
     
@@ -66,6 +70,7 @@ class PurchaselyManager {
                 saveSubscriptionStatus(isSubscribed: EMobi.shared.isSubscribedUser())
                 AdjustManager.shared.trackPurchaseEvent(purchaseToken: Constant.shared.purchaseToken, productID: plan?.appleProductId ?? "", transactionID: "")
                  
+               
                 guard let completionSuccess else { return }
                 completionSuccess()
                 break
@@ -74,7 +79,8 @@ class PurchaselyManager {
                 EMobi.shared.setSubscribedUser(isSubscribed: true)
                 saveSubscriptionStatus(isSubscribed: EMobi.shared.isSubscribedUser())
                 AdjustManager.shared.trackPurchaseEvent(purchaseToken: Constant.shared.restoreToken, productID: plan?.appleProductId ?? "", transactionID: "")
-              
+                 
+                
                 guard let completionSuccess else { return }
                 completionSuccess()
                 break
@@ -88,8 +94,49 @@ class PurchaselyManager {
             }
         })
         
+        
+        Purchasely.setPaywallActionsInterceptor { [weak self] (action, parameters, presentationInfos, proceed) in
+            switch action {
+                // Intercept the tap on purchase to display the terms and condition
+                case .purchase:
+                    // Grab the plan to purchase
+                    guard let plan = parameters?.plan, let appleProductId = plan.appleProductId else {
+                        proceed(false)
+                        return
+                    }
+
+                  
+                
+                default:
+                    proceed(true)
+            }
+        }
+        
+        
         return purhchasely
+        
     }
+    
+    func restoreAllProducts() {
+        
+        Purchasely.restoreAllProducts(success: {
+            // Reload content and display a success / thank you message to user
+        }, failure: { (error) in
+            // Display error
+        })
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            Purchasely.userSubscriptions(success: { (subscriptions) in
+                if(subscriptions?.count ?? 0 > 0){
+                    EMobi.shared.setSubscribedUser(isSubscribed: true)
+                    saveSubscriptionStatus(isSubscribed: EMobi.shared.isSubscribedUser())
+                }
+            }, failure: { (error) in
+                // Display error
+            })
+        }
+    }
+
      
     func calculateDurationOfSubscription(duration: String) -> DurationUnit{
         

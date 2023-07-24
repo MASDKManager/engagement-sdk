@@ -231,22 +231,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "13774D22-7048-4F16-9A1B-BD3BA5211A90"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "ENG/SDK/EMobi.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "125"
-            endingLineNumber = "125"
-            landmarkName = "applyFetchedValues()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "9F8268F1-2099-472E-8F2A-5336C5FC0EE8"
             shouldBeEnabled = "No"
             ignoreCount = "0"
@@ -263,17 +247,64 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "A12F3B59-117E-4448-8080-003D9727DF38"
-            shouldBeEnabled = "No"
+            uuid = "8E88F398-1E30-4557-879D-CDDD2C4647E9"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "ENG/SDK/AdjustDelegateHandler.swift"
+            filePath = "ENG/SDK/PurchaselyManager.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "27"
-            endingLineNumber = "27"
-            landmarkName = "adjustDeeplinkResponse(_:)"
+            startingLineNumber = "103"
+            endingLineNumber = "103"
+            landmarkName = "showPurchaselyPaywall(type:completionSuccess:completionFailure:)"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "8E88F398-1E30-4557-879D-CDDD2C4647E9 - fcaaa04cbca34f17"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #3 (Purchasely.PLYPresentationAction, Swift.Optional&lt;Purchasely.PLYPresentationActionParameters&gt;, Swift.Optional&lt;Purchasely.PLYPresentationInfo&gt;, (Swift.Bool) -&gt; ()) -&gt; () in ENG.PurchaselyManager.showPurchaselyPaywall(type: ENG.PaywallType, completionSuccess: Swift.Optional&lt;() -&gt; ()&gt;, completionFailure: Swift.Optional&lt;() -&gt; ()&gt;) -&gt; Swift.Optional&lt;__C.UIViewController&gt;"
+                  moduleName = "ENG"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Maarouf/Desktop/ios/ENG/ENG/SDK/PurchaselyManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "103"
+                  endingLineNumber = "103"
+                  offsetFromSymbolStart = "100">
+               </Location>
+               <Location
+                  uuid = "8E88F398-1E30-4557-879D-CDDD2C4647E9 - fcaaa04cbca34f17"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #3 (Purchasely.PLYPresentationAction, Swift.Optional&lt;Purchasely.PLYPresentationActionParameters&gt;, Swift.Optional&lt;Purchasely.PLYPresentationInfo&gt;, (Swift.Bool) -&gt; ()) -&gt; () in ENG.PurchaselyManager.showPurchaselyPaywall(type: ENG.PaywallType, completionSuccess: Swift.Optional&lt;() -&gt; ()&gt;, completionFailure: Swift.Optional&lt;() -&gt; ()&gt;) -&gt; Swift.Optional&lt;__C.UIViewController&gt;"
+                  moduleName = "ENG"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Maarouf/Desktop/ios/ENG/ENG/SDK/PurchaselyManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "103"
+                  endingLineNumber = "103"
+                  offsetFromSymbolStart = "224">
+               </Location>
+               <Location
+                  uuid = "8E88F398-1E30-4557-879D-CDDD2C4647E9 - fcaaa04cbca34f17"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #3 (Purchasely.PLYPresentationAction, Swift.Optional&lt;Purchasely.PLYPresentationActionParameters&gt;, Swift.Optional&lt;Purchasely.PLYPresentationInfo&gt;, (Swift.Bool) -&gt; ()) -&gt; () in ENG.PurchaselyManager.showPurchaselyPaywall(type: ENG.PaywallType, completionSuccess: Swift.Optional&lt;() -&gt; ()&gt;, completionFailure: Swift.Optional&lt;() -&gt; ()&gt;) -&gt; Swift.Optional&lt;__C.UIViewController&gt;"
+                  moduleName = "ENG"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Maarouf/Desktop/ios/ENG/ENG/SDK/PurchaselyManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "103"
+                  endingLineNumber = "103"
+                  offsetFromSymbolStart = "292">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

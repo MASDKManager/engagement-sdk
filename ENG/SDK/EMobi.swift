@@ -278,18 +278,21 @@ public class EMobi: NSObject, PurchasesDelegate {
         sdkSettings.displayName = Constant.shared.facebookDisplayName
         sdkSettings.clientToken = Constant.shared.facebookClientToken
         print( tag + "Facebook sdk init")
-   }
+    }
      
-   private func configureMailchimp() {
+    private func configureMailchimp() {
        try? Mailchimp.initialize(token: Constant.shared.mailchimpKey, autoTagContacts: true, debugMode: true)
        
        print( tag + "Mailchimp sdk init")
         
-   }
+    }
 
+    private func distroyAds(){
+        AppLovinManager.shared.unloadAds()
+    }
+    
     public func registerMailchimpEmail(email: String) {
-       
-     
+        
         var contact: Contact = Contact(emailAddress: email)
       //  contact.marketingPermissions = [emailPermission, mailPermission, advertisingPermission]
       
@@ -314,9 +317,9 @@ public class EMobi: NSObject, PurchasesDelegate {
         print( tag + "Firebase logEvent sent")
     }
     
-   public func isSubscribedUser( )  -> Bool {
+    public func isSubscribedUser( )  -> Bool {
       return  isSubscribed
-   }
+    }
     
     public func setSubscribedUser(isSubscribed : Bool )   {
         self.isSubscribed = isSubscribed
@@ -339,6 +342,11 @@ public class EMobi: NSObject, PurchasesDelegate {
             }
         }
     }
+    
+    
+    public func restorePurchases() {
+        PurchaselyManager.shared.restoreAllProducts()
+    }
      
     public  func loadBannerAd(vc : UIViewController, bannerView: UIView  ) {
         if(isPremium || isSubscribed){
@@ -355,11 +363,7 @@ public class EMobi: NSObject, PurchasesDelegate {
         
         AppLovinManager.shared.showInterestialAd(onClose: onClose)
     }
-    
-    public func distroyAds(){
-        AppLovinManager.shared.unloadAds()
-    }
-    
+     
     func showPurchaselyPaywall(type: PaywallType = .paywall, completionSuccess: (() -> Void)? = nil, completionFailure: (() -> Void)? = nil) -> UIViewController? {
         if isPremium || isSubscribed {
             // Do something else here or just return nil if you don't need to show any paywall.

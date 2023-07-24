@@ -54,6 +54,9 @@ class ViewController: UIViewController {
              purchasedProductsLabel.topAnchor.constraint(equalTo: premUserLabel.bottomAnchor, constant: 20)
          ])
          
+         
+         EMobi.shared.restorePurchases()
+         
          // Call the logAnalyticsEvent function and update the eventLabel
          EMobi.shared.logAnalyticsEvent(name: "EventName", parameter: ["Parameter": "test"] );
      
