@@ -58,8 +58,8 @@ class ViewController: UIViewController {
          EMobi.shared.logAnalyticsEvent(name: "EventName", parameter: ["Parameter": "test"] );
      
          // Call the isActiveUser function and update the activeUserLabel
-         let isActive = EMobi.shared.isActiveUser()
-         activeUserLabel.text = "Is Active User: \(isActive)"
+         let isActive = EMobi.shared.isSubscribedUser()
+         activeUserLabel.text = "Is Subscribed User: \(isActive)"
          
          let isPremium = EMobi.shared.isPremiumUser()
          premUserLabel.text = "Is Premium User: \(isPremium)"

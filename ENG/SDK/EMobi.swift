@@ -21,8 +21,25 @@ import AppLovinSDK
 public class EMobi: NSObject, PurchasesDelegate {
    
     public static let shared = EMobi()
-    private var isSubscribed = false
-    private var isPremium = false 
+    
+    private var isSubscribed = false {
+        didSet {
+            if isSubscribed {
+                distroyAds()
+            }
+        }
+    }
+    
+    private var isPremium = false {
+        didSet {
+            if isPremium {
+                distroyAds()
+            }
+        }
+    }
+     
+    private var PurchasesIsConfigured = false
+    private var showATTonLaunch = false
     public weak var delegate: EMobiDelegate?
      
     private var adjustDelegateHandler: AdjustDelegateHandler?
@@ -35,10 +52,9 @@ public class EMobi: NSObject, PurchasesDelegate {
         print( tag + "EMobi SDK started.")
 
         Constant.shared.getValuesFromPlist()
-         
-        self.requestIDFA()
+          
         configureFirebaseAndFetchRemoteConfig()
-        checkPremiumUser()
+        checkUserSubscription()
             
         configureAdjust()
         configureRevenueCat()
@@ -102,11 +118,19 @@ public class EMobi: NSObject, PurchasesDelegate {
         PurchaselyManager.shared.onboardPaywallPlacementID = RemoteConfig.remoteConfig()["onboardPaywallPlacementID"].stringValue ?? ""
         PurchaselyManager.shared.premiumPaywallPlacementID = RemoteConfig.remoteConfig()["premiumPaywallPlacementID"].stringValue ?? ""
         PurchaselyManager.shared.showPurchaselyPaywall = RemoteConfig.remoteConfig()["showPurchaselyPaywall"].boolValue
+        
+        self.showATTonLaunch =  RemoteConfig.remoteConfig()["showATTonLaunch"].boolValue
+        
+        if self.showATTonLaunch {
+            self.requestIDFA(fromInside: true)
+        }
+        
         PurchaselyManager.shared.firebaseRemoteConfigLoaded = true
     }
  
-    private func checkPremiumUser(){
-        isPremium =  checkPremiumStatus() 
+    private func checkUserSubscription(){
+        isPremium =  checkPremiumStatus()
+        isSubscribed =  checkSubscriptionStatus()
     }
     
     private func configureOneSignal( launchOptions : [UIApplication.LaunchOptionsKey: Any]?  ) {
@@ -172,7 +196,12 @@ public class EMobi: NSObject, PurchasesDelegate {
 
     }
      
-    func requestIDFA() {
+    public func requestIDFA(fromInside: Bool = false) {
+        
+        if !fromInside && showATTonLaunch {
+            return
+        }
+            
         if #available(iOS 14.3, *) {
             // Check the ATT consent status.
         
@@ -193,8 +222,10 @@ public class EMobi: NSObject, PurchasesDelegate {
                         return
                     }
                     
-                    Purchases.shared.attribution.setAttributes(["ATTrackingManagerStatus": statusCase])
-                    Purchases.shared.attribution.enableAdServicesAttributionTokenCollection()
+                    if self.PurchasesIsConfigured {
+                        Purchases.shared.attribution.setAttributes(["ATTrackingManagerStatus": statusCase])
+                        Purchases.shared.attribution.enableAdServicesAttributionTokenCollection()
+                    }
                 }
             }
         }
@@ -213,7 +244,7 @@ public class EMobi: NSObject, PurchasesDelegate {
         }
         
     }
-    
+     
     private func configureAdjust() {
         print("Adjust initiate called")
         
@@ -255,26 +286,7 @@ public class EMobi: NSObject, PurchasesDelegate {
        print( tag + "Mailchimp sdk init")
         
    }
-    
-    func trackPurchaseEvent(purchaseToken: String, productID: String, transactionID: String) {
-        let event = ADJEvent(eventToken: Constant.shared.adjustSubscriptionToken)
-      
-        event?.addCallbackParameter("user_uuid", value: getUserID())
-        event?.addCallbackParameter("inAppPurchaseTime", value: "\(Date())")
-        event?.addCallbackParameter("inAppTransactionId", value: transactionID)
-        event?.addCallbackParameter("inAppProductId", value: productID)
-        
-        if let bundleIdentifier = Bundle.main.bundleIdentifier {
-            event?.addCallbackParameter("inAppPackageName", value: bundleIdentifier)
-        } else {
-            print("Unable to retrieve the bundle identifier.")
-        }
- 
-        Adjust.trackEvent(event)
-         
-        print( tag + "trackPurchaseEvent sent init")
-    }
-    
+
     public func registerMailchimpEmail(email: String) {
        
      
@@ -301,13 +313,21 @@ public class EMobi: NSObject, PurchasesDelegate {
         
         print( tag + "Firebase logEvent sent")
     }
-     
-    public func isActiveUser( )  -> Bool {
-       return  isSubscribed
+    
+   public func isSubscribedUser( )  -> Bool {
+      return  isSubscribed
+   }
+    
+    public func setSubscribedUser(isSubscribed : Bool )   {
+        self.isSubscribed = isSubscribed
     }
-     
+    
     public func isPremiumUser( )  -> Bool {
       return  isPremium
+    }
+    
+    public func setPremiumUser(isPremium : Bool )   {
+        self.isPremium = isPremium
     }
 
     public func getAllPurchasedProductIdentifiers(completion: @escaping (Set<String>?) -> Void) {
@@ -321,10 +341,18 @@ public class EMobi: NSObject, PurchasesDelegate {
     }
      
     public  func loadBannerAd(vc : UIViewController, bannerView: UIView  ) {
+        if(isPremium || isSubscribed){
+            return
+        }
+        
         AppLovinManager.shared.loadBannerAd(vc: vc, adViewContainer: bannerView )
     }
     
-    public func showInterestialAd(onClose: @escaping (Bool) -> ()) { 
+    public func showInterestialAd(onClose: @escaping (Bool) -> ()) {
+        if(isPremium || isSubscribed){
+            return
+        }
+        
         AppLovinManager.shared.showInterestialAd(onClose: onClose)
     }
     
@@ -332,8 +360,13 @@ public class EMobi: NSObject, PurchasesDelegate {
         AppLovinManager.shared.unloadAds()
     }
     
-    func showPurchaselyPaywall(type: PaywallType = .paywall, completionSuccess: (() -> ())?, completionFailure: (() -> ())?)-> UIViewController? { 
-        PurchaselyManager.shared.showPurchaselyPaywall(completionSuccess: completionSuccess, completionFailure: completionFailure)
+    func showPurchaselyPaywall(type: PaywallType = .paywall, completionSuccess: (() -> Void)? = nil, completionFailure: (() -> Void)? = nil) -> UIViewController? {
+        if isPremium || isSubscribed {
+            // Do something else here or just return nil if you don't need to show any paywall.
+            return nil
+        }
+
+        return PurchaselyManager.shared.showPurchaselyPaywall(completionSuccess: completionSuccess, completionFailure: completionFailure)
     }
  
 }

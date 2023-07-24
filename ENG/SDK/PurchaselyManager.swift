@@ -62,19 +62,19 @@ class PurchaselyManager {
             switch result {
             case .purchased:
                 print("User purchased: \(plan?.name ?? "")")
-              //  RevenueCatManager.shared.isUserPremium = true
-              //  UserDefaults.standard.set(RevenueCatManager.shared.isUserPremium, forKey: "isUserPremium")
-              //  AdjustManager.shared.trackPurchaseEvent(eventToken: Constant.shared.purchaseToken, productID: plan?.appleProductId ?? "", transaction: nil)
- 
+                EMobi.shared.setSubscribedUser(isSubscribed: true)
+                saveSubscriptionStatus(isSubscribed: EMobi.shared.isSubscribedUser())
+                AdjustManager.shared.trackPurchaseEvent(purchaseToken: Constant.shared.purchaseToken, productID: plan?.appleProductId ?? "", transactionID: "")
+                 
                 guard let completionSuccess else { return }
                 completionSuccess()
                 break
             case .restored:
-                print("User restored: \(plan?.name ?? "")")
-               // RevenueCatManager.shared.isUserPremium = true
-               // UserDefaults.standard.set(RevenueCatManager.shared.isUserPremium, forKey: "isUserPremium")
-               // AdjustManager.shared.trackRestoreEvent(eventToken: Constant.shared.restoreToken, productID: plan?.appleProductId ?? "")
- 
+                print("User restored: \(plan?.name ?? "")")  
+                EMobi.shared.setSubscribedUser(isSubscribed: true)
+                saveSubscriptionStatus(isSubscribed: EMobi.shared.isSubscribedUser())
+                AdjustManager.shared.trackPurchaseEvent(purchaseToken: Constant.shared.restoreToken, productID: plan?.appleProductId ?? "", transactionID: "")
+              
                 guard let completionSuccess else { return }
                 completionSuccess()
                 break

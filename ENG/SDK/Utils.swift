@@ -26,14 +26,25 @@ func logEvent(eventName: String, parameters: [String: Any]) {
 
 func savePremiumStatus(isPremium: Bool) {
     let defaults = UserDefaults.standard
-    defaults.set(isPremium, forKey: "IsPremium")
+    defaults.set(isPremium, forKey: "IsPremiumUser")
 }
 
 func checkPremiumStatus() -> Bool {
     let defaults = UserDefaults.standard
-    return defaults.bool(forKey: "IsPremium")
+    return defaults.bool(forKey: "IsPremiumUser")
 }
 
+
+func saveSubscriptionStatus(isSubscribed: Bool) {
+    let defaults = UserDefaults.standard
+    defaults.set(isSubscribed, forKey: "IsSubscribedUser")
+}
+
+func checkSubscriptionStatus() -> Bool {
+    let defaults = UserDefaults.standard
+    return defaults.bool(forKey: "IsSubscribedUser")
+}
+ 
 enum BannerPosition {
     case top
     case bottom

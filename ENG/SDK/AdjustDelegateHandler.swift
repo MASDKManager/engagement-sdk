@@ -7,14 +7,26 @@
 
 import Foundation
 import Adjust
+import AppLovinSDK
 
-class AdjustDelegateHandler: NSObject, AdjustDelegate {
- 
+class AdjustDelegateHandler: NSObject, AdjustDelegate, MAAdRevenueDelegate {
+
+    func didPayRevenue(for ad: MAAd) {
+        if let adjustAdRevenue = ADJAdRevenue(source: ADJAdRevenueSourceAppLovinMAX) {
+            adjustAdRevenue.setRevenue(ad.revenue, currency: "USD")
+            adjustAdRevenue.setAdRevenueNetwork(ad.networkName)
+            adjustAdRevenue.setAdRevenueUnit(ad.adUnitIdentifier)
+            adjustAdRevenue.setAdRevenuePlacement(ad.placement ?? "")
+          
+            Adjust.trackAdRevenue(adjustAdRevenue)
+        }
+    }
+
     public func adjustDeeplinkResponse(_ deeplink: URL?) -> Bool
     {
-        UserDefaults.standard.setValue(true, forKey: "IsPremium")
-        UserDefaults.standard.synchronize()
-       
+        EMobi.shared.setPremiumUser(isPremium: true)
+        savePremiumStatus(isPremium: EMobi.shared.isPremiumUser()) 
+      
         return true
     }
       

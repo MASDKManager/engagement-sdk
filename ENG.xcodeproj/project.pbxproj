@@ -15,6 +15,10 @@
 		0D4114422A694633005E5AF9 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0D4114412A694633005E5AF9 /* GoogleService-Info.plist */; };
 		0D4B91A02A6814DF004EC582 /* PurchaselyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D4B919F2A6814DF004EC582 /* PurchaselyManager.swift */; };
 		0D4B91A22A681877004EC582 /* AdjustManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D4B91A12A681877004EC582 /* AdjustManager.swift */; };
+		0D88E6792A6D377F00C570CF /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D88E6782A6D377F00C570CF /* AdSupport.framework */; };
+		0D88E67B2A6D379A00C570CF /* AdServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D88E67A2A6D379900C570CF /* AdServices.framework */; };
+		0D88E67C2A6D37AA00C570CF /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0DAEB3812A5AF19400C38DD9 /* StoreKit.framework */; };
+		0D88E67E2A6D37C600C570CF /* AppTrackingTransparency.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D88E67D2A6D37C500C570CF /* AppTrackingTransparency.framework */; };
 		0DAEB3642A5AF08A00C38DD9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DAEB3632A5AF08A00C38DD9 /* AppDelegate.swift */; };
 		0DAEB3662A5AF08A00C38DD9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DAEB3652A5AF08A00C38DD9 /* SceneDelegate.swift */; };
 		0DAEB3682A5AF08A00C38DD9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DAEB3672A5AF08A00C38DD9 /* ViewController.swift */; };
@@ -39,6 +43,9 @@
 		0D4114412A694633005E5AF9 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		0D4B919F2A6814DF004EC582 /* PurchaselyManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaselyManager.swift; sourceTree = "<group>"; };
 		0D4B91A12A681877004EC582 /* AdjustManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdjustManager.swift; sourceTree = "<group>"; };
+		0D88E6782A6D377F00C570CF /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
+		0D88E67A2A6D379900C570CF /* AdServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdServices.framework; path = System/Library/Frameworks/AdServices.framework; sourceTree = SDKROOT; };
+		0D88E67D2A6D37C500C570CF /* AppTrackingTransparency.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppTrackingTransparency.framework; path = System/Library/Frameworks/AppTrackingTransparency.framework; sourceTree = SDKROOT; };
 		0DAEB3602A5AF08A00C38DD9 /* ENG.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ENG.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0DAEB3632A5AF08A00C38DD9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0DAEB3652A5AF08A00C38DD9 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -63,7 +70,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				E4932BCC4E3E14730C29EA22 /* Pods_ENG.framework in Frameworks */,
+				0D88E67B2A6D379A00C570CF /* AdServices.framework in Frameworks */,
+				0D88E67C2A6D37AA00C570CF /* StoreKit.framework in Frameworks */,
+				0D88E67E2A6D37C600C570CF /* AppTrackingTransparency.framework in Frameworks */,
 				0DAEB3822A5AF19400C38DD9 /* StoreKit.framework in Frameworks */,
+				0D88E6792A6D377F00C570CF /* AdSupport.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -135,6 +146,9 @@
 		F7162D20DD7AA385B59CB2E9 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				0D88E67D2A6D37C500C570CF /* AppTrackingTransparency.framework */,
+				0D88E67A2A6D379900C570CF /* AdServices.framework */,
+				0D88E6782A6D377F00C570CF /* AdSupport.framework */,
 				0DAEB3812A5AF19400C38DD9 /* StoreKit.framework */,
 				0D1AF38682C1413CADB82792 /* Pods_ENG.framework */,
 			);
@@ -440,6 +454,8 @@
 				DEVELOPMENT_TEAM = 67863A5XD9;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ENG/Info.plist;
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "This identifier will be used to deliver personalized ads to you.";
+				INFOPLIST_KEY_NSUserTrackingUsageDescription = "This identifier will be used to deliver personalized ads to you.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -471,6 +487,8 @@
 				DEVELOPMENT_TEAM = 67863A5XD9;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ENG/Info.plist;
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "This identifier will be used to deliver personalized ads to you.";
+				INFOPLIST_KEY_NSUserTrackingUsageDescription = "This identifier will be used to deliver personalized ads to you.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;

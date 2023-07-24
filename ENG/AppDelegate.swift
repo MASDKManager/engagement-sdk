@@ -21,6 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, EMobiDelegate {
         if let plistData = NSDictionary(contentsOf: url) {
             EMobi.shared.start(withConstantPlist: plistData, launchOptions: launchOptions)
             EMobi.shared.delegate = self
+            EMobi.shared.requestIDFA()
         } else {
             print("Unable to read Constants.plist file.")
         }
