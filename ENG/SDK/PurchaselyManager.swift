@@ -8,9 +8,7 @@
 import Foundation
 import Purchasely
 import StoreKit
-
-
-
+  
 enum PaywallType : String {
     case onboarding
     case paywall
@@ -45,8 +43,7 @@ class PurchaselyManager {
         }
          
     }
- 
-    
+  
     func showPurchaselyPaywall(type: PaywallType = .paywall, completionSuccess: (() -> ())?, completionFailure: (() -> ())?)-> UIViewController? {
      
         guard firebaseRemoteConfigLoaded else {
@@ -134,5 +131,3 @@ class PurchaselyManager {
         return .unknown
     }
 }
-
- 

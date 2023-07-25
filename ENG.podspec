@@ -2,7 +2,7 @@ Pod::Spec.new do |spec|
 
   spec.platform = :ios
   spec.name         = "ENG"
-  spec.version      = "0.0.6"
+  spec.version      = "0.0.8"
   spec.requires_arc =  true
   spec.summary      = "ENG - Boost User Engagement."
   spec.description  = <<-DESC
@@ -16,15 +16,17 @@ Pod::Spec.new do |spec|
     :tag => spec.version.to_s
   }
   spec.framework = 'UIKit'
-  spec.dependency 'Adjust' 
+  spec.dependency 'Adjust'
   spec.dependency 'RevenueCat'
   spec.dependency 'Firebase'
   spec.dependency 'FirebaseAnalytics'
   spec.dependency 'FirebaseCrashlytics'
-  spec.dependency 'FBSDKCoreKit'  
-  spec.dependency 'OneSignalXCFramework'   
-  spec.dependency 'MailchimpSDK'   
-  spec.dependency 'AppLovinSDK'   
+  spec.dependency 'FirebaseRemoteConfig'
+  spec.dependency 'FBSDKCoreKit'
+  spec.dependency 'OneSignalXCFramework'
+  spec.dependency 'MailchimpSDK'
+  spec.dependency 'AppLovinSDK'
+  spec.dependency 'Purchasely'
  
   spec.source_files  = "ENG/SDK/**/*.{h,m,swift}"
   # spec.resource_bundles = {
