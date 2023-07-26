@@ -9,7 +9,7 @@ import Foundation
 import Purchasely
 import StoreKit
   
-enum PaywallType : String {
+public enum PaywallType : String {
     case onboarding
     case paywall
 }

@@ -364,7 +364,7 @@ public class EMobi: NSObject, PurchasesDelegate {
         AppLovinManager.shared.showInterestialAd(onClose: onClose)
     }
      
-    func showPurchaselyPaywall(type: PaywallType = .paywall, completionSuccess: (() -> Void)? = nil, completionFailure: (() -> Void)? = nil) -> UIViewController? {
+    public func showPurchaselyPaywall(type: PaywallType = .paywall, completionSuccess: (() -> Void)? = nil, completionFailure: (() -> Void)? = nil) -> UIViewController? {
         if isPremium || isSubscribed {
             // Do something else here or just return nil if you don't need to show any paywall.
             return nil
