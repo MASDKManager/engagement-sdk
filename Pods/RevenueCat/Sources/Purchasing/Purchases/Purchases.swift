@@ -273,17 +273,12 @@ public typealias StartPurchaseBlock = (@escaping PurchaseCompletedBlock) -> Void
         let receiptRefreshRequestFactory = ReceiptRefreshRequestFactory()
         let fetcher = StoreKitRequestFetcher(requestFactory: receiptRefreshRequestFactory,
                                              operationDispatcher: operationDispatcher)
-        let systemInfo: SystemInfo
-        do {
-            systemInfo = try SystemInfo(platformInfo: platformInfo,
-                                        finishTransactions: !observerMode,
-                                        operationDispatcher: operationDispatcher,
-                                        storeKit2Setting: storeKit2Setting,
-                                        responseVerificationMode: responseVerificationMode,
-                                        dangerousSettings: dangerousSettings)
-        } catch {
-            fatalError(error.localizedDescription)
-        }
+        let systemInfo = SystemInfo(platformInfo: platformInfo,
+                                    finishTransactions: !observerMode,
+                                    operationDispatcher: operationDispatcher,
+                                    storeKit2Setting: storeKit2Setting,
+                                    responseVerificationMode: responseVerificationMode,
+                                    dangerousSettings: dangerousSettings)
 
         let receiptFetcher = ReceiptFetcher(requestFetcher: fetcher, systemInfo: systemInfo)
         let eTagManager = ETagManager()
@@ -755,9 +750,7 @@ extension Purchases {
         self.identityManager.switchUser(to: newAppUserID)
 
         self.systemInfo.isApplicationBackgrounded { isBackgrounded in
-            self.offeringsManager.updateOfferingsCache(appUserID: self.appUserID,
-                                                       isAppBackgrounded: isBackgrounded,
-                                                       completion: nil)
+            self.updateOfferingsCache(isAppBackgrounded: isBackgrounded)
         }
     }
 
@@ -830,6 +823,12 @@ public extension Purchases {
         return try await purchaseAsync(package: package)
     }
 
+    #if !ENABLE_CUSTOM_ENTITLEMENT_COMPUTATION
+
+    @objc func invalidateCustomerInfoCache() {
+        self.customerInfoManager.clearCustomerInfoCache(forAppUserID: appUserID)
+    }
+
     @objc func syncPurchases(completion: ((CustomerInfo?, PublicError?) -> Void)?) {
         self.purchasesOrchestrator.syncPurchases { @Sendable in
             completion?($0.value, $0.error?.asPublicError)
@@ -851,8 +850,6 @@ public extension Purchases {
     func restorePurchases() async throws -> CustomerInfo {
         return try await restorePurchasesAsync()
     }
-
-    #if !ENABLE_CUSTOM_ENTITLEMENT_COMPUTATION
 
     @available(iOS 12.2, macOS 10.14.4, watchOS 6.2, macCatalyst 13.0, tvOS 12.2, *)
     @objc(purchaseProduct:withPromotionalOffer:completion:)
@@ -915,10 +912,6 @@ public extension Purchases {
         self.paymentQueueWrapper.paymentQueueWrapperType.showPriceConsentIfNeeded()
     }
 #endif
-
-    @objc func invalidateCustomerInfoCache() {
-        self.customerInfoManager.clearCustomerInfoCache(forAppUserID: appUserID)
-    }
 
 #if os(iOS)
 
@@ -1558,9 +1551,7 @@ private extension Purchases {
         }
 
         if self.deviceCache.isOfferingsCacheStale(isAppBackgrounded: isAppBackgrounded) {
-            self.offeringsManager.updateOfferingsCache(appUserID: self.appUserID,
-                                                       isAppBackgrounded: isAppBackgrounded,
-                                                       completion: nil)
+            self.updateOfferingsCache(isAppBackgrounded: isAppBackgrounded)
         }
     }
 
@@ -1577,27 +1568,24 @@ private extension Purchases {
     ) {
         Logger.verbose(Strings.purchase.updating_all_caches)
 
-        self.offeringsManager.updateOfferingsCache(appUserID: self.appUserID,
-                                                   isAppBackgrounded: isAppBackgrounded,
-                                                   completion: nil)
-
-        guard !self.systemInfo.dangerousSettings.customEntitlementComputation else {
+        if self.systemInfo.dangerousSettings.customEntitlementComputation {
             if let completion = completion {
                 let error = NewErrorUtils.featureNotAvailableInCustomEntitlementsComputationModeError()
                 completion(.failure(error.asPublicError))
             }
-            return
+        } else {
+            self.customerInfoManager.fetchAndCacheCustomerInfo(appUserID: self.appUserID,
+                                                               isAppBackgrounded: isAppBackgrounded) { @Sendable in
+                completion?($0.mapError { $0.asPublicError })
+            }
+
+            self.offlineEntitlementsManager.updateProductsEntitlementsCacheIfStale(
+                isAppBackgrounded: isAppBackgrounded,
+                completion: nil
+            )
         }
 
-        self.customerInfoManager.fetchAndCacheCustomerInfo(appUserID: self.appUserID,
-                                                           isAppBackgrounded: isAppBackgrounded) { @Sendable in
-            completion?($0.mapError { $0.asPublicError })
-        }
-
-        self.offlineEntitlementsManager.updateProductsEntitlementsCacheIfStale(
-            isAppBackgrounded: isAppBackgrounded,
-            completion: nil
-        )
+        self.updateOfferingsCache(isAppBackgrounded: isAppBackgrounded)
     }
 
     // Used when delegate is being set
@@ -1607,6 +1595,12 @@ private extension Purchases {
         }
 
         self.delegate?.purchases?(self, receivedUpdated: info)
+    }
+
+    private func updateOfferingsCache(isAppBackgrounded: Bool) {
+        self.offeringsManager.updateOfferingsCache(appUserID: self.appUserID,
+                                                   isAppBackgrounded: isAppBackgrounded,
+                                                   completion: nil)
     }
 
 }
