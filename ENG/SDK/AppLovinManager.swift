@@ -39,7 +39,7 @@ class AppLovinManager : NSObject {
 extension AppLovinManager {
     
     func initializeAppLovin() {
-        
+ 
 #if DEBUG
         print("Not App Store build")
         let gpsadid = ASIdentifierManager.shared().advertisingIdentifier.uuidString

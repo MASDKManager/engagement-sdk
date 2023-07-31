@@ -135,7 +135,8 @@ public class EMobi: NSObject, PurchasesDelegate {
     
     private func configureOneSignal( launchOptions : [UIApplication.LaunchOptionsKey: Any]?  ) {
         
-        guard !Constant.shared.oneSignalKey.isEmpty else {
+        guard !Constant.shared.oneSignalKey.isEmpty else { 
+            print( "oneSignalKey sdk key are empty")
             return
         }
          
@@ -178,7 +179,7 @@ public class EMobi: NSObject, PurchasesDelegate {
             Purchases.shared.attribution.setAdjustID(adjustId)
         }
         
-        Purchases.shared.attribution.setOnesignalID(Constant.shared.adjustEventToken)
+        Purchases.shared.attribution.setOnesignalID(Constant.shared.oneSignalKey)
          
         Purchases.shared.delegate = self
 
@@ -273,6 +274,13 @@ public class EMobi: NSObject, PurchasesDelegate {
     }
     
     private func configureFacebook() {
+      
+        if Constant.shared.facebookAppID.isEmpty || Constant.shared.facebookDisplayName.isEmpty ||  Constant.shared.facebookClientToken.isEmpty
+        {
+            print( "Facebook sdk keys are empty")
+            return
+        }
+        
         let sdkSettings = FBSDKCoreKit.Settings()
         sdkSettings.appID = Constant.shared.facebookAppID
         sdkSettings.displayName = Constant.shared.facebookDisplayName
@@ -281,6 +289,13 @@ public class EMobi: NSObject, PurchasesDelegate {
     }
      
     private func configureMailchimp() {
+      
+        if Constant.shared.mailchimpKey.isEmpty
+        {
+            print( "Mailchimp sdk key are empty")
+            return
+        }
+        
        try? Mailchimp.initialize(token: Constant.shared.mailchimpKey, autoTagContacts: true, debugMode: true)
        
        print( tag + "Mailchimp sdk init")
@@ -292,6 +307,11 @@ public class EMobi: NSObject, PurchasesDelegate {
     }
     
     public func registerMailchimpEmail(email: String) {
+        if Constant.shared.mailchimpKey.isEmpty
+        {
+            print( "Mailchimp sdk key are empty")
+            return
+        }
         
         var contact: Contact = Contact(emailAddress: email)
       //  contact.marketingPermissions = [emailPermission, mailPermission, advertisingPermission]
