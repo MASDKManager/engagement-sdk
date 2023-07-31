@@ -31,6 +31,8 @@ class AppLovinManager : NSObject {
     
     private var adView: MAAdView!
     
+    private var keyExists = true
+    
     override init() {
         
     }
@@ -39,7 +41,14 @@ class AppLovinManager : NSObject {
 extension AppLovinManager {
     
     func initializeAppLovin() {
- 
+  
+        if let value = Bundle.main.infoDictionary?["AppLovinSdkKey"] as? String, !value.isEmpty {
+            keyExists =  true
+        } else {
+            keyExists = false
+            return
+        }
+         
 #if DEBUG
         print("Not App Store build")
         let gpsadid = ASIdentifierManager.shared().advertisingIdentifier.uuidString
@@ -64,6 +73,11 @@ extension AppLovinManager {
     }
     
     func loadBannerAd(vc: UIViewController, adViewContainer: UIView) {
+        
+        if !keyExists{
+            return
+        }
+            
         AppLovinManager.shared.adView = MAAdView(adUnitIdentifier: AdType.banner.rawValue)
         AppLovinManager.shared.adView.delegate = self
          
@@ -89,6 +103,11 @@ extension AppLovinManager {
     }
     
     func showInterestialAd(onClose : @escaping (Bool) -> ()) {
+        
+        if !keyExists{
+            return
+        }
+            
         if (AppLovinManager.shared.interestialAdView?.isReady ?? false) {
             AppLovinManager.shared.interestialAdView?.show()
             AppLovinManager.shared.onClose = onClose
@@ -99,6 +118,10 @@ extension AppLovinManager {
     }
     
     func unloadAds() {
+        if !keyExists{
+            return
+        }
+          
         // 1. Remove the loaded ad
         AppLovinManager.shared.adView?.removeFromSuperview()
         AppLovinManager.shared.adView = nil 
