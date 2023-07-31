@@ -53,8 +53,7 @@ class ViewController: UIViewController {
              purchasedProductsLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
              purchasedProductsLabel.topAnchor.constraint(equalTo: premUserLabel.bottomAnchor, constant: 20)
          ])
-         
-         
+          
          EMobi.shared.restorePurchases()
          
          // Call the logAnalyticsEvent function and update the eventLabel
@@ -66,8 +65,7 @@ class ViewController: UIViewController {
          
          let isPremium = EMobi.shared.isPremiumUser()
          premUserLabel.text = "Is Premium User: \(isPremium)"
-          
-         
+           
          EMobi.shared.getAllPurchasedProductIdentifiers { ids in
              if let ids = ids {
                  self.purchasedProductsLabel.text = "Purchased Products: \(ids)"

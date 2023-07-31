@@ -142,8 +142,8 @@
             filePath = "ENG/SDK/EMobi.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "179"
-            endingLineNumber = "179"
+            startingLineNumber = "177"
+            endingLineNumber = "177"
             landmarkName = "configureRevenueCat()"
             landmarkType = "7">
             <Locations>
@@ -222,8 +222,8 @@
             filePath = "ENG/SDK/EMobi.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "202"
-            endingLineNumber = "202"
+            startingLineNumber = "200"
+            endingLineNumber = "200"
             landmarkName = "requestIDFA(fromInside:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -334,8 +334,8 @@
             filePath = "ENG/SDK/AppLovinManager.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "77"
-            endingLineNumber = "77"
+            startingLineNumber = "79"
+            endingLineNumber = "79"
             landmarkName = "loadBannerAd(vc:adViewContainer:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -350,58 +350,10 @@
             filePath = "ENG/SDK/AppLovinManager.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "121"
-            endingLineNumber = "121"
+            startingLineNumber = "123"
+            endingLineNumber = "123"
             landmarkName = "unloadAds()"
             landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "DD27C0F1-555D-4E04-809C-3BA8A1571B6A"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "ENG/ViewController.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "72"
-            endingLineNumber = "72"
-            landmarkName = "viewDidLoad()"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "DD27C0F1-555D-4E04-809C-3BA8A1571B6A - feaf3079cf55c9d5"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Swift.Optional&lt;Swift.Set&lt;Swift.String&gt;&gt;) -&gt; () in ENG.ViewController.viewDidLoad() -&gt; ()"
-                  moduleName = "ENG"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/Maarouf/Documents/Engagement%20SDK/ios/ENG/ENG/ViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "72"
-                  endingLineNumber = "72"
-                  offsetFromSymbolStart = "88">
-               </Location>
-               <Location
-                  uuid = "DD27C0F1-555D-4E04-809C-3BA8A1571B6A - feaf3079cf55c9d5"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Swift.Optional&lt;Swift.Set&lt;Swift.String&gt;&gt;) -&gt; () in ENG.ViewController.viewDidLoad() -&gt; ()"
-                  moduleName = "ENG"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/Maarouf/Documents/Engagement%20SDK/ios/ENG/ENG/ViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "72"
-                  endingLineNumber = "72"
-                  offsetFromSymbolStart = "124">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -414,8 +366,8 @@
             filePath = "ENG/SDK/AppLovinManager.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "63"
-            endingLineNumber = "63"
+            startingLineNumber = "65"
+            endingLineNumber = "65"
             landmarkName = "initializeAppLovin()"
             landmarkType = "7">
          </BreakpointContent>
@@ -430,10 +382,42 @@
             filePath = "ENG/SDK/AppLovinManager.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "144"
-            endingLineNumber = "144"
+            startingLineNumber = "146"
+            endingLineNumber = "146"
             landmarkName = "didFailToLoadAd(forAdUnitIdentifier:withError:)"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "4B10CE94-78E5-4A7C-B715-2B7D313D93DB - 2a5396842d2cf5cf"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "ENG.AppLovinManager.didFailToLoadAd(forAdUnitIdentifier: Swift.String, withError: __C.MAError) -&gt; ()"
+                  moduleName = "ENG"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Maarouf/Documents/Engagement%20SDK/ios/ENG/ENG/SDK/AppLovinManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "144"
+                  endingLineNumber = "144"
+                  offsetFromSymbolStart = "684">
+               </Location>
+               <Location
+                  uuid = "4B10CE94-78E5-4A7C-B715-2B7D313D93DB - 2a5396842d2cf20d"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "ENG.AppLovinManager.didFailToLoadAd(forAdUnitIdentifier: Swift.String, withError: __C.MAError) -&gt; ()"
+                  moduleName = "ENG"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Maarouf/Documents/Engagement%20SDK/ios/ENG/ENG/SDK/AppLovinManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "146"
+                  endingLineNumber = "146"
+                  offsetFromSymbolStart = "872">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -446,10 +430,58 @@
             filePath = "ENG/SDK/AppLovinManager.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "147"
+            endingLineNumber = "147"
+            landmarkName = "didFailToLoadAd(forAdUnitIdentifier:withError:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "5FE890FD-8419-412C-9836-6A7A110AF7C9"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ENG/SDK/AppLovinManager.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
             startingLineNumber = "145"
             endingLineNumber = "145"
             landmarkName = "didFailToLoadAd(forAdUnitIdentifier:withError:)"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "5FE890FD-8419-412C-9836-6A7A110AF7C9 - 2a5396842d2cf5cf"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "ENG.AppLovinManager.didFailToLoadAd(forAdUnitIdentifier: Swift.String, withError: __C.MAError) -&gt; ()"
+                  moduleName = "ENG"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Maarouf/Documents/Engagement%20SDK/ios/ENG/ENG/SDK/AppLovinManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "144"
+                  endingLineNumber = "144"
+                  offsetFromSymbolStart = "684">
+               </Location>
+               <Location
+                  uuid = "5FE890FD-8419-412C-9836-6A7A110AF7C9 - 2a5396842d2cf20d"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "ENG.AppLovinManager.didFailToLoadAd(forAdUnitIdentifier: Swift.String, withError: __C.MAError) -&gt; ()"
+                  moduleName = "ENG"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Maarouf/Documents/Engagement%20SDK/ios/ENG/ENG/SDK/AppLovinManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "146"
+                  endingLineNumber = "146"
+                  offsetFromSymbolStart = "872">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

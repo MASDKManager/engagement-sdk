@@ -14,6 +14,8 @@ final class Constant {
     var facebookClientToken = String()
     var mailchimpKey = String()
     var oneSignalKey = String()
+    var interestialKey = String()
+    var bannerKey = String()
 
     func getValuesFromPlist() {
         if let plistPath = Bundle.main.path(forResource: "Constants", ofType: "plist"),
@@ -50,13 +52,22 @@ final class Constant {
             }
             self.restoreToken = restoreTokenTemp
             
+            guard let interestialKeyTemp = plist["interestialKey"] as? String  else {
+               fatalError("interestial Key not exist in Constants.plist")
+            }
+            self.interestialKey = interestialKeyTemp
+
+            guard let bannerKeyTemp = plist["bannerKey"] as? String  else {
+               fatalError("banner Key not exist in Constants.plist")
+            }
+            self.bannerKey = bannerKeyTemp
+
             self.facebookAppID = plist["FacebookAppID"] as? String ?? ""
             self.facebookDisplayName = plist["FacebookDisplayName"] as? String ?? ""
             self.facebookClientToken = plist["FacebookClientToken"] as? String ?? ""
             self.mailchimpKey = plist["MailchimpKey"] as? String  ?? ""
             self.oneSignalKey = plist["OneSignalKey"] as? String  ?? ""
-        
-             
+         
         }
     }
 }

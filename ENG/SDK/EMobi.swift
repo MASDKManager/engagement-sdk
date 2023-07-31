@@ -65,8 +65,7 @@ public class EMobi: NSObject, PurchasesDelegate {
         PurchaselyManager.shared.initializePurchasely()
         
     }
-   
-
+    
     func configureFirebaseAndFetchRemoteConfig() {
         // Step 1: Configure FirebaseApp (if not already configured)
         if FirebaseApp.app() == nil {
@@ -160,8 +159,7 @@ public class EMobi: NSObject, PurchasesDelegate {
         }
          
     }
-  
-    
+   
     private func configureRevenueCat() {
         let appUserID = getUserID()
      

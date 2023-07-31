@@ -2,7 +2,7 @@ Pod::Spec.new do |spec|
 
   spec.platform = :ios
   spec.name         = "ENG"
-  spec.version      = "0.0.9"
+  spec.version      = "0.1"
   spec.requires_arc =  true
   spec.summary      = "ENG - Boost User Engagement."
   spec.description  = <<-DESC
