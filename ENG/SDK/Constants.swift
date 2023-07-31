@@ -14,7 +14,7 @@ final class Constant {
     var facebookClientToken = String()
     var mailchimpKey = String()
     var oneSignalKey = String()
-    var interestialKey = String()
+    var interstitialKey = String()
     var bannerKey = String()
 
     func getValuesFromPlist() {
@@ -52,10 +52,10 @@ final class Constant {
             }
             self.restoreToken = restoreTokenTemp
             
-            guard let interestialKeyTemp = plist["interestialKey"] as? String  else {
+            guard let interstitialKeyKeyTemp = plist["interstitialKey"] as? String  else {
                fatalError("interestial Key not exist in Constants.plist")
             }
-            self.interestialKey = interestialKeyTemp
+            self.interstitialKey = interstitialKeyKeyTemp
 
             guard let bannerKeyTemp = plist["bannerKey"] as? String  else {
                fatalError("banner Key not exist in Constants.plist")
