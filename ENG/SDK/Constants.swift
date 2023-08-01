@@ -53,7 +53,7 @@ final class Constant {
             self.restoreToken = restoreTokenTemp
             
             guard let interstitialKeyKeyTemp = plist["interstitialKey"] as? String  else {
-               fatalError("interestial Key not exist in Constants.plist")
+               fatalError("interstitial Key not exist in Constants.plist")
             }
             self.interstitialKey = interstitialKeyKeyTemp
 
