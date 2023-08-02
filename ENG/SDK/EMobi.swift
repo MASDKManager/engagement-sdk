@@ -362,10 +362,16 @@ public class EMobi: NSObject, PurchasesDelegate {
     }
     
     
-    public func restorePurchases() {
-        PurchaselyManager.shared.restoreAllProducts()
+    public func restorePurchases(success: @escaping () -> Void, failure: @escaping (Error) -> Void) {
+        PurchaselyManager.shared.restoreAllProducts(success: {
+            // Reload content and display a success / thank you message to the user
+            success() // Call the success callback
+        }, failure: { error in
+            // Display error
+            failure(error) // Call the failure callback and pass the error
+        })
     }
-     
+
     public  func loadBannerAd(vc : UIViewController, bannerView: UIView  ) {
         if(isPremium || isSubscribed){
             return

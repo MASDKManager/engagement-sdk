@@ -54,7 +54,13 @@ class ViewController: UIViewController {
              purchasedProductsLabel.topAnchor.constraint(equalTo: premUserLabel.bottomAnchor, constant: 20)
          ])
           
-         EMobi.shared.restorePurchases()
+         EMobi.shared.restorePurchases(success: {
+             // Success callback: Reload content and display a success / thank you message to the user
+             print("Products successfully restored!")
+         }, failure: { error in
+             // Failure callback: Display error
+             print("Error restoring purchases: \(error.localizedDescription)")
+         })
          
          // Call the logAnalyticsEvent function and update the eventLabel
          EMobi.shared.logAnalyticsEvent(name: "EventName", parameter: ["Parameter": "test"] );

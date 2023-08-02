@@ -95,11 +95,13 @@ class PurchaselyManager {
         
     }
     
-    func restoreAllProducts() {
-        
+    func restoreAllProducts(success: @escaping () -> Void, failure: @escaping (Error) -> Void) {
+ 
         Purchasely.restoreAllProducts(success: {
             // Reload content and display a success / thank you message to user
+            success()
         }, failure: { (error) in
+            failure(error) 
             // Display error
         })
         
