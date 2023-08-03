@@ -103,23 +103,23 @@ class ViewController: UIViewController {
          
          EMobi.shared.registerMailchimpEmail(email: "test@email.com")
  
-         DispatchQueue.main.asyncAfter(deadline: .now() + 3333) {
+         DispatchQueue.main.asyncAfter(deadline: .now() + 10) {
              
              // Call the showPurchaselyPaywall function
              if let paywallViewController = EMobi.shared.showPurchaselyPaywall(type: .onboarding, completionSuccess: {
                  // This block is executed when the user completes a successful purchase or restore
                  // Present the premium content or any other view controller you want to show after purchase or restore
-             
+                 print("Purchase Success")
+                 let isActive = EMobi.shared.isSubscribedUser()
+                 self.activeUserLabel.text = "Is Subscribed User: \(isActive)"
+                 
              }, completionFailure: {
                  // This block is executed when the user cancels the purchase
                  // Handle the cancellation behavior or show any relevant message
-                 let alert = UIAlertController(title: "Purchase Cancelled", message: "You have cancelled the purchase.", preferredStyle: .alert)
-                 alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-                 self.present(alert, animated: true, completion: nil)
+                 print("Purchase Cancelled")
              }) {
                  // If the paywallViewController is not nil, it means the paywall presentation was successful
                  // You can present the paywallViewController in your desired way
-                 
                  paywallViewController.modalPresentationStyle = .fullScreen
                  self.present(paywallViewController, animated: true, completion: nil)
              }

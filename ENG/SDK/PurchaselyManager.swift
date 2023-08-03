@@ -66,8 +66,7 @@ class PurchaselyManager {
                 EMobi.shared.setSubscribedUser(isSubscribed: true)
                 saveSubscriptionStatus(isSubscribed: EMobi.shared.isSubscribedUser())
                 AdjustManager.shared.trackPurchaseEvent(purchaseToken: Constant.shared.purchaseToken, productID: plan?.appleProductId ?? "", transactionID: "")
-                 
-               
+                  
                 guard let completionSuccess else { return }
                 completionSuccess()
                 break
