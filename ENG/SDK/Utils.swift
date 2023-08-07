@@ -49,3 +49,7 @@ enum BannerPosition {
     case top
     case bottom
 }
+
+extension Notification.Name {
+    static let sdkInitializedNotification = Notification.Name("SDKInitializedNotification")
+}

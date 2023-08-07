@@ -142,8 +142,8 @@
             filePath = "ENG/SDK/EMobi.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "177"
-            endingLineNumber = "177"
+            startingLineNumber = "274"
+            endingLineNumber = "274"
             landmarkName = "configureRevenueCat()"
             landmarkType = "7">
             <Locations>
@@ -222,8 +222,8 @@
             filePath = "ENG/SDK/EMobi.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "200"
-            endingLineNumber = "200"
+            startingLineNumber = "297"
+            endingLineNumber = "297"
             landmarkName = "requestIDFA(fromInside:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -494,10 +494,42 @@
             filePath = "ENG/ViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "112"
-            endingLineNumber = "112"
-            landmarkName = "viewDidLoad()"
+            startingLineNumber = "123"
+            endingLineNumber = "123"
+            landmarkName = "handleSDKInitialized()"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "B60A0451-5102-4763-84D4-032B79C8577B - b9599468b6c65c3"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 () -&gt; () in closure #6 @Swift.MainActor () -&gt; () in ENG.ViewController.handleSDKInitialized() -&gt; ()"
+                  moduleName = "ENG"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Maarouf/Documents/Engagement%20SDK/ios/ENG/ENG/ViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "125"
+                  endingLineNumber = "125"
+                  offsetFromSymbolStart = "100">
+               </Location>
+               <Location
+                  uuid = "B60A0451-5102-4763-84D4-032B79C8577B - b9599468b6c6581"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 () -&gt; () in closure #6 @Swift.MainActor () -&gt; () in ENG.ViewController.handleSDKInitialized() -&gt; ()"
+                  moduleName = "ENG"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Maarouf/Documents/Engagement%20SDK/ios/ENG/ENG/ViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "123"
+                  endingLineNumber = "123"
+                  offsetFromSymbolStart = "100">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -510,10 +542,42 @@
             filePath = "ENG/ViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "119"
-            endingLineNumber = "119"
-            landmarkName = "viewDidLoad()"
+            startingLineNumber = "130"
+            endingLineNumber = "130"
+            landmarkName = "handleSDKInitialized()"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "1E15B22B-69A7-4BD9-871D-1F6A306D4968 - 45143fb7235498f9"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #2 () -&gt; () in closure #6 @Swift.MainActor () -&gt; () in ENG.ViewController.handleSDKInitialized() -&gt; ()"
+                  moduleName = "ENG"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Maarouf/Documents/Engagement%20SDK/ios/ENG/ENG/ViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "132"
+                  endingLineNumber = "132"
+                  offsetFromSymbolStart = "36">
+               </Location>
+               <Location
+                  uuid = "1E15B22B-69A7-4BD9-871D-1F6A306D4968 - 45143fb7235498a7"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #2 () -&gt; () in closure #6 @Swift.MainActor () -&gt; () in ENG.ViewController.handleSDKInitialized() -&gt; ()"
+                  moduleName = "ENG"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Maarouf/Documents/Engagement%20SDK/ios/ENG/ENG/ViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "130"
+                  endingLineNumber = "130"
+                  offsetFromSymbolStart = "36">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -561,6 +625,54 @@
             startingLineNumber = "86"
             endingLineNumber = "86"
             landmarkName = "showPurchaselyPaywall(type:completionSuccess:completionFailure:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "97D6C6B6-E2A7-47CF-93B5-A36F45D238B1"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ENG/SDK/EMobi.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "189"
+            endingLineNumber = "189"
+            landmarkName = "applyFetchedValues()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "54F958F1-88E0-40C7-9474-AAD03616F479"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ENG/ViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "23"
+            endingLineNumber = "23"
+            landmarkName = "viewDidLoad()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "28FA3E72-1E62-4B76-A6E8-141465D84F11"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ENG/AppDelegate.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "19"
+            endingLineNumber = "19"
+            landmarkName = "application(_:didFinishLaunchingWithOptions:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

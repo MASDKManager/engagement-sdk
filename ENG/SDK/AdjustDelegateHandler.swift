@@ -11,6 +11,7 @@ import AppLovinSDK
 
 class AdjustDelegateHandler: NSObject, AdjustDelegate, MAAdRevenueDelegate {
 
+    
     func didPayRevenue(for ad: MAAd) {
         if let adjustAdRevenue = ADJAdRevenue(source: ADJAdRevenueSourceAppLovinMAX) {
             adjustAdRevenue.setRevenue(ad.revenue, currency: "USD")

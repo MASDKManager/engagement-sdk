@@ -3,19 +3,19 @@ import Foundation
 final class Constant {
     static let shared = Constant()
     var purchaselyAPIKey = String()
-    var rcAPIKey = String()
-    var restoreToken = String()
+    var revenuecatAPIKey = String()
+    var adjustRestoreToken = String()
     var adjustAppToken = String()
     var adjustEventToken = String()
     var adjustSubscriptionToken = String()
-    var purchaseToken = String()
+    var adjustPurchaseToken = String()
     var facebookAppID = String()
     var facebookDisplayName = String()
     var facebookClientToken = String()
     var mailchimpKey = String()
     var oneSignalKey = String()
-    var interstitialKey = String()
-    var bannerKey = String()
+    var applovinInterstitialKey = String()
+    var applovinBannerKey = String()
 
     func getValuesFromPlist() {
         if let plistPath = Bundle.main.path(forResource: "Constants", ofType: "plist"),
@@ -30,7 +30,7 @@ final class Constant {
             guard let sharedRCAPIKey = plist["RevenueCat API Key"] as? String else {
                 fatalError("RevenueCat token not exist in Constants.plist")
             }
-            self.rcAPIKey = sharedRCAPIKey
+            self.revenuecatAPIKey = sharedRCAPIKey
    
             guard let appTokenTemp = plist["Adjust App Token"] as? String  else {
                 fatalError("Adjust token not exist in Constants.plist")
@@ -50,17 +50,17 @@ final class Constant {
             guard let restoreTokenTemp = plist["app_restored_store_purchase"] as? String  else {
                 fatalError("Adjust token not exist in Constants.plist")
             }
-            self.restoreToken = restoreTokenTemp
+            self.adjustRestoreToken = restoreTokenTemp
             
             guard let interstitialKeyKeyTemp = plist["interstitialKey"] as? String  else {
                fatalError("interstitial Key not exist in Constants.plist")
             }
-            self.interstitialKey = interstitialKeyKeyTemp
+            self.applovinInterstitialKey = interstitialKeyKeyTemp
 
             guard let bannerKeyTemp = plist["bannerKey"] as? String  else {
                fatalError("banner Key not exist in Constants.plist")
             }
-            self.bannerKey = bannerKeyTemp
+            self.applovinBannerKey = bannerKeyTemp
 
             self.facebookAppID = plist["FacebookAppID"] as? String ?? ""
             self.facebookDisplayName = plist["FacebookDisplayName"] as? String ?? ""

@@ -17,9 +17,9 @@ import OneSignal
 import RevenueCat
 import MailchimpSDK
 import AppLovinSDK
- 
+
 public class EMobi: NSObject, PurchasesDelegate {
-   
+    
     public static let shared = EMobi()
     
     private var isSubscribed = false {
@@ -37,36 +37,44 @@ public class EMobi: NSObject, PurchasesDelegate {
             }
         }
     }
-     
+    
     private var PurchasesIsConfigured = false
+    private var OneSignalIsConfigured = false
     private var showATTonLaunch = false
+    private var launchOptions : [UIApplication.LaunchOptionsKey: Any]?
     public weak var delegate: EMobiDelegate?
-     
+    
     private var adjustDelegateHandler: AdjustDelegateHandler?
     
     public override init() {
         adjustDelegateHandler = AdjustDelegateHandler()
     }
-     
-    public func start(withConstantPlist plistData: NSDictionary, launchOptions: [UIApplication.LaunchOptionsKey: Any]?  ) {
+    
+    public func start( launchOptions: [UIApplication.LaunchOptionsKey: Any]? , completion: @escaping (Bool) -> Void) {
         print( tag + "EMobi SDK started.")
-
-        Constant.shared.getValuesFromPlist()
-          
-        configureFirebaseAndFetchRemoteConfig()
-        checkUserSubscription()
-            
-        configureAdjust()
-        configureRevenueCat()
-        configureOneSignal(launchOptions: launchOptions)
-        configureFacebook()
-        configureMailchimp()
-        AppLovinManager.shared.initializeAppLovin()
-        PurchaselyManager.shared.initializePurchasely()
         
+        // Constant.shared.getValuesFromPlist()
+        
+        checkUserSubscription()
+        
+        self.launchOptions = launchOptions
+        
+        configureFirebaseAndFetchRemoteConfig { success in
+            if success {
+                completion(true)
+                print("Remote config fetch and activation succeeded.")
+                // Do something on success
+            } else {
+                completion(false)
+                print("Remote config fetch and activation failed.")
+                // Do something on failure
+            }
+        }
+         
     }
     
-    func configureFirebaseAndFetchRemoteConfig() {
+    func configureFirebaseAndFetchRemoteConfig(completion: @escaping (Bool) -> Void) {
+        
         // Step 1: Configure FirebaseApp (if not already configured)
         if FirebaseApp.app() == nil {
             FirebaseApp.configure()
@@ -92,12 +100,14 @@ public class EMobi: NSObject, PurchasesDelegate {
                     DispatchQueue.main.async {
                         if let error = error {
                             print("Error activating RemoteConfig: \(error.localizedDescription)")
+                            completion(false)
                             // Handle any potential error here, if needed
                             return
                         }
                         
                         // Step 5: Apply fetched values to appropriate properties
                         self.applyFetchedValues()
+                        completion(true)
                     }
                 }
             } else {
@@ -108,17 +118,99 @@ public class EMobi: NSObject, PurchasesDelegate {
                 } else {
                     print("Unknown error occurred.")
                 }
+                completion(false)
             }
         }
     }
-
+    
     private func applyFetchedValues() {
-      
-        PurchaselyManager.shared.onboardPaywallPlacementID = RemoteConfig.remoteConfig()["onboardPaywallPlacementID"].stringValue ?? ""
-        PurchaselyManager.shared.premiumPaywallPlacementID = RemoteConfig.remoteConfig()["premiumPaywallPlacementID"].stringValue ?? ""
-        PurchaselyManager.shared.showPurchaselyPaywall = RemoteConfig.remoteConfig()["showPurchaselyPaywall"].boolValue
+        let remoteConfig = RemoteConfig.remoteConfig()
         
-        self.showATTonLaunch =  RemoteConfig.remoteConfig()["showATTonLaunch"].boolValue
+        let configKeys: [String: String] = [
+            "onboardPaywallPlacementID": PurchaselyManager.shared.onboardPaywallPlacementID,
+            "premiumPaywallPlacementID": PurchaselyManager.shared.premiumPaywallPlacementID,
+            "adjustAppToken": Constant.shared.adjustAppToken,
+            "adjustEventToken": Constant.shared.adjustEventToken,
+            "adjustSubscriptionToken": Constant.shared.adjustSubscriptionToken,
+            "adjustRestoreToken": Constant.shared.adjustRestoreToken,
+            "revenuecatAPIKey": Constant.shared.revenuecatAPIKey,
+            "oneSignalKey": Constant.shared.oneSignalKey,
+            "purchaselyAPIKey": Constant.shared.purchaselyAPIKey,
+            "mailchimpKey": Constant.shared.mailchimpKey,
+            "facebookAppID": Constant.shared.facebookAppID,
+            "facebookClientToken": Constant.shared.facebookClientToken,
+            "facebookDisplayName": Constant.shared.facebookDisplayName,
+            "applovinInterstitialKey": Constant.shared.applovinInterstitialKey,
+            "applovinBannerKey": Constant.shared.applovinBannerKey,
+            "showATTonLaunch": ""
+        ]
+        
+        for (key, _) in configKeys {
+            if let stringValue = remoteConfig[key].stringValue, !stringValue.isEmpty {
+                switch key {
+                case "onboardPaywallPlacementID":
+                    PurchaselyManager.shared.onboardPaywallPlacementID = stringValue
+                case "premiumPaywallPlacementID":
+                    PurchaselyManager.shared.premiumPaywallPlacementID = stringValue
+                case "adjustAppToken":
+                    Constant.shared.adjustAppToken = stringValue
+                case "adjustEventToken":
+                    Constant.shared.adjustEventToken = stringValue
+                case "adjustSubscriptionToken":
+                    Constant.shared.adjustSubscriptionToken = stringValue
+                case "adjustRestoreToken":
+                    Constant.shared.adjustRestoreToken = stringValue
+                case "revenuecatAPIKey":
+                    Constant.shared.revenuecatAPIKey = stringValue
+                case "oneSignalKey":
+                    Constant.shared.oneSignalKey = stringValue
+                case "purchaselyAPIKey":
+                    Constant.shared.purchaselyAPIKey = stringValue
+                case "mailchimpKey":
+                    Constant.shared.mailchimpKey = stringValue
+                case "facebookAppID":
+                    Constant.shared.facebookAppID = stringValue
+                case "facebookClientToken":
+                    Constant.shared.facebookClientToken = stringValue
+                case "facebookDisplayName":
+                    Constant.shared.facebookDisplayName = stringValue
+                case "applovinInterstitialKey":
+                    Constant.shared.applovinInterstitialKey = stringValue
+                case "applovinBannerKey":
+                    Constant.shared.applovinBannerKey = stringValue
+                case "showATTonLaunch":
+                    showATTonLaunch = remoteConfig[key].boolValue
+                default:
+                    break
+                }
+            }
+        }
+        
+        if !Constant.shared.adjustAppToken.isEmpty {
+            configureAdjust()
+        }
+        
+        if !Constant.shared.revenuecatAPIKey.isEmpty {
+            configureRevenueCat()
+        }
+        
+        if !Constant.shared.oneSignalKey.isEmpty {
+            configureOneSignal()
+        }
+        
+        if !Constant.shared.purchaselyAPIKey.isEmpty {
+            PurchaselyManager.shared.initializePurchasely()
+        }
+        
+        if !Constant.shared.mailchimpKey.isEmpty {
+            configureMailchimp()
+        }
+        
+        if !Constant.shared.facebookAppID.isEmpty &&
+            !Constant.shared.facebookClientToken.isEmpty &&
+            !Constant.shared.facebookDisplayName.isEmpty {
+            configureFacebook()
+        }
         
         if self.showATTonLaunch {
             self.requestIDFA(fromInside: true)
@@ -126,84 +218,89 @@ public class EMobi: NSObject, PurchasesDelegate {
         
         PurchaselyManager.shared.firebaseRemoteConfigLoaded = true
     }
- 
+    
+    
     private func checkUserSubscription(){
         isPremium =  checkPremiumStatus()
         isSubscribed =  checkSubscriptionStatus()
     }
     
-    private func configureOneSignal( launchOptions : [UIApplication.LaunchOptionsKey: Any]?  ) {
+    private func configureOneSignal() {
         
-        guard !Constant.shared.oneSignalKey.isEmpty else { 
+        guard !Constant.shared.oneSignalKey.isEmpty else {
             print( "oneSignalKey sdk key are empty")
             return
         }
-         
+        
         OneSignal.setLogLevel(.LL_VERBOSE, visualLevel: .LL_NONE)
         
         // OneSignal initialization
-        OneSignal.initWithLaunchOptions(launchOptions)
+        OneSignal.initWithLaunchOptions(self.launchOptions)
         OneSignal.setAppId( Constant.shared.oneSignalKey)
         
         // promptForPushNotifications will show the native iOS notification permission prompt.
         // We recommend removing the following code and instead using an In-App Message to prompt for notification permission (See step 8)
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
-            OneSignal.promptForPushNotifications(userResponse: { accepted in
-                print( tag + "User accepted notifications: \(accepted)")
-            })
+        if (!showATTonLaunch){
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                OneSignal.promptForPushNotifications(userResponse: { accepted in
+                    print( tag + "User accepted notifications: \(accepted)")
+                })
+            }
         }
         
         if let onesignalId = OneSignal.getDeviceState().userId {
             Purchases.shared.attribution.setOnesignalID(onesignalId)
         }
-         
+        
+        self.OneSignalIsConfigured = true
+        
     }
-   
+    
     private func configureRevenueCat() {
         let appUserID = getUserID()
-     
+        
         Purchases.logLevel = .debug
-        Purchases.configure(withAPIKey: Constant.shared.rcAPIKey, appUserID: appUserID)
+        Purchases.configure(withAPIKey: Constant.shared.revenuecatAPIKey, appUserID: appUserID)
         
         checkSubscription()
-
+        
         // Automatically collect the $idfa, $idfv, and $ip values
         Purchases.shared.attribution.collectDeviceIdentifiers()
         // REQUIRED: Set the Facebook anonymous Id
         Purchases.shared.attribution.setFBAnonymousID(FBSDKCoreKit.AppEvents.shared.anonymousID)
-     
+        
         if let adjustId = Adjust.adid() {
             Purchases.shared.attribution.setAdjustID(adjustId)
         }
         
         Purchases.shared.attribution.setOnesignalID(Constant.shared.oneSignalKey)
-         
+        
         Purchases.shared.delegate = self
-
+        
         // Set the reserved $firebaseAppInstanceId subscriber attribute from Firebase Analytics
         let instanceID = Analytics.appInstanceID();
         if let unwrapped = instanceID {
             print( tag + "Instance ID -> " + unwrapped);
             print( tag + "Setting Attributes");
-          Purchases.shared.attribution.setFirebaseAppInstanceID(unwrapped)
-         } else {
-             print( tag + "Instance ID -> NOT FOUND!");
-         }
+            Purchases.shared.attribution.setFirebaseAppInstanceID(unwrapped)
+        } else {
+            print( tag + "Instance ID -> NOT FOUND!");
+        }
         
         Purchases.shared.attribution.setAttributes(["user_uuid" : getUserID()])
-
+        
     }
-     
+    
     public func requestIDFA(fromInside: Bool = false) {
         
         if !fromInside && showATTonLaunch {
             return
         }
-            
+        
         if #available(iOS 14.3, *) {
             // Check the ATT consent status.
-        
+            
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                 ATTrackingManager.requestTrackingAuthorization { status in
                     var statusCase = ""
@@ -225,17 +322,23 @@ public class EMobi: NSObject, PurchasesDelegate {
                         Purchases.shared.attribution.setAttributes(["ATTrackingManagerStatus": statusCase])
                         Purchases.shared.attribution.enableAdServicesAttributionTokenCollection()
                     }
+                    
+                    if self.OneSignalIsConfigured && self.showATTonLaunch {
+                        OneSignal.promptForPushNotifications(userResponse: { accepted in
+                            print( tag + "User accepted notifications: \(accepted)")
+                        })
+                    }
                 }
             }
         }
     }
- 
+    
     private func setPurchasesEmail(email : String){
         Purchases.shared.attribution.setEmail(email)
     }
     
     private func checkSubscription(){
-          
+        
         Purchases.shared.getCustomerInfo { (customerInfo, error) in
             if ((customerInfo?.activeSubscriptions.count ?? 0) != 0){
                 self.isSubscribed = true
@@ -243,7 +346,7 @@ public class EMobi: NSObject, PurchasesDelegate {
         }
         
     }
-     
+    
     private func configureAdjust() {
         print("Adjust initiate called")
         
@@ -252,13 +355,13 @@ public class EMobi: NSObject, PurchasesDelegate {
         adjustConfig?.sendInBackground = true
         adjustConfig?.linkMeEnabled = true
         adjustConfig?.delegate = adjustDelegateHandler
- 
-     //   adjustConfig?.delegate = self
+        
+        //   adjustConfig?.delegate = self
         
         Adjust.appDidLaunch(adjustConfig)
-         
+        
         let versionNumber = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? ""
-      
+        
         Adjust.addSessionCallbackParameter("m_sdk_ver", value: versionNumber)
         Adjust.addSessionCallbackParameter("user_uuid", value: getUserID())
         
@@ -268,11 +371,11 @@ public class EMobi: NSObject, PurchasesDelegate {
         adjustEvent?.addCallbackParameter("click_id", value: getUserID())
         
         Adjust.trackEvent(adjustEvent)
-         
+        
     }
     
     private func configureFacebook() {
-      
+        
         if Constant.shared.facebookAppID.isEmpty || Constant.shared.facebookDisplayName.isEmpty ||  Constant.shared.facebookClientToken.isEmpty
         {
             print( "Facebook sdk keys are empty")
@@ -285,21 +388,21 @@ public class EMobi: NSObject, PurchasesDelegate {
         sdkSettings.clientToken = Constant.shared.facebookClientToken
         print( tag + "Facebook sdk init")
     }
-     
+    
     private func configureMailchimp() {
-      
+        
         if Constant.shared.mailchimpKey.isEmpty
         {
             print( "Mailchimp sdk key are empty")
             return
         }
         
-       try? Mailchimp.initialize(token: Constant.shared.mailchimpKey, autoTagContacts: true, debugMode: true)
-       
-       print( tag + "Mailchimp sdk init")
+        try? Mailchimp.initialize(token: Constant.shared.mailchimpKey, autoTagContacts: true, debugMode: true)
+        
+        print( tag + "Mailchimp sdk init")
         
     }
-
+    
     private func distroyAds(){
         AppLovinManager.shared.unloadAds()
     }
@@ -312,8 +415,8 @@ public class EMobi: NSObject, PurchasesDelegate {
         }
         
         var contact: Contact = Contact(emailAddress: email)
-      //  contact.marketingPermissions = [emailPermission, mailPermission, advertisingPermission]
-      
+        //  contact.marketingPermissions = [emailPermission, mailPermission, advertisingPermission]
+        
         let mergeFields = ["mobile": MergeFieldValue.string("signup") ]
         contact.status = .subscribed
         contact.mergeFields = mergeFields
@@ -326,7 +429,7 @@ public class EMobi: NSObject, PurchasesDelegate {
                 print( tag + "Mailchimp Error: \(error.localizedDescription)")
             }
         }
-         
+        
     }
     
     public func logAnalyticsEvent(name: String, parameter: [String: Any]) {
@@ -336,7 +439,7 @@ public class EMobi: NSObject, PurchasesDelegate {
     }
     
     public func isSubscribedUser( )  -> Bool {
-      return  isSubscribed
+        return  isSubscribed
     }
     
     public func setSubscribedUser(isSubscribed : Bool )   {
@@ -344,13 +447,13 @@ public class EMobi: NSObject, PurchasesDelegate {
     }
     
     public func isPremiumUser( )  -> Bool {
-      return  isPremium
+        return  isPremium
     }
     
     public func setPremiumUser(isPremium : Bool )   {
         self.isPremium = isPremium
     }
-
+    
     public func getAllPurchasedProductIdentifiers(completion: @escaping (Set<String>?) -> Void) {
         Purchases.shared.getCustomerInfo { (customerInfo, error) in
             if let customerInfo = customerInfo {
@@ -371,7 +474,7 @@ public class EMobi: NSObject, PurchasesDelegate {
             failure(error) // Call the failure callback and pass the error
         })
     }
-
+    
     public  func loadBannerAd(vc : UIViewController, bannerView: UIView  ) {
         if(isPremium || isSubscribed){
             return
@@ -387,14 +490,14 @@ public class EMobi: NSObject, PurchasesDelegate {
         
         AppLovinManager.shared.showInterestialAd(onClose: onClose)
     }
-     
+    
     public func showPurchaselyPaywall(type: PaywallType = .paywall, completionSuccess: (() -> Void)? = nil, completionFailure: (() -> Void)? = nil) -> UIViewController? {
         if isPremium || isSubscribed {
             // Do something else here or just return nil if you don't need to show any paywall.
             return nil
         }
-
+        
         return PurchaselyManager.shared.showPurchaselyPaywall(completionSuccess: completionSuccess, completionFailure: completionFailure)
     }
- 
+    
 }

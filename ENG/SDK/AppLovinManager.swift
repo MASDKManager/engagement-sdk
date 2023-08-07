@@ -64,7 +64,7 @@ extension AppLovinManager {
             //         AppLovin SDK is initialized, start loading ads now or later if ad gate is reached
             print("AppLovin SDK is initialized, start loading ads now or later if ad gate is reached")
             
-            if (Constant.shared.interstitialKey != "") {
+            if (Constant.shared.applovinInterstitialKey != "") {
                 AppLovinManager.shared.loadInterestialAd()
             }
 //            if (Constant.shared.interestialKey != "") {
@@ -80,7 +80,7 @@ extension AppLovinManager {
             return
         }
             
-        AppLovinManager.shared.adView = MAAdView(adUnitIdentifier: Constant.shared.bannerKey)
+        AppLovinManager.shared.adView = MAAdView(adUnitIdentifier: Constant.shared.applovinBannerKey)
         AppLovinManager.shared.adView.delegate = self
          
         AppLovinManager.shared.adView.frame = adViewContainer.frame
@@ -93,7 +93,7 @@ extension AppLovinManager {
 
     
     private func loadInterestialAd() {
-        AppLovinManager.shared.interestialAdView = MAInterstitialAd(adUnitIdentifier: Constant.shared.interstitialKey)
+        AppLovinManager.shared.interestialAdView = MAInterstitialAd(adUnitIdentifier: Constant.shared.applovinInterstitialKey)
         AppLovinManager.shared.interestialAdView?.delegate = self
         AppLovinManager.shared.interestialAdView?.load()
     }
@@ -144,7 +144,7 @@ extension AppLovinManager: MAAdDelegate {
         EMobi.shared.delegate?.bannerAdDidFailToLoad(adUnitIdentifier: adUnitIdentifier, error: error.description)
 
         print("Ad didFailToLoadAd with id:\(adUnitIdentifier)")
-        if (adUnitIdentifier == Constant.shared.interstitialKey) {
+        if (adUnitIdentifier == Constant.shared.applovinInterstitialKey) {
             // Interstitial ad failed to load
             // We recommend retrying with exponentially higher delays up to a maximum delay (in this case 64 seconds)
             
