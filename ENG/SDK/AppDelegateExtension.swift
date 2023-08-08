@@ -7,11 +7,13 @@
 
 import Foundation
 import UIKit
-import FBSDKCoreKit // Import the necessary module
+import FBSDKCoreKit
 
- 
+// Make sure the following import points to the correct module where AppDelegate is defined
+// import YourModuleName // Replace "YourModuleName" with the actual module name
+
+// If AppDelegate is part of your current module, you can directly extend it
 extension AppDelegate {
-    
     func application(
         _ app: UIApplication,
         open url: URL,
@@ -24,5 +26,4 @@ extension AppDelegate {
             annotation: options[UIApplication.OpenURLOptionsKey.annotation]
         )
     }
-    
 }
