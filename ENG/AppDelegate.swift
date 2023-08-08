@@ -37,6 +37,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate, EMobiDelegate {
         print("Error: \(error  )")
     }
     
+    func application(
+        _ app: UIApplication,
+        open url: URL,
+        options: [UIApplication.OpenURLOptionsKey : Any] = [:]
+    ) -> Bool {
+        // Call your custom method from the module
+        return EMobi.handleOpenURL(app, open: url, options: options)
+    }
     
     // MARK: UISceneSession Lifecycle
     

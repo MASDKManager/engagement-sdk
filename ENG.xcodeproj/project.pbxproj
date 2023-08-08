@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0D0AB4FF2A8128AB0069095F /* AppDelegateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D0AB4FE2A8128AB0069095F /* AppDelegateExtension.swift */; };
 		0D0C049D2A6521AF003FADC8 /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D0C049C2A6521AF003FADC8 /* SecondViewController.swift */; };
 		0D0C04A12A657EB3003FADC8 /* EMobiDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D0C04A02A657EB3003FADC8 /* EMobiDelegate.swift */; };
 		0D3801AE2A6124F400EFE050 /* AppLovinManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D3801AD2A6124F400EFE050 /* AppLovinManager.swift */; };
@@ -34,7 +33,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		0D0AB4FE2A8128AB0069095F /* AppDelegateExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegateExtension.swift; sourceTree = "<group>"; };
 		0D0C049C2A6521AF003FADC8 /* SecondViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondViewController.swift; sourceTree = "<group>"; };
 		0D0C04A02A657EB3003FADC8 /* EMobiDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EMobiDelegate.swift; sourceTree = "<group>"; };
 		0D1AF38682C1413CADB82792 /* Pods_ENG.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ENG.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -129,7 +127,6 @@
 				0D0C04A02A657EB3003FADC8 /* EMobiDelegate.swift */,
 				0D4B919F2A6814DF004EC582 /* PurchaselyManager.swift */,
 				0D4B91A12A681877004EC582 /* AdjustManager.swift */,
-				0D0AB4FE2A8128AB0069095F /* AppDelegateExtension.swift */,
 			);
 			path = SDK;
 			sourceTree = "<group>";
@@ -295,7 +292,6 @@
 				0DAEB37F2A5AF14E00C38DD9 /* EMobi.swift in Sources */,
 				0D4B91A22A681877004EC582 /* AdjustManager.swift in Sources */,
 				0DAEB37D2A5AF14E00C38DD9 /* Constants.swift in Sources */,
-				0D0AB4FF2A8128AB0069095F /* AppDelegateExtension.swift in Sources */,
 				0D4B91A02A6814DF004EC582 /* PurchaselyManager.swift in Sources */,
 				0DAEB3682A5AF08A00C38DD9 /* ViewController.swift in Sources */,
 				0DAEB3642A5AF08A00C38DD9 /* AppDelegate.swift in Sources */,

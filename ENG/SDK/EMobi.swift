@@ -507,4 +507,13 @@ public class EMobi: NSObject, PurchasesDelegate {
         return PurchaselyManager.shared.showPurchaselyPaywall(completionSuccess: completionSuccess, completionFailure: completionFailure)
     }
     
+    public static func handleOpenURL(
+        _ app: UIApplication,
+        open url: URL,
+        options: [UIApplication.OpenURLOptionsKey: Any] = [:]
+    ) -> Bool {
+        // Custom handling code here
+        return true
+    }
+    
 }
