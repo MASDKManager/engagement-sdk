@@ -2,8 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>AppLovinSdkKey</key>
-	<string>ZdbmgUomfTQ5fekFOXPTGvqxIf38Z_XliyOk1R8Ae3DccRew8zp8TxlddxITaPrMyi97PWXExcZHSwHdrJEx9z</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>

@@ -30,6 +30,7 @@ class AppLovinManager : NSObject {
     private var onClose: ((Bool) -> Void)?
     
     private var adView: MAAdView!
+    private var alsdk: ALSdk!
     
     private var keyExists = true
     
@@ -41,26 +42,19 @@ class AppLovinManager : NSObject {
 extension AppLovinManager {
     
     func initializeAppLovin() {
-  
-        if let value = Bundle.main.infoDictionary?["AppLovinSdkKey"] as? String, !value.isEmpty {
-            keyExists =  true
-        } else {
-            keyExists = false
-            return
-        }
-         
-        
-         
+        let settings = ALSdkSettings()
+        alsdk = ALSdk.shared(withKey: Constant.shared.appLovinSdkKey,settings: settings )
+       
+   
 #if DEBUG
         print("Not App Store build")
         let gpsadid = ASIdentifierManager.shared().advertisingIdentifier.uuidString
-        ALSdk.shared()!.settings.testDeviceAdvertisingIdentifiers = [gpsadid]
+        ALSdk.shared(withKey: Constant.shared.appLovinSdkKey)!.settings.testDeviceAdvertisingIdentifiers = [gpsadid]
 #else
         print("App Store build")
 #endif
-        
-        ALSdk.shared()!.mediationProvider = ALMediationProviderMAX
-        ALSdk.shared()!.initializeSdk(completionHandler: { configuration in
+        ALSdk.shared(withKey: Constant.shared.appLovinSdkKey)!.mediationProvider = ALMediationProviderMAX
+        ALSdk.shared(withKey: Constant.shared.appLovinSdkKey)!.initializeSdk(completionHandler: { configuration in
             //         AppLovin SDK is initialized, start loading ads now or later if ad gate is reached
             print("AppLovin SDK is initialized, start loading ads now or later if ad gate is reached")
             
@@ -80,7 +74,7 @@ extension AppLovinManager {
             return
         }
             
-        AppLovinManager.shared.adView = MAAdView(adUnitIdentifier: Constant.shared.applovinBannerKey)
+        AppLovinManager.shared.adView = MAAdView(adUnitIdentifier: Constant.shared.applovinBannerKey,sdk: alsdk)
         AppLovinManager.shared.adView.delegate = self
          
         AppLovinManager.shared.adView.frame = adViewContainer.frame
@@ -93,7 +87,7 @@ extension AppLovinManager {
 
     
     private func loadInterestialAd() {
-        AppLovinManager.shared.interestialAdView = MAInterstitialAd(adUnitIdentifier: Constant.shared.applovinInterstitialKey)
+        AppLovinManager.shared.interestialAdView = MAInterstitialAd(adUnitIdentifier: Constant.shared.applovinInterstitialKey,sdk: alsdk)
         AppLovinManager.shared.interestialAdView?.delegate = self
         AppLovinManager.shared.interestialAdView?.load()
     }

@@ -142,6 +142,7 @@ public class EMobi: NSObject, PurchasesDelegate {
             "facebookDisplayName": Constant.shared.facebookDisplayName,
             "applovinInterstitialKey": Constant.shared.applovinInterstitialKey,
             "applovinBannerKey": Constant.shared.applovinBannerKey,
+            "appLovinSdkKey": Constant.shared.appLovinSdkKey,
             "showATTonLaunch": ""
         ]
         
@@ -178,6 +179,8 @@ public class EMobi: NSObject, PurchasesDelegate {
                     Constant.shared.applovinInterstitialKey = stringValue
                 case "applovinBannerKey":
                     Constant.shared.applovinBannerKey = stringValue
+                case "appLovinSdkKey":
+                    Constant.shared.appLovinSdkKey = stringValue
                 case "showATTonLaunch":
                     showATTonLaunch = remoteConfig[key].boolValue
                 default:
@@ -204,6 +207,10 @@ public class EMobi: NSObject, PurchasesDelegate {
         
         if !Constant.shared.mailchimpKey.isEmpty {
             configureMailchimp()
+        }
+        
+        if !Constant.shared.appLovinSdkKey.isEmpty {
+            AppLovinManager.shared.initializeAppLovin()
         }
         
         if !Constant.shared.facebookAppID.isEmpty &&

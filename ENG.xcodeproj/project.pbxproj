@@ -28,7 +28,6 @@
 		0DAEB3702A5AF08B00C38DD9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0DAEB36E2A5AF08B00C38DD9 /* LaunchScreen.storyboard */; };
 		0DAEB37C2A5AF14E00C38DD9 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DAEB3782A5AF14E00C38DD9 /* Utils.swift */; };
 		0DAEB37D2A5AF14E00C38DD9 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DAEB3792A5AF14E00C38DD9 /* Constants.swift */; };
-		0DAEB37E2A5AF14E00C38DD9 /* Constants.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0DAEB37A2A5AF14E00C38DD9 /* Constants.plist */; };
 		0DAEB37F2A5AF14E00C38DD9 /* EMobi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DAEB37B2A5AF14E00C38DD9 /* EMobi.swift */; };
 		0DAEB3822A5AF19400C38DD9 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0DAEB3812A5AF19400C38DD9 /* StoreKit.framework */; };
 		E4932BCC4E3E14730C29EA22 /* Pods_ENG.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D1AF38682C1413CADB82792 /* Pods_ENG.framework */; };
@@ -58,7 +57,6 @@
 		0DAEB3712A5AF08B00C38DD9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0DAEB3782A5AF14E00C38DD9 /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		0DAEB3792A5AF14E00C38DD9 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
-		0DAEB37A2A5AF14E00C38DD9 /* Constants.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Constants.plist; sourceTree = "<group>"; };
 		0DAEB37B2A5AF14E00C38DD9 /* EMobi.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EMobi.swift; sourceTree = "<group>"; };
 		0DAEB3802A5AF18A00C38DD9 /* ENG.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ENG.entitlements; sourceTree = "<group>"; };
 		0DAEB3812A5AF19400C38DD9 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
@@ -105,7 +103,6 @@
 			isa = PBXGroup;
 			children = (
 				0DAEB3712A5AF08B00C38DD9 /* Info.plist */,
-				0DAEB37A2A5AF14E00C38DD9 /* Constants.plist */,
 				0D4114412A694633005E5AF9 /* GoogleService-Info.plist */,
 				0DAEB3802A5AF18A00C38DD9 /* ENG.entitlements */,
 				0DAEB3772A5AF10900C38DD9 /* SDK */,
@@ -221,7 +218,6 @@
 			files = (
 				0DAEB3702A5AF08B00C38DD9 /* LaunchScreen.storyboard in Resources */,
 				0DAEB36D2A5AF08B00C38DD9 /* Assets.xcassets in Resources */,
-				0DAEB37E2A5AF14E00C38DD9 /* Constants.plist in Resources */,
 				0DAEB36B2A5AF08A00C38DD9 /* Main.storyboard in Resources */,
 				0D4114422A694633005E5AF9 /* GoogleService-Info.plist in Resources */,
 			);

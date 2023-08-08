@@ -16,6 +16,7 @@ final class Constant {
     var oneSignalKey = String()
     var applovinInterstitialKey = String()
     var applovinBannerKey = String()
+    var appLovinSdkKey = String()
 
     func getValuesFromPlist() {
         if let plistPath = Bundle.main.path(forResource: "Constants", ofType: "plist"),
