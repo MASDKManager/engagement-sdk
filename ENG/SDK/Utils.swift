@@ -51,5 +51,5 @@ enum BannerPosition {
 }
 
 extension Notification.Name {
-    static let sdkInitializedNotification = Notification.Name("SDKInitializedNotification")
+    public static let sdkInitializedNotification = Notification.Name("SDKInitializedNotification")
 }

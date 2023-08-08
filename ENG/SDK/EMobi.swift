@@ -421,6 +421,10 @@ public class EMobi: NSObject, PurchasesDelegate {
             return
         }
         
+        if self.PurchasesIsConfigured {
+            Purchases.shared.attribution.setEmail(email)
+        }
+        
         var contact: Contact = Contact(emailAddress: email)
         //  contact.marketingPermissions = [emailPermission, mailPermission, advertisingPermission]
         
