@@ -293,6 +293,7 @@ public class EMobi: NSObject, PurchasesDelegate {
         }
         
         Purchases.shared.attribution.setAttributes(["user_uuid" : getUserID()])
+        PurchasesIsConfigured = true
         
     }
     
@@ -328,7 +329,7 @@ public class EMobi: NSObject, PurchasesDelegate {
                     }
                     
                     if self.OneSignalIsConfigured && self.showATTonLaunch {
-                        OneSignal.User.pushSubscription.optIn() 
+                        OneSignal.User.pushSubscription.optIn()
                     }
                 }
             }
