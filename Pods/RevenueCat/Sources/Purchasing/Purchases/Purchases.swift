@@ -884,8 +884,8 @@ public extension Purchases {
     @objc(checkTrialOrIntroDiscountEligibility:completion:)
     func checkTrialOrIntroDiscountEligibility(productIdentifiers: [String],
                                               completion: @escaping ([String: IntroEligibility]) -> Void) {
-        trialOrIntroPriceEligibilityChecker.checkEligibility(productIdentifiers: productIdentifiers,
-                                                             completion: completion)
+        self.trialOrIntroPriceEligibilityChecker.checkEligibility(productIdentifiers: Set(productIdentifiers),
+                                                                  completion: completion)
     }
 
     @available(iOS 13.0, tvOS 13.0, macOS 10.15, watchOS 6.2, *)
@@ -906,14 +906,14 @@ public extension Purchases {
 
     #endif
 
-#if os(iOS) || targetEnvironment(macCatalyst)
+#if os(iOS) || targetEnvironment(macCatalyst) || VISION_OS
     @available(iOS 13.4, macCatalyst 13.4, *)
     @objc func showPriceConsentIfNeeded() {
         self.paymentQueueWrapper.paymentQueueWrapperType.showPriceConsentIfNeeded()
     }
 #endif
 
-#if os(iOS)
+#if os(iOS) || VISION_OS
 
     @available(iOS 14.0, *)
     @available(watchOS, unavailable)
@@ -951,7 +951,7 @@ public extension Purchases {
 
     #endif
 
-#if os(iOS) || os(macOS)
+#if os(iOS) || os(macOS) || VISION_OS
 
     @available(watchOS, unavailable)
     @available(tvOS, unavailable)
@@ -966,12 +966,12 @@ public extension Purchases {
     @available(tvOS, unavailable)
     @available(iOS 13.0, macOS 10.15, *)
     func showManageSubscriptions() async throws {
-        return try await showManageSubscriptionsAsync()
+        return try await self.showManageSubscriptionsAsync()
     }
 
 #endif
 
-#if os(iOS)
+#if os(iOS) || VISION_OS
 
     @available(iOS 15.0, *)
     @available(macOS, unavailable)
@@ -1255,7 +1255,7 @@ extension Purchases: PurchasesOrchestratorDelegate {
         self.delegate?.purchases?(self, readyForPromotedProduct: product, purchase: startPurchase)
     }
 
-#if os(iOS) || targetEnvironment(macCatalyst)
+#if os(iOS) || targetEnvironment(macCatalyst) || VISION_OS
     @available(iOS 13.4, macCatalyst 13.4, *)
     var shouldShowPriceConsent: Bool {
         self.delegate?.shouldShowPriceConsent ?? true
@@ -1496,9 +1496,9 @@ private extension Purchases {
         #if !ENABLE_CUSTOM_ENTITLEMENT_COMPUTATION
         (self as DeprecatedSearchAdsAttribution).postAppleSearchAddsAttributionCollectionIfNeeded()
 
-        #if os(iOS) || os(macOS)
+        #if os(iOS) || os(macOS) || VISION_OS
         if #available(iOS 14.3, macOS 11.1, macCatalyst 14.3, *) {
-            self.attribution.postAdServicesTokenIfNeeded()
+            self.attribution.postAdServicesTokenOncePerInstallIfNeeded()
         }
         #endif
 

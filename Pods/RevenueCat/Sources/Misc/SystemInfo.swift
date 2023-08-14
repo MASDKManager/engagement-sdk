@@ -14,7 +14,7 @@
 
 import Foundation
 
-#if os(iOS) || os(tvOS) || targetEnvironment(macCatalyst)
+#if os(iOS) || os(tvOS) || VISION_OS || targetEnvironment(macCatalyst)
 import UIKit
 #elseif os(watchOS)
 import UIKit
@@ -53,7 +53,7 @@ class SystemInfo {
     }
 
     static var frameworkVersion: String {
-        return "4.25.2"
+        return "4.25.4"
     }
 
     static var systemVersion: String {
@@ -81,7 +81,7 @@ class SystemInfo {
         // https://developer.apple.com/documentation/uikit/uidevice?language=swift
         // https://developer.apple.com/documentation/watchkit/wkinterfacedevice?language=swift
 
-        #if os(iOS) || os(tvOS)
+        #if os(iOS) || os(tvOS) || VISION_OS
             return UIDevice.current.identifierForVendor?.uuidString
         #elseif os(watchOS)
             return WKInterfaceDevice.current().identifierForVendor?.uuidString
@@ -92,22 +92,12 @@ class SystemInfo {
         #endif
     }
 
-    static var serverHostURL: URL {
-        return Self.proxyURL ?? Self.defaultServerHostURL
-    }
-
     static var proxyURL: URL? {
         didSet {
             if let privateProxyURLString = proxyURL?.absoluteString {
                 Logger.info(Strings.configure.configuring_purchases_proxy_url_set(url: privateProxyURLString))
             }
         }
-    }
-
-    private static let defaultServerHostName = "https://api.revenuecat.com"
-
-    private static var defaultServerHostURL: URL {
-        return URL(string: defaultServerHostName)!
     }
 
     init(platformInfo: Purchases.PlatformInfo?,
@@ -142,7 +132,7 @@ class SystemInfo {
     /// - Seealso: `isApplicationBackgrounded(completion:)`
     @MainActor
     var isApplicationBackgrounded: Bool {
-    #if os(iOS) || os(tvOS)
+    #if os(iOS) || os(tvOS) || VISION_OS
         return self.isApplicationBackgroundedIOSAndTVOS
     #elseif os(macOS)
         return false
@@ -161,7 +151,7 @@ class SystemInfo {
         return ProcessInfo.processInfo.isOperatingSystemAtLeast(version)
     }
 
-    #if os(iOS) || os(tvOS)
+    #if os(iOS) || os(tvOS) || VISION_OS
     var sharedUIApplication: UIApplication? {
         return Self.sharedUIApplication
     }
@@ -179,7 +169,7 @@ class SystemInfo {
 
 }
 
-#if os(iOS)
+#if os(iOS) || VISION_OS
 extension SystemInfo {
 
     @available(iOS 13.0, macCatalystApplicationExtension 13.1, *)
@@ -217,6 +207,8 @@ extension SystemInfo {
     static let platformHeaderConstant = "tvOS"
     #elseif os(macOS)
     static let platformHeaderConstant = "macOS"
+    #elseif VISION_OS
+    static let platformHeaderConstant = "visionOS"
     #endif
 
 }
@@ -224,7 +216,7 @@ extension SystemInfo {
 extension SystemInfo {
 
     static var applicationWillEnterForegroundNotification: Notification.Name {
-        #if os(iOS) || os(tvOS)
+        #if os(iOS) || os(tvOS) || VISION_OS
             UIApplication.willEnterForegroundNotification
         #elseif os(macOS)
             NSApplication.willBecomeActiveNotification
@@ -234,7 +226,7 @@ extension SystemInfo {
     }
 
     static var applicationDidEnterBackgroundNotification: Notification.Name {
-        #if os(iOS) || os(tvOS)
+        #if os(iOS) || os(tvOS) || VISION_OS
             UIApplication.didEnterBackgroundNotification
         #elseif os(macOS)
             NSApplication.didResignActiveNotification
@@ -251,7 +243,7 @@ extension SystemInfo {
 
 private extension SystemInfo {
 
-    #if os(iOS) || os(tvOS)
+    #if os(iOS) || os(tvOS) || VISION_OS
 
     // iOS/tvOS App extensions can't access UIApplication.sharedApplication, and will fail to compile if any calls to
     // it are made. There are no pre-processor macros available to check if the code is running in an app extension,

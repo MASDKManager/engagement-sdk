@@ -195,10 +195,15 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "${PODS_XCFRAMEWORKS_BUILD_DIR}/FBSDKCoreKit/FBSDKCoreKit.framework"
   install_framework "${PODS_XCFRAMEWORKS_BUILD_DIR}/FBSDKCoreKit_Basics/FBSDKCoreKit_Basics.framework"
   install_framework "${PODS_XCFRAMEWORKS_BUILD_DIR}/MailchimpSDK/MailchimpSDK.framework"
-  install_framework "${PODS_XCFRAMEWORKS_BUILD_DIR}/OneSignalXCFramework/OneSignal.framework"
+  install_framework "${PODS_XCFRAMEWORKS_BUILD_DIR}/OneSignalXCFramework/OneSignal/OneSignalFramework.framework"
   install_framework "${PODS_XCFRAMEWORKS_BUILD_DIR}/OneSignalXCFramework/OneSignalCore/OneSignalCore.framework"
   install_framework "${PODS_XCFRAMEWORKS_BUILD_DIR}/OneSignalXCFramework/OneSignalExtension/OneSignalExtension.framework"
+  install_framework "${PODS_XCFRAMEWORKS_BUILD_DIR}/OneSignalXCFramework/OneSignalInAppMessages/OneSignalInAppMessages.framework"
+  install_framework "${PODS_XCFRAMEWORKS_BUILD_DIR}/OneSignalXCFramework/OneSignalLocation/OneSignalLocation.framework"
+  install_framework "${PODS_XCFRAMEWORKS_BUILD_DIR}/OneSignalXCFramework/OneSignalNotifications/OneSignalNotifications.framework"
+  install_framework "${PODS_XCFRAMEWORKS_BUILD_DIR}/OneSignalXCFramework/OneSignalOSCore/OneSignalOSCore.framework"
   install_framework "${PODS_XCFRAMEWORKS_BUILD_DIR}/OneSignalXCFramework/OneSignalOutcomes/OneSignalOutcomes.framework"
+  install_framework "${PODS_XCFRAMEWORKS_BUILD_DIR}/OneSignalXCFramework/OneSignalUser/OneSignalUser.framework"
   install_framework "${PODS_XCFRAMEWORKS_BUILD_DIR}/Purchasely/Purchasely.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
@@ -221,10 +226,15 @@ if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "${PODS_XCFRAMEWORKS_BUILD_DIR}/FBSDKCoreKit/FBSDKCoreKit.framework"
   install_framework "${PODS_XCFRAMEWORKS_BUILD_DIR}/FBSDKCoreKit_Basics/FBSDKCoreKit_Basics.framework"
   install_framework "${PODS_XCFRAMEWORKS_BUILD_DIR}/MailchimpSDK/MailchimpSDK.framework"
-  install_framework "${PODS_XCFRAMEWORKS_BUILD_DIR}/OneSignalXCFramework/OneSignal.framework"
+  install_framework "${PODS_XCFRAMEWORKS_BUILD_DIR}/OneSignalXCFramework/OneSignal/OneSignalFramework.framework"
   install_framework "${PODS_XCFRAMEWORKS_BUILD_DIR}/OneSignalXCFramework/OneSignalCore/OneSignalCore.framework"
   install_framework "${PODS_XCFRAMEWORKS_BUILD_DIR}/OneSignalXCFramework/OneSignalExtension/OneSignalExtension.framework"
+  install_framework "${PODS_XCFRAMEWORKS_BUILD_DIR}/OneSignalXCFramework/OneSignalInAppMessages/OneSignalInAppMessages.framework"
+  install_framework "${PODS_XCFRAMEWORKS_BUILD_DIR}/OneSignalXCFramework/OneSignalLocation/OneSignalLocation.framework"
+  install_framework "${PODS_XCFRAMEWORKS_BUILD_DIR}/OneSignalXCFramework/OneSignalNotifications/OneSignalNotifications.framework"
+  install_framework "${PODS_XCFRAMEWORKS_BUILD_DIR}/OneSignalXCFramework/OneSignalOSCore/OneSignalOSCore.framework"
   install_framework "${PODS_XCFRAMEWORKS_BUILD_DIR}/OneSignalXCFramework/OneSignalOutcomes/OneSignalOutcomes.framework"
+  install_framework "${PODS_XCFRAMEWORKS_BUILD_DIR}/OneSignalXCFramework/OneSignalUser/OneSignalUser.framework"
   install_framework "${PODS_XCFRAMEWORKS_BUILD_DIR}/Purchasely/Purchasely.framework"
 fi
 if [ "${COCOAPODS_PARALLEL_CODE_SIGN}" == "true" ]; then

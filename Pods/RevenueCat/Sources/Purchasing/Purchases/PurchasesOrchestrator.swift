@@ -43,7 +43,7 @@ final class PurchasesOrchestrator {
 
     private let _allowSharingAppStoreAccount: Atomic<Bool?> = nil
     private let presentedOfferingIDsByProductID: Atomic<[String: String]> = .init([:])
-    private let purchaseCompleteCallbacksByProductID: Atomic<[String: PurchaseCompletedBlock]> = .init([:])
+    private let purchaseCompleteCallbacksByProductID: Atomic<[String: CallbackData]> = .init([:])
 
     private var appUserID: String { self.currentUserProvider.currentAppUserID }
     private var unsyncedAttributes: SubscriberAttribute.Dictionary {
@@ -74,9 +74,9 @@ final class PurchasesOrchestrator {
     // swiftlint:enable identifier_name
 
     @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
-    var storeKit2TransactionListener: StoreKit2TransactionListener {
+    var storeKit2TransactionListener: StoreKit2TransactionListenerType {
         // swiftlint:disable:next force_cast
-        return self._storeKit2TransactionListener! as! StoreKit2TransactionListener
+        return self._storeKit2TransactionListener! as! StoreKit2TransactionListenerType
     }
 
     @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
@@ -102,7 +102,7 @@ final class PurchasesOrchestrator {
                      offeringsManager: OfferingsManager,
                      manageSubscriptionsHelper: ManageSubscriptionsHelper,
                      beginRefundRequestHelper: BeginRefundRequestHelper,
-                     storeKit2TransactionListener: StoreKit2TransactionListener,
+                     storeKit2TransactionListener: StoreKit2TransactionListenerType,
                      storeKit2StorefrontListener: StoreKit2StorefrontListener
     ) {
         self.init(
@@ -127,13 +127,14 @@ final class PurchasesOrchestrator {
         self._storeKit2TransactionListener = storeKit2TransactionListener
         self._storeKit2StorefrontListener = storeKit2StorefrontListener
 
-        storeKit2TransactionListener.delegate = self
         storeKit2StorefrontListener.delegate = self
-
-        storeKit2TransactionListener.listenForTransactions()
-
         if systemInfo.storeKit2Setting == .enabledForCompatibleDevices {
             storeKit2StorefrontListener.listenForStorefrontChanges()
+        }
+
+        Task {
+            await storeKit2TransactionListener.set(delegate: self)
+            await storeKit2TransactionListener.listenForTransactions()
         }
     }
 
@@ -510,15 +511,9 @@ final class PurchasesOrchestrator {
         _ product: SK2Product,
         _ options: Set<Product.PurchaseOption>
     ) async throws -> Product.PurchaseResult {
-        // Note: this can be simplified as `#if swift(>=5.9) && os(xrOS)`
-        // once we drop support for Xcode 13.x
-        #if swift(>=5.9)
-            #if os(xrOS)
-            return try await product.purchase(confirmIn: try self.systemInfo.currentWindowScene,
-                                              options: options)
-            #else
-            return try await product.purchase(options: options)
-            #endif
+        #if VISION_OS
+        return try await product.purchase(confirmIn: try self.systemInfo.currentWindowScene,
+                                          options: options)
         #else
         return try await product.purchase(options: options)
         #endif
@@ -540,7 +535,7 @@ final class PurchasesOrchestrator {
         self.presentedOfferingIDsByProductID.modify { $0[productIdentifier] = identifier }
     }
 
-#if os(iOS) || os(macOS)
+#if os(iOS) || os(macOS) || VISION_OS
 
     @available(watchOS, unavailable)
     @available(tvOS, unavailable)
@@ -556,7 +551,7 @@ final class PurchasesOrchestrator {
     }
 #endif
 
-#if os(iOS)
+#if os(iOS) || VISION_OS
 
     @available(iOS 15.0, *)
     @available(macOS, unavailable)
@@ -655,8 +650,13 @@ extension PurchasesOrchestrator: StoreKit1WrapperDelegate {
 
         let storeProduct = StoreProduct(sk1Product: product)
         delegate.readyForPromotedProduct(storeProduct) { completion in
-            self.purchaseCompleteCallbacksByProductID.modify { $0[productIdentifier] = completion }
-            storeKit1Wrapper.add(payment)
+            let addPayment = self.addPurchaseCompletedCallback(
+                productIdentifier: productIdentifier,
+                completion: completion
+            )
+            if addPayment {
+                storeKit1Wrapper.add(payment)
+            }
         }
 
         // See `SKPaymentTransactionObserver.paymentQueue(_:shouldAddStorePayment:for:)`
@@ -689,7 +689,7 @@ extension PurchasesOrchestrator: StoreKit1WrapperDelegate {
 
 extension PurchasesOrchestrator: PaymentQueueWrapperDelegate {
 
-    #if os(iOS) || targetEnvironment(macCatalyst)
+    #if os(iOS) || targetEnvironment(macCatalyst) || VISION_OS
     @available(iOS 13.4, macCatalyst 13.4, *)
     var paymentQueueWrapperShouldShowPriceConsent: Bool {
         return self.storeKit1WrapperShouldShowPriceConsent
@@ -823,19 +823,28 @@ private extension PurchasesOrchestrator {
     /// - Parameter restored: whether the transaction state was `.restored` instead of `.purchased`.
     private func purchaseSource(
         for productIdentifier: String,
+        transaction: StoreTransaction,
         restored: Bool
     ) -> PurchaseSource {
         let initiationSource: ProductRequestData.InitiationSource = {
             // Having a purchase completed callback implies that the transation comes from an explicit call
             // to `purchase()` instead of a StoreKit transaction notification.
-            let hasPurchaseCallback = self.purchaseCompleteCallbacksByProductID.value.keys.contains(productIdentifier)
+            // As long as the transaction date is _after_ the completion block was added.
+            let completionBlockDate = self.purchaseCompleteCallbacksByProductID.value[productIdentifier]?
+                .creationDate
 
-            switch (hasPurchaseCallback, restored) {
-            case (true, false): return .purchase
+            switch (completionBlockDate, restored) {
+            case let (.some(completionBlockDate), false):
+                if transaction.purchaseDate > completionBlockDate {
+                    return .purchase
+                } else {
+                    return .queue
+                }
+
                 // Note that restores initiated through the SDK with `restorePurchases`
                 // won't use this method since those set the initiation source explicitly.
-            case (true, true): return .restore
-            case (false, _): return .queue
+            case (.some, true): return .restore
+            case (.none, _): return .queue
             }
         }()
 
@@ -849,7 +858,7 @@ private extension PurchasesOrchestrator {
 extension PurchasesOrchestrator: StoreKit2TransactionListenerDelegate {
 
     func storeKit2TransactionListener(
-        _ listener: StoreKit2TransactionListener,
+        _ listener: StoreKit2TransactionListenerType,
         updatedTransaction transaction: StoreTransactionType
     ) async throws {
         let storefront = await self.storefront(from: transaction)
@@ -905,6 +914,18 @@ extension PurchasesOrchestrator: StoreKit2StorefrontListenerDelegate {
 
 private extension PurchasesOrchestrator {
 
+    struct CallbackData {
+
+        var completion: PurchaseCompletedBlock
+        var creationDate: Date
+
+        init(_ completion: @escaping PurchaseCompletedBlock, _ creationDate: Date = Date()) {
+            self.completion = completion
+            self.creationDate = creationDate
+        }
+
+    }
+
     /// - Returns: whether the callback was added
     @discardableResult
     func addPurchaseCompletedCallback(
@@ -933,7 +954,7 @@ private extension PurchasesOrchestrator {
                 return false
             }
 
-            callbacks[productIdentifier] = completion
+            callbacks[productIdentifier] = .init(completion)
             return true
         }
     }
@@ -941,8 +962,22 @@ private extension PurchasesOrchestrator {
     func getAndRemovePurchaseCompletedCallback(
         forTransaction transaction: StoreTransaction
     ) -> PurchaseCompletedBlock? {
-        return self.purchaseCompleteCallbacksByProductID.modify {
-            $0.removeValue(forKey: transaction.productIdentifier)
+        return self.purchaseCompleteCallbacksByProductID.modify { callbacks -> PurchaseCompletedBlock? in
+            guard let value = callbacks[transaction.productIdentifier] else { return nil }
+
+            if !transaction.hasKnownPurchaseDate || value.creationDate <= transaction.purchaseDate {
+                callbacks.removeValue(forKey: transaction.productIdentifier)
+                return value.completion
+            } else {
+                // This callback was added to handle a purchase _after_ the transaction was created,
+                // therefore it should not be notified.
+                Logger.verbose(Strings.purchase.paymentqueue_ignoring_callback_for_older_transaction(
+                    self,
+                    transaction,
+                    value.creationDate
+                ))
+                return nil
+            }
         }
     }
 
@@ -1078,6 +1113,7 @@ private extension PurchasesOrchestrator {
                 aadAttributionToken: adServicesToken,
                 storefront: storefront,
                 source: self.purchaseSource(for: purchasedTransaction.productIdentifier,
+                                            transaction: purchasedTransaction,
                                             restored: restored)
             )
         ) { result in

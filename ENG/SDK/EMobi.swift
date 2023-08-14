@@ -13,7 +13,7 @@ import FirebaseInstallations
 import FirebaseRemoteConfig
 import FBSDKCoreKit
 import AppTrackingTransparency
-import OneSignal
+import OneSignalFramework
 import RevenueCat
 import MailchimpSDK
 import AppLovinSDK
@@ -238,25 +238,22 @@ public class EMobi: NSObject, PurchasesDelegate {
             print( "oneSignalKey sdk key are empty")
             return
         }
-        
-        OneSignal.setLogLevel(.LL_VERBOSE, visualLevel: .LL_NONE)
+         
+        OneSignal.Debug.setLogLevel(.LL_VERBOSE)
         
         // OneSignal initialization
-        OneSignal.initWithLaunchOptions(self.launchOptions)
-        OneSignal.setAppId( Constant.shared.oneSignalKey)
+        OneSignal.initialize(Constant.shared.oneSignalKey, withLaunchOptions: launchOptions)
         
         // promptForPushNotifications will show the native iOS notification permission prompt.
         // We recommend removing the following code and instead using an In-App Message to prompt for notification permission (See step 8)
         
         if (!showATTonLaunch){
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                OneSignal.promptForPushNotifications(userResponse: { accepted in
-                    print( tag + "User accepted notifications: \(accepted)")
-                })
+                OneSignal.User.pushSubscription.optIn()
             }
         }
         
-        if let onesignalId = OneSignal.getDeviceState().userId {
+        if let onesignalId = OneSignal.User.pushSubscription.id {
             Purchases.shared.attribution.setOnesignalID(onesignalId)
         }
         
@@ -331,9 +328,7 @@ public class EMobi: NSObject, PurchasesDelegate {
                     }
                     
                     if self.OneSignalIsConfigured && self.showATTonLaunch {
-                        OneSignal.promptForPushNotifications(userResponse: { accepted in
-                            print( tag + "User accepted notifications: \(accepted)")
-                        })
+                        OneSignal.User.pushSubscription.optIn() 
                     }
                 }
             }

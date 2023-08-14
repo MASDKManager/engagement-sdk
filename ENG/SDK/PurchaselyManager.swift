@@ -34,7 +34,8 @@ class PurchaselyManager {
     func initializePurchasely() {
         let key = Constant.shared.purchaselyAPIKey
         let user_uuid = getUserID()
-        Purchasely.start(withAPIKey: key, appUserId: user_uuid, runningMode: .full, eventDelegate: nil, logLevel: .debug) { success, err in
+  
+        Purchasely.start(withAPIKey: key, appUserId: user_uuid, runningMode: .full, logLevel: .debug) { success, err in
             if (success) {
                 print("purchasely initiaisation: success")
             } else {

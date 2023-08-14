@@ -142,8 +142,8 @@
             filePath = "ENG/SDK/EMobi.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "281"
-            endingLineNumber = "281"
+            startingLineNumber = "278"
+            endingLineNumber = "278"
             landmarkName = "configureRevenueCat()"
             landmarkType = "7">
             <Locations>
@@ -222,8 +222,8 @@
             filePath = "ENG/SDK/EMobi.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "304"
-            endingLineNumber = "304"
+            startingLineNumber = "301"
+            endingLineNumber = "301"
             landmarkName = "requestIDFA(fromInside:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -334,8 +334,8 @@
             filePath = "ENG/SDK/PurchaselyManager.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "68"
-            endingLineNumber = "68"
+            startingLineNumber = "69"
+            endingLineNumber = "69"
             landmarkName = "showPurchaselyPaywall(type:completionSuccess:completionFailure:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -656,6 +656,22 @@
             startingLineNumber = "215"
             endingLineNumber = "215"
             landmarkName = "didCollapse(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "52B6EF97-55CE-4781-96F4-230CFB327406"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ENG/AppDelegate.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "22"
+            endingLineNumber = "22"
+            landmarkName = "application(_:didFinishLaunchingWithOptions:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
