@@ -277,9 +277,7 @@ public class EMobi: NSObject, PurchasesDelegate {
         if let adjustId = Adjust.adid() {
             Purchases.shared.attribution.setAdjustID(adjustId)
         }
-        
-        Purchases.shared.attribution.setOnesignalID(Constant.shared.oneSignalKey)
-        
+         
         Purchases.shared.delegate = self
         
         // Set the reserved $firebaseAppInstanceId subscriber attribute from Firebase Analytics

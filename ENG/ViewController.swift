@@ -107,14 +107,14 @@ class ViewController: UIViewController {
         }
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 8) {
-            EMobi.shared.showInterestialAd{ success in
-                print("ad closed")
-            }
+//            EMobi.shared.showInterestialAd{ success in
+//                print("ad closed")
+//            }
         }
         
         EMobi.shared.registerMailchimpEmail(email: "test@email.com")
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 10) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
             
             // Call the showPurchaselyPaywall function
             if let paywallViewController = EMobi.shared.showPurchaselyPaywall(type: .onboarding, completionSuccess: {

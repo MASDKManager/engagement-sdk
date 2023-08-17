@@ -98,13 +98,17 @@ class PurchaselyManager {
     func restoreAllProducts(success: @escaping () -> Void, failure: @escaping (Error) -> Void) {
  
         Purchasely.restoreAllProducts(success: {
-            // Reload content and display a success / thank you message to user
+            self.checkSubscription()
             success()
         }, failure: { (error) in
             failure(error) 
             // Display error
         })
         
+
+    }
+
+    func checkSubscription(){
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             Purchasely.userSubscriptions(success: { (subscriptions) in
                 if(subscriptions?.count ?? 0 > 0){
@@ -116,7 +120,6 @@ class PurchaselyManager {
             })
         }
     }
-
      
     func calculateDurationOfSubscription(duration: String) -> DurationUnit{
         

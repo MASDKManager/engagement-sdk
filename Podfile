@@ -14,6 +14,6 @@ target 'ENG' do
   pod 'OneSignalXCFramework'
   pod 'MailchimpSDK'
   pod 'AppLovinSDK'
-  pod 'Purchasely'
+  pod 'Purchasely', '~> 3.7.2'
  
 end

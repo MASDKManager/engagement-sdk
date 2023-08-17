@@ -157,7 +157,7 @@ PODS:
   - PromisesObjC (2.3.1)
   - PromisesSwift (2.3.1):
     - PromisesObjC (= 2.3.1)
-  - Purchasely (4.0.0)
+  - Purchasely (3.7.3)
   - RevenueCat (4.25.4)
 
 DEPENDENCIES:
@@ -169,7 +169,7 @@ DEPENDENCIES:
   - FirebaseRemoteConfig
   - MailchimpSDK
   - OneSignalXCFramework
-  - Purchasely
+  - Purchasely (~> 3.7.2)
   - RevenueCat
 
 SPEC REPOS:
@@ -222,9 +222,9 @@ SPEC CHECKSUMS:
   OneSignalXCFramework: 8429bc2456554da1b09b17135621087152ad05a0
   PromisesObjC: c50d2056b5253dadbd6c2bea79b0674bd5a52fa4
   PromisesSwift: 28dca69a9c40779916ac2d6985a0192a5cb4a265
-  Purchasely: 900594a7acb3ebc9f65169d5a02a3a5c59fca25c
+  Purchasely: b03b93f64316e27c99d4fb298c9cf6b39d48cd9c
   RevenueCat: 77f863268cfb1819cd0119749d488f3a50576b97
 
-PODFILE CHECKSUM: 90caba2eff4573db2ef57b47ce6a43962b5a9bae
+PODFILE CHECKSUM: 4ee2c7dbe4a4163bf6827dcc4fdbd074c43aca71
 
 COCOAPODS: 1.12.1
