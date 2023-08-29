@@ -239,7 +239,7 @@ public class EMobi: NSObject, PurchasesDelegate {
             return
         }
          
-      //  OneSignal.Debug.setLogLevel(.LL_VERBOSE)
+        OneSignal.Debug.setLogLevel(.LL_VERBOSE)
         
         // OneSignal initialization
         OneSignal.initialize(Constant.shared.oneSignalKey, withLaunchOptions: launchOptions)
@@ -264,7 +264,7 @@ public class EMobi: NSObject, PurchasesDelegate {
     private func configureRevenueCat() {
         let appUserID = getUserID()
         
-      //  Purchases.logLevel = .debug
+        Purchases.logLevel = .debug
         Purchases.configure(withAPIKey: Constant.shared.revenuecatAPIKey, appUserID: appUserID)
         
         checkSubscription()
