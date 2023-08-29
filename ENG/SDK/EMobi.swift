@@ -239,7 +239,7 @@ public class EMobi: NSObject, PurchasesDelegate {
             return
         }
          
-        OneSignal.Debug.setLogLevel(.LL_VERBOSE)
+      //  OneSignal.Debug.setLogLevel(.LL_VERBOSE)
         
         // OneSignal initialization
         OneSignal.initialize(Constant.shared.oneSignalKey, withLaunchOptions: launchOptions)
@@ -264,7 +264,7 @@ public class EMobi: NSObject, PurchasesDelegate {
     private func configureRevenueCat() {
         let appUserID = getUserID()
         
-        Purchases.logLevel = .debug
+      //  Purchases.logLevel = .debug
         Purchases.configure(withAPIKey: Constant.shared.revenuecatAPIKey, appUserID: appUserID)
         
         checkSubscription()
@@ -351,7 +351,7 @@ public class EMobi: NSObject, PurchasesDelegate {
     private func configureAdjust() {
         print("Adjust initiate called")
         
-        let adjustConfig = ADJConfig(appToken: Constant.shared.adjustAppToken, environment: ADJEnvironmentSandbox)
+        let adjustConfig = ADJConfig(appToken: Constant.shared.adjustAppToken, environment: ADJEnvironmentProduction)
         
         adjustConfig?.sendInBackground = true
         adjustConfig?.linkMeEnabled = true
@@ -398,7 +398,7 @@ public class EMobi: NSObject, PurchasesDelegate {
             return
         }
         
-        try? Mailchimp.initialize(token: Constant.shared.mailchimpKey, autoTagContacts: true, debugMode: true)
+        try? Mailchimp.initialize(token: Constant.shared.mailchimpKey, autoTagContacts: true, debugMode: false)
         
         print( tag + "Mailchimp sdk init")
         

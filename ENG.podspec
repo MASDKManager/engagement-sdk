@@ -2,7 +2,7 @@ Pod::Spec.new do |spec|
 
   spec.platform = :ios
   spec.name         = "ENG"
-  spec.version      = "0.9.1"
+  spec.version      = "0.9.2"
   spec.requires_arc =  true
   spec.summary      = "ENG - Boost User Engagement."
   spec.description  = <<-DESC
@@ -26,7 +26,7 @@ Pod::Spec.new do |spec|
   spec.dependency 'OneSignalXCFramework'
   spec.dependency 'MailchimpSDK'
   spec.dependency 'AppLovinSDK'
-  spec.dependency 'Purchasely'
+  spec.dependency 'Purchasely', '3.7.2'
  
   spec.source_files  = "ENG/SDK/**/*.{h,m,swift}"
   # spec.resource_bundles = {
