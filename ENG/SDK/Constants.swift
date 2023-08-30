@@ -9,6 +9,7 @@ final class Constant {
     var adjustEventToken = String()
     var adjustSubscriptionToken = String()
     var adjustPurchaseToken = String()
+    var adjustConversionToken = String()
     var facebookAppID = String()
     var facebookDisplayName = String()
     var facebookClientToken = String()
@@ -47,11 +48,16 @@ final class Constant {
                 fatalError("Adjust token not exist in Constants.plist")
             }
             self.adjustSubscriptionToken = adjustSubscriptionToken
-             
-            guard let restoreTokenTemp = plist["app_restored_store_purchase"] as? String  else {
-                fatalError("Adjust token not exist in Constants.plist")
+            
+           guard let restoreTokenTemp = plist["app_restored_store_purchase"] as? String  else {
+               fatalError("Adjust token not exist in Constants.plist")
+           }
+           self.adjustRestoreToken = restoreTokenTemp
+           
+            guard let adjustConversionToken = plist["adjustConversionToken"] as? String  else {
+                fatalError("adjust Conversion token not exist in Constants.plist")
             }
-            self.adjustRestoreToken = restoreTokenTemp
+            self.adjustConversionToken = adjustConversionToken
             
             guard let interstitialKeyKeyTemp = plist["interstitialKey"] as? String  else {
                fatalError("interstitial Key not exist in Constants.plist")

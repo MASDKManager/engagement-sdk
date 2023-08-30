@@ -30,4 +30,15 @@ class AdjustManager {
         
         print( tag + "trackPurchaseEvent sent init")
     }
+    
+    func sendConversionEvent( eventData: [String: String]) {
+        let adjustEvent = ADJEvent(eventToken: Constant.shared.adjustConversionToken)
+            
+        for (key, value) in eventData {
+            adjustEvent?.addCallbackParameter(key, value: value )
+        }
+        
+        Adjust.trackEvent(adjustEvent)
+    }
+    
 }

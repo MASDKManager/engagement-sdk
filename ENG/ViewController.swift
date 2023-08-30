@@ -75,6 +75,7 @@ class ViewController: UIViewController {
         
         // Call the logAnalyticsEvent function and update the eventLabel
         EMobi.shared.logAnalyticsEvent(name: "EventName", parameter: ["Parameter": "test"] );
+        EMobi.shared.sendConversionEvent(  eventData: ["TransID": "1223"] );
         
         // Call the isActiveUser function and update the activeUserLabel
         let isActive = EMobi.shared.isSubscribedUser()

@@ -161,6 +161,8 @@ public class EMobi: NSObject, PurchasesDelegate {
                     Constant.shared.adjustSubscriptionToken = stringValue
                 case "adjustRestoreToken":
                     Constant.shared.adjustRestoreToken = stringValue
+                case "adjustConversionToken":
+                    Constant.shared.adjustConversionToken = stringValue
                 case "revenuecatAPIKey":
                     Constant.shared.revenuecatAPIKey = stringValue
                 case "oneSignalKey":
@@ -350,8 +352,16 @@ public class EMobi: NSObject, PurchasesDelegate {
     
     private func configureAdjust() {
         print("Adjust initiate called")
+        #if DEBUG
+                print("Not App Store build")
+                let environment = ADJEnvironmentSandbox
+        #else
+                print("App Store build")
+                let environment = ADJEnvironmentProduction
+        #endif
         
-        let adjustConfig = ADJConfig(appToken: Constant.shared.adjustAppToken, environment: ADJEnvironmentProduction)
+        
+        let adjustConfig = ADJConfig(appToken: Constant.shared.adjustAppToken, environment: environment)
         
         adjustConfig?.sendInBackground = true
         adjustConfig?.linkMeEnabled = true
@@ -441,6 +451,10 @@ public class EMobi: NSObject, PurchasesDelegate {
         logEvent(eventName: name, parameters: parameter)
         
         print( tag + "Firebase logEvent sent")
+    }
+    
+    public func sendConversionEvent(eventData: [String: String]) {
+        AdjustManager.shared.sendConversionEvent(eventData: eventData)
     }
     
     public func isSubscribedUser( )  -> Bool {
