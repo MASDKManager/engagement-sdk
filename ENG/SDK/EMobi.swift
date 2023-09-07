@@ -418,7 +418,7 @@ public class EMobi: NSObject, PurchasesDelegate {
         AppLovinManager.shared.unloadAds()
     }
     
-    public func registerMailchimpEmail(email: String) {
+    public func registerEmail(email: String) {
         if Constant.shared.mailchimpKey.isEmpty
         {
             print( "Mailchimp sdk key are empty")
@@ -510,7 +510,7 @@ public class EMobi: NSObject, PurchasesDelegate {
         AppLovinManager.shared.showInterestialAd(onClose: onClose)
     }
     
-    public func showPurchaselyPaywall(type: PaywallType = .paywall, completionSuccess: (() -> Void)? = nil, completionFailure: (() -> Void)? = nil) -> UIViewController? {
+    public func showPaywall(type: PaywallType = .paywall, completionSuccess: (() -> Void)? = nil, completionFailure: (() -> Void)? = nil) -> UIViewController? {
         if isPremium || isSubscribed {
             // Do something else here or just return nil if you don't need to show any paywall.
             return nil

@@ -113,12 +113,12 @@ class ViewController: UIViewController {
 //            }
         }
         
-        EMobi.shared.registerMailchimpEmail(email: "test@email.com")
+        EMobi.shared.registerEmail(email: "test@email.com")
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
             
-            // Call the showPurchaselyPaywall function
-            if let paywallViewController = EMobi.shared.showPurchaselyPaywall(type: .onboarding, completionSuccess: {
+            // Call the showPaywall function
+            if let paywallViewController = EMobi.shared.showPaywall(type: .onboarding, completionSuccess: {
                 // This block is executed when the user completes a successful purchase or restore
                 // Present the premium content or any other view controller you want to show after purchase or restore
                 print("Purchase Success")
