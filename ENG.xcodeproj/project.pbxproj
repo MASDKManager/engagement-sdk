@@ -9,9 +9,9 @@
 /* Begin PBXBuildFile section */
 		0D0C049D2A6521AF003FADC8 /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D0C049C2A6521AF003FADC8 /* SecondViewController.swift */; };
 		0D0C04A12A657EB3003FADC8 /* EMobiDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D0C04A02A657EB3003FADC8 /* EMobiDelegate.swift */; };
+		0D36D3AC2AA9DC8000A964D1 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0D36D3AB2AA9DC8000A964D1 /* GoogleService-Info.plist */; };
 		0D3801AE2A6124F400EFE050 /* AppLovinManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D3801AD2A6124F400EFE050 /* AppLovinManager.swift */; };
 		0D3A01442A5D458B001D974E /* AdjustDelegateHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D3A01432A5D458B001D974E /* AdjustDelegateHandler.swift */; };
-		0D4114422A694633005E5AF9 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0D4114412A694633005E5AF9 /* GoogleService-Info.plist */; };
 		0D4B91A02A6814DF004EC582 /* PurchaselyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D4B919F2A6814DF004EC582 /* PurchaselyManager.swift */; };
 		0D4B91A22A681877004EC582 /* AdjustManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D4B91A12A681877004EC582 /* AdjustManager.swift */; };
 		0D88E6792A6D377F00C570CF /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D88E6782A6D377F00C570CF /* AdSupport.framework */; };
@@ -34,9 +34,9 @@
 /* Begin PBXFileReference section */
 		0D0C049C2A6521AF003FADC8 /* SecondViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondViewController.swift; sourceTree = "<group>"; };
 		0D0C04A02A657EB3003FADC8 /* EMobiDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EMobiDelegate.swift; sourceTree = "<group>"; };
+		0D36D3AB2AA9DC8000A964D1 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		0D3801AD2A6124F400EFE050 /* AppLovinManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLovinManager.swift; sourceTree = "<group>"; };
 		0D3A01432A5D458B001D974E /* AdjustDelegateHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdjustDelegateHandler.swift; sourceTree = "<group>"; };
-		0D4114412A694633005E5AF9 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		0D4B919F2A6814DF004EC582 /* PurchaselyManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaselyManager.swift; sourceTree = "<group>"; };
 		0D4B91A12A681877004EC582 /* AdjustManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdjustManager.swift; sourceTree = "<group>"; };
 		0D88E6782A6D377F00C570CF /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
@@ -99,7 +99,7 @@
 			isa = PBXGroup;
 			children = (
 				0DAEB3712A5AF08B00C38DD9 /* Info.plist */,
-				0D4114412A694633005E5AF9 /* GoogleService-Info.plist */,
+				0D36D3AB2AA9DC8000A964D1 /* GoogleService-Info.plist */,
 				0DAEB3802A5AF18A00C38DD9 /* ENG.entitlements */,
 				0DAEB3772A5AF10900C38DD9 /* SDK */,
 				0DAEB3632A5AF08A00C38DD9 /* AppDelegate.swift */,
@@ -212,8 +212,8 @@
 			files = (
 				0DAEB3702A5AF08B00C38DD9 /* LaunchScreen.storyboard in Resources */,
 				0DAEB36D2A5AF08B00C38DD9 /* Assets.xcassets in Resources */,
+				0D36D3AC2AA9DC8000A964D1 /* GoogleService-Info.plist in Resources */,
 				0DAEB36B2A5AF08A00C38DD9 /* Main.storyboard in Resources */,
-				0D4114422A694633005E5AF9 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

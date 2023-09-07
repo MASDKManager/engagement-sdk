@@ -2,7 +2,7 @@ Pod::Spec.new do |spec|
 
   spec.platform = :ios
   spec.name         = "ENG"
-  spec.version      = "0.9.4"
+  spec.version      = "0.9.5"
   spec.requires_arc =  true
   spec.summary      = "ENG - Boost User Engagement."
   spec.description  = <<-DESC
@@ -23,9 +23,15 @@ Pod::Spec.new do |spec|
   spec.dependency 'FirebaseCrashlytics'
   spec.dependency 'FirebaseRemoteConfig'
   spec.dependency 'FBSDKCoreKit'
+  spec.dependency 'FBAudienceNetwork'
   spec.dependency 'OneSignalXCFramework'
-  spec.dependency 'MailchimpSDK'
+  spec.dependency 'AppLovinMediationByteDanceAdapter'
+  spec.dependency 'AppLovinMediationGoogleAdManagerAdapter'
+  spec.dependency 'AppLovinMediationGoogleAdapter'
+  spec.dependency 'AppLovinMediationMaioAdapter'
+  spec.dependency 'AppLovinMediationUnityAdsAdapter'
   spec.dependency 'AppLovinSDK'
+  spec.dependency 'MailchimpSDK'
   spec.dependency 'Purchasely', '3.7.2'
  
   spec.source_files  = "ENG/SDK/**/*.{h,m,swift}"

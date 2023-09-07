@@ -11,8 +11,17 @@ target 'ENG' do
   pod 'FirebaseCrashlytics'
   pod 'FirebaseRemoteConfig'
   pod 'FBSDKCoreKit'
+  pod 'FBAudienceNetwork'
   pod 'OneSignalXCFramework'
   pod 'MailchimpSDK'
+  
+  pod 'AppLovinMediationByteDanceAdapter'
+  pod 'AppLovinMediationGoogleAdManagerAdapter'
+  pod 'AppLovinMediationGoogleAdapter'
+  pod 'AppLovinMediationMaioAdapter'
+  pod 'AppLovinMediationUnityAdsAdapter'
+  pod 'AppLovinMediationVungleAdapter'
+  
   pod 'AppLovinSDK'
   pod 'Purchasely', '~> 3.7.2'
  
