@@ -516,7 +516,7 @@ public class EMobi: NSObject, PurchasesDelegate {
             return nil
         }
         
-        return PurchaselyManager.shared.showPurchaselyPaywall(completionSuccess: completionSuccess, completionFailure: completionFailure)
+        return PurchaselyManager.shared.showPurchaselyPaywall(type: type, completionSuccess: completionSuccess, completionFailure: completionFailure)
     }
     
     public static func handleOpenURL(
