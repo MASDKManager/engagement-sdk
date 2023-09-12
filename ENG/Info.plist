@@ -27,7 +27,7 @@
 	</array>
 	<key>GADIsAdManagerApp</key>
 	<true/>
-	<key>GADApplicationIdentifier8</key>
+	<key>GADApplicationIdentifier</key>
 	<string>ca-app-pub-1944147142676857~1276321986</string>
 </dict>
 </plist>

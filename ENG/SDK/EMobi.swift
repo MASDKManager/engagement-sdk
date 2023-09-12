@@ -133,6 +133,7 @@ public class EMobi: NSObject, PurchasesDelegate {
             "adjustEventToken": Constant.shared.adjustEventToken,
             "adjustSubscriptionToken": Constant.shared.adjustSubscriptionToken,
             "adjustRestoreToken": Constant.shared.adjustRestoreToken,
+            "adjustConversionToken": Constant.shared.adjustConversionToken,
             "revenuecatAPIKey": Constant.shared.revenuecatAPIKey,
             "oneSignalKey": Constant.shared.oneSignalKey,
             "purchaselyAPIKey": Constant.shared.purchaselyAPIKey,

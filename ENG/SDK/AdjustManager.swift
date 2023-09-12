@@ -13,7 +13,7 @@ class AdjustManager {
     
     
     func trackPurchaseEvent(purchaseToken: String, productID: String, transactionID: String) {
-        let event = ADJEvent(eventToken: Constant.shared.adjustSubscriptionToken)
+        let event = ADJEvent(eventToken: purchaseToken)
         
         event?.addCallbackParameter("user_uuid", value: getUserID())
         event?.addCallbackParameter("inAppPurchaseTime", value: "\(Date())")
