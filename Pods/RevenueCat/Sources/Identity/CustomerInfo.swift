@@ -42,6 +42,11 @@ import Foundation
     /**
      * Returns all the non-subscription purchases a user has made.
      * The purchases are ordered by purchase date in ascending order.
+     * 
+     * This includes:
+     * - Consumables
+     * - Non-consumables
+     * - Non-renewing subscriptions
      */
     @objc public let nonSubscriptions: [NonSubscriptionTransaction]
 
@@ -136,6 +141,14 @@ import Foundation
 
         let allEntitlementsDescription = self.entitlements.all.mapValues { $0.description }
 
+        let verificationResult: String
+
+        if #available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.2, *) {
+            verificationResult = self.entitlements.verification.debugDescription
+        } else {
+            verificationResult = "unknown"
+        }
+
         return """
             <\(String(describing: CustomerInfo.self)):
             originalApplicationVersion=\(self.originalApplicationVersion ?? ""),
@@ -147,6 +160,7 @@ import Foundation
             firstSeen=\(String(describing: self.firstSeen)),
             originalAppUserId=\(self.originalAppUserId),
             entitlements=\(allEntitlementsDescription)
+            verification=\(verificationResult)
             >
             """
     }

@@ -31,6 +31,8 @@ enum PurchaseStrings {
     case entitlements_revoked_syncing_purchases(productIdentifiers: [String])
     case entitlement_expired_outside_grace_period(expiration: Date, reference: Date)
     case finishing_transaction(StoreTransactionType)
+    case finish_transaction_skipped_because_its_missing_in_non_subscriptions(StoreTransactionType,
+                                                                             [NonSubscriptionTransaction])
     case purchasing_with_observer_mode_and_finish_transactions_false_warning
     case paymentqueue_revoked_entitlements_for_product_identifiers(productIdentifiers: [String])
     case paymentqueue_adding_payment(SKPaymentQueue, SKPayment)
@@ -40,9 +42,6 @@ enum PurchaseStrings {
                                                              SKPaymentTransaction)
     case paymentqueue_updated_transaction(SKPaymentTransactionObserver,
                                           SKPaymentTransaction)
-    case paymentqueue_ignoring_callback_for_older_transaction(PurchasesOrchestrator,
-                                                              StoreTransactionType,
-                                                              Date)
     case presenting_code_redemption_sheet
     case unable_to_present_redemption_sheet
     case purchases_synced
@@ -78,7 +77,10 @@ enum PurchaseStrings {
     case begin_refund_customer_info_error(entitlementID: String?)
     case missing_cached_customer_info
     case sk2_transactions_update_received_transaction(productID: String)
-    case transaction_poster_handling_transaction(productID: String, offeringID: String?)
+    case transaction_poster_handling_transaction(transactionID: String,
+                                                 productID: String,
+                                                 transactionDate: Date,
+                                                 offeringID: String?)
     case caching_presented_offering_identifier(offeringID: String, productID: String)
     case payment_queue_wrapper_delegate_call_sk1_enabled
     case restorepurchases_called_with_allow_sharing_appstore_account_false
@@ -130,6 +132,10 @@ extension PurchaseStrings: LogMessage {
             return "Finishing transaction '\(transaction.transactionIdentifier)' " +
             "for product '\(transaction.productIdentifier)'"
 
+        case let .finish_transaction_skipped_because_its_missing_in_non_subscriptions(transaction, nonSubscriptions):
+            return "Transaction '\(transaction.transactionIdentifier)' will not be finished: " +
+            "it's a non-subscription and it's missing in CustomerInfo list: \(nonSubscriptions)"
+
         case .purchasing_with_observer_mode_and_finish_transactions_false_warning:
             return "Observer mode is active (finishTransactions is set to false) and " +
             "purchase has been initiated. RevenueCat will not finish the " +
@@ -170,11 +176,6 @@ extension PurchaseStrings: LogMessage {
             ]
                 .compactMap { $0 }
                 .joined(separator: " ")
-
-        case let .paymentqueue_ignoring_callback_for_older_transaction(observer, transaction, date):
-            return "\(Strings.objectDescription(observer)): will not notify callback for transaction " +
-            "'\(transaction.transactionIdentifier)'. " +
-            "Transaction date '\(transaction.purchaseDate)' - callback date '\(date)'"
 
         case .presenting_code_redemption_sheet:
             return "Presenting code redemption sheet."
@@ -292,8 +293,9 @@ extension PurchaseStrings: LogMessage {
         case let .sk2_transactions_update_received_transaction(productID):
             return "StoreKit.Transaction.updates: received transaction for product '\(productID)'"
 
-        case let .transaction_poster_handling_transaction(productID, offeringID):
-            let prefix = "TransactionPoster: handling transaction for product '\(productID)'"
+        case let .transaction_poster_handling_transaction(transactionID, productID, date, offeringID):
+            let prefix = "TransactionPoster: handling transaction '\(transactionID)' " +
+            "for product '\(productID)' (date: \(date))"
 
             if let offeringIdentifier = offeringID {
                 return prefix + " in Offering '\(offeringIdentifier)'"

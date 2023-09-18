@@ -30,3 +30,23 @@ final class Clock: ClockType {
     static let `default`: Clock = .init()
 
 }
+
+extension ClockType {
+
+    func durationSince(_ startTime: DispatchTime) -> TimeInterval {
+        if #available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.2, *) {
+            return startTime.distance(to: self.currentTime).seconds
+        } else {
+            return TimeInterval(self.currentTime.uptimeNanoseconds - startTime.uptimeNanoseconds) / 1_000_000_000
+        }
+    }
+
+    func durationSince(_ date: Date) -> TimeInterval {
+        if #available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.2, *) {
+            return date.distance(to: self.now)
+        } else {
+            return date.timeIntervalSince(self.now)
+        }
+    }
+
+}

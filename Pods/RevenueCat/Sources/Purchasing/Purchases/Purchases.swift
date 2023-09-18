@@ -545,9 +545,9 @@ public typealias StartPurchaseBlock = (@escaping PurchaseCompletedBlock) -> Void
         (self as DeprecatedSearchAdsAttribution).postAppleSearchAddsAttributionCollectionIfNeeded()
         #endif
 
-        self.customerInfoObservationDisposable = customerInfoManager.monitorChanges { [weak self] customerInfo in
+        self.customerInfoObservationDisposable = customerInfoManager.monitorChanges { [weak self] old, new in
             guard let self = self else { return }
-            self.handleCustomerInfoChanged(customerInfo)
+            self.handleCustomerInfoChanged(from: old, to: new)
         }
     }
 
@@ -823,6 +823,17 @@ public extension Purchases {
         return try await purchaseAsync(package: package)
     }
 
+    @objc func restorePurchases(completion: ((CustomerInfo?, PublicError?) -> Void)? = nil) {
+        self.purchasesOrchestrator.restorePurchases { @Sendable in
+            completion?($0.value, $0.error?.asPublicError)
+        }
+    }
+
+    @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.2, *)
+    func restorePurchases() async throws -> CustomerInfo {
+        return try await self.restorePurchasesAsync()
+    }
+
     #if !ENABLE_CUSTOM_ENTITLEMENT_COMPUTATION
 
     @objc func invalidateCustomerInfoCache() {
@@ -838,17 +849,6 @@ public extension Purchases {
     @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.2, *)
     func syncPurchases() async throws -> CustomerInfo {
         return try await syncPurchasesAsync()
-    }
-
-    @objc func restorePurchases(completion: ((CustomerInfo?, PublicError?) -> Void)? = nil) {
-        purchasesOrchestrator.restorePurchases { @Sendable in
-            completion?($0.value, $0.error?.asPublicError)
-        }
-    }
-
-    @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.2, *)
-    func restorePurchases() async throws -> CustomerInfo {
-        return try await restorePurchasesAsync()
     }
 
     @available(iOS 12.2, macOS 10.14.4, watchOS 6.2, macCatalyst 13.0, tvOS 12.2, *)
@@ -1389,6 +1389,10 @@ internal extension Purchases {
         return self.paymentQueueWrapper.sk1Wrapper != nil
     }
 
+    var storeKit2Setting: StoreKit2Setting {
+        return self.systemInfo.storeKit2Setting
+    }
+
     #if DEBUG
 
     /// - Returns: the parsed `AppleReceipt`
@@ -1454,10 +1458,6 @@ internal extension Purchases {
         return self.backend.offlineCustomerInfoEnabled
     }
 
-    var storeKit2Setting: StoreKit2Setting {
-        return self.systemInfo.storeKit2Setting
-    }
-
     var publicKey: Signing.PublicKey? {
         return self.systemInfo.responseVerificationMode.publicKey
     }
@@ -1478,10 +1478,13 @@ internal extension Purchases {
 
 private extension Purchases {
 
-    func handleCustomerInfoChanged(_ customerInfo: CustomerInfo) {
-        self.trialOrIntroPriceEligibilityChecker.clearCache()
-        self.purchasedProductsFetcher?.clearCache()
-        self.delegate?.purchases?(self, receivedUpdated: customerInfo)
+    func handleCustomerInfoChanged(from old: CustomerInfo?, to new: CustomerInfo) {
+        if old != nil {
+            self.trialOrIntroPriceEligibilityChecker.clearCache()
+            self.purchasedProductsFetcher?.clearCache()
+        }
+
+        self.delegate?.purchases?(self, receivedUpdated: new)
     }
 
     @objc func applicationWillEnterForeground() {
@@ -1595,6 +1598,7 @@ private extension Purchases {
         }
 
         self.delegate?.purchases?(self, receivedUpdated: info)
+        self.customerInfoManager.setLastSentCustomerInfo(info)
     }
 
     private func updateOfferingsCache(isAppBackgrounded: Bool) {

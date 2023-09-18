@@ -19,8 +19,6 @@ class CustomerInfoManager {
 
     typealias CustomerInfoCompletion = @MainActor @Sendable (Result<CustomerInfo, BackendError>) -> Void
 
-    var lastSentCustomerInfo: CustomerInfo? { return self.data.value.lastSentCustomerInfo }
-
     private let offlineEntitlementsManager: OfflineEntitlementsManager
     private let operationDispatcher: OperationDispatcher
     private let backend: Backend
@@ -98,14 +96,6 @@ class CustomerInfoManager {
                 completion(.success(customerInfo))
             }
         }
-    }
-
-    func sendCachedCustomerInfoIfAvailable(appUserID: String) {
-        guard let info = self.cachedCustomerInfo(appUserID: appUserID) else {
-            return
-        }
-
-        self.sendUpdateIfChanged(customerInfo: info)
     }
 
     // swiftlint:disable:next function_body_length
@@ -215,7 +205,12 @@ class CustomerInfoManager {
     func clearCustomerInfoCache(forAppUserID appUserID: String) {
         self.modifyData {
             $0.deviceCache.clearCustomerInfoCache(appUserID: appUserID)
-            $0.lastSentCustomerInfo = nil
+        }
+    }
+
+    func setLastSentCustomerInfo(_ info: CustomerInfo) {
+        self.modifyData {
+            $0.lastSentCustomerInfo = info
         }
     }
 
@@ -226,15 +221,17 @@ class CustomerInfoManager {
                 continuation.yield(lastSentCustomerInfo)
             }
 
-            let disposable = self.monitorChanges { continuation.yield($0) }
+            let disposable = self.monitorChanges { _, new in continuation.yield(new) }
 
             continuation.onTermination = { @Sendable _ in disposable() }
         }
     }
 
+    typealias CustomerInfoChangeClosure = (_ old: CustomerInfo?, _ new: CustomerInfo) -> Void
+
     /// Allows monitoring changes to the active `CustomerInfo`.
     /// - Returns: closure that removes the created observation.
-    func monitorChanges(_ changes: @escaping (CustomerInfo) -> Void) -> () -> Void {
+    func monitorChanges(_ changes: @escaping CustomerInfoChangeClosure) -> () -> Void {
         self.modifyData {
             let lastIdentifier = $0.customerInfoObserversByIdentifier.keys
                 .sorted()
@@ -251,6 +248,9 @@ class CustomerInfoManager {
         }
     }
 
+    // Visible for tests
+    var lastSentCustomerInfo: CustomerInfo? { return self.data.value.lastSentCustomerInfo }
+
     private func removeObserver(with identifier: Int) {
         self.modifyData {
             $0.customerInfoObserversByIdentifier.removeValue(forKey: identifier)
@@ -258,11 +258,12 @@ class CustomerInfoManager {
     }
 
     private func sendUpdateIfChanged(customerInfo: CustomerInfo) {
-        self.modifyData {
-            guard !$0.customerInfoObserversByIdentifier.isEmpty,
-                  $0.lastSentCustomerInfo != customerInfo else {
-                      return
-                  }
+        return self.modifyData {
+            let lastSentCustomerInfo = $0.lastSentCustomerInfo
+
+            guard !$0.customerInfoObserversByIdentifier.isEmpty, lastSentCustomerInfo != customerInfo else {
+                return
+            }
 
             if $0.lastSentCustomerInfo != nil {
                 Logger.debug(Strings.customerInfo.sending_updated_customerinfo_to_delegate)
@@ -276,7 +277,7 @@ class CustomerInfoManager {
             // this class' data. By making it async, the closure is invoked outside of the lock.
             self.operationDispatcher.dispatchAsyncOnMainThread { [observers = $0.customerInfoObserversByIdentifier] in
                 for closure in observers.values {
-                    closure(customerInfo)
+                    closure(lastSentCustomerInfo, customerInfo)
                 }
             }
         }
@@ -321,35 +322,33 @@ private extension CustomerInfoManager {
             _ = Task<Void, Never> {
                 let transactions = await self.transactionFetcher.unfinishedVerifiedTransactions
 
-                if !transactions.isEmpty {
-                    var results: [Result<CustomerInfo, BackendError>] = []
-                    let storefront = await Storefront.currentStorefront
-
+                if let transactionToPost = transactions.first {
                     Logger.debug(
                         Strings.customerInfo.posting_transactions_in_lieu_of_fetching_customerinfo(transactions)
                     )
 
-                    for transaction in transactions {
-                        results.append(
-                            await self.transactionPoster.handlePurchasedTransaction(
-                                transaction,
-                                data: .init(appUserID: appUserID,
-                                            presentedOfferingID: nil,
-                                            unsyncedAttributes: [:],
-                                            storefront: storefront,
-                                            source: Self.sourceForUnfinishedTransaction)
-                            )
-                        )
+                    let transactionData = PurchasedTransactionData(
+                        appUserID: appUserID,
+                        presentedOfferingID: nil,
+                        unsyncedAttributes: [:],
+                        storefront: await Storefront.currentStorefront,
+                        source: Self.sourceForUnfinishedTransaction
+                    )
+
+                    // Post everything but the first transaction in the background
+                    // in parallel so they can be de-duped
+                    let otherTransactionsToPostInParalel = Array(transactions.dropFirst())
+                    Task.detached(priority: .background) {
+                        await self.postTransactions(otherTransactionsToPostInParalel, transactionData)
                     }
 
-                    // Any of the POST receipt operations will have posted the same receipt contents
-                    // so the resulting `CustomerInfo` will be equivalent.
-                    // For that reason, we can return the last known success if available,
-                    // and otherwise the last result (an error).
-                    let lastSuccess = results.last { $0.value != nil }
-                    let result = lastSuccess ?? results.last!
-
-                    completion(result)
+                    // Return the result of posting the first transaction.
+                    // The posted receipt will include the content of every other transaction
+                    // so we don't need to wait for those.
+                    completion(await self.transactionPoster.handlePurchasedTransaction(
+                        transactionToPost,
+                        data: transactionData
+                    ))
                 } else {
                     self.requestCustomerInfo(appUserID: appUserID,
                                              isAppBackgrounded: isAppBackgrounded,
@@ -374,6 +373,24 @@ private extension CustomerInfoManager {
                                      withRandomDelay: isAppBackgrounded,
                                      allowComputingOffline: allowComputingOffline,
                                      completion: completion)
+    }
+
+    /// Posts all `transactions` in parallel.
+    @available(iOS 15.0, tvOS 15.0, macOS 12.0, watchOS 8.0, *)
+    private func postTransactions(
+        _ transactions: [StoreTransaction],
+        _ data: PurchasedTransactionData
+    ) async {
+        await withTaskGroup(of: Void.self) { group in
+            for transaction in transactions {
+                group.addTask {
+                    _ = await self.transactionPoster.handlePurchasedTransaction(
+                        transaction,
+                        data: data
+                    )
+                }
+            }
+        }
     }
 
     // Note: this is just a best guess.
@@ -403,7 +420,7 @@ private extension CustomerInfoManager {
         /// This allows cancelling observations by deleting them from this dictionary.
         /// These observers are used both for ``Purchases/customerInfoStream`` and
         /// `PurchasesDelegate/purchases(_:receivedUpdated:)``.
-        var customerInfoObserversByIdentifier: [Int: (CustomerInfo) -> Void]
+        var customerInfoObserversByIdentifier: [Int: CustomerInfoManager.CustomerInfoChangeClosure]
 
         init(deviceCache: DeviceCache) {
             self.deviceCache = deviceCache

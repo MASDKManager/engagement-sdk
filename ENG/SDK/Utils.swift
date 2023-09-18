@@ -53,3 +53,12 @@ enum BannerPosition {
 extension Notification.Name {
     public static let sdkInitializedNotification = Notification.Name("SDKInitializedNotification")
 }
+
+extension ViewController: PaywallViewControllerDelegate {
+
+    func paywallViewController(_ controller: PaywallViewController,
+                               didFinishPurchasingWith customerInfo: CustomerInfo) {
+
+    }
+
+}

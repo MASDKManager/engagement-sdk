@@ -168,6 +168,8 @@
 			dependencies = (
 			);
 			name = ENG;
+			packageProductDependencies = (
+			);
 			productName = ENG;
 			productReference = 0DAEB3602A5AF08A00C38DD9 /* ENG.app */;
 			productType = "com.apple.product-type.application";
@@ -196,6 +198,8 @@
 				Base,
 			);
 			mainGroup = 0DAEB3572A5AF08A00C38DD9;
+			packageReferences = (
+			);
 			productRefGroup = 0DAEB3612A5AF08A00C38DD9 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";

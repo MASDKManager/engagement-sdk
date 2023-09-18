@@ -135,54 +135,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "99ACBADD-DC2A-41C7-95C0-9B89F14DDD52"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "ENG/SDK/EMobi.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "284"
-            endingLineNumber = "284"
-            landmarkName = "configureRevenueCat()"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "99ACBADD-DC2A-41C7-95C0-9B89F14DDD52 - 230ad2d3d7959cca"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "ENG.EMobi.configureRevenueCat() -&gt; ()"
-                  moduleName = "ENG"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/Maarouf/Desktop/ios/ENG/ENG/SDK/EMobi.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "159"
-                  endingLineNumber = "159"
-                  offsetFromSymbolStart = "772">
-               </Location>
-               <Location
-                  uuid = "99ACBADD-DC2A-41C7-95C0-9B89F14DDD52 - 230ad2d3d7959c46"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "ENG.EMobi.configureRevenueCat() -&gt; ()"
-                  moduleName = "ENG"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/Maarouf/Desktop/ios/ENG/ENG/SDK/EMobi.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "163"
-                  endingLineNumber = "163"
-                  offsetFromSymbolStart = "772">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "8E015F07-F1AC-417E-88F1-588DD013512A"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
@@ -210,22 +162,6 @@
             endingLineNumber = "16"
             landmarkName = "adjustDeeplinkResponse(_:)"
             landmarkType = "9">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "9F8268F1-2099-472E-8F2A-5336C5FC0EE8"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "ENG/SDK/EMobi.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "306"
-            endingLineNumber = "306"
-            landmarkName = "requestIDFA(fromInside:)"
-            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -322,22 +258,6 @@
                   offsetFromSymbolStart = "36">
                </Location>
             </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "97D6C6B6-E2A7-47CF-93B5-A36F45D238B1"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "ENG/SDK/EMobi.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "196"
-            endingLineNumber = "196"
-            landmarkName = "applyFetchedValues()"
-            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy

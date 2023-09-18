@@ -14,7 +14,7 @@ import FirebaseRemoteConfig
 import FBSDKCoreKit
 import AppTrackingTransparency
 import OneSignalFramework
-import RevenueCat
+import RevenueCat 
 import MailchimpSDK
 import AppLovinSDK
 
@@ -516,10 +516,12 @@ public class EMobi: NSObject, PurchasesDelegate {
             // Do something else here or just return nil if you don't need to show any paywall.
             return nil
         }
-        
+
         return PurchaselyManager.shared.showPurchaselyPaywall(type: type, completionSuccess: completionSuccess, completionFailure: completionFailure)
+ 
     }
     
+   
     public static func handleOpenURL(
         _ app: UIApplication,
         open url: URL,
