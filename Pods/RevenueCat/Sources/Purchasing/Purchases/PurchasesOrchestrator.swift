@@ -43,6 +43,7 @@ final class PurchasesOrchestrator {
 
     private let _allowSharingAppStoreAccount: Atomic<Bool?> = nil
     private let presentedOfferingIDsByProductID: Atomic<[String: String]> = .init([:])
+    private let presentedPaywall: Atomic<PaywallEvent.Data?> = nil
     private let purchaseCompleteCallbacksByProductID: Atomic<[String: PurchaseCompletedBlock]> = .init([:])
 
     private var appUserID: String { self.currentUserProvider.currentAppUserID }
@@ -546,6 +547,19 @@ final class PurchasesOrchestrator {
         self.presentedOfferingIDsByProductID.modify { $0[productIdentifier] = identifier }
     }
 
+    func track(paywallEvent: PaywallEvent) {
+        switch paywallEvent {
+        case let .impression(data):
+            self.cachePresentedPaywall(data)
+
+        case .close:
+            self.clearPresentedPaywall()
+
+        case .cancel:
+            break
+        }
+    }
+
 #if os(iOS) || os(macOS) || VISION_OS
 
     @available(watchOS, unavailable)
@@ -866,27 +880,29 @@ extension PurchasesOrchestrator: StoreKit2TransactionListenerDelegate {
         let storefront = await self.storefront(from: transaction)
         let subscriberAttributes = self.unsyncedAttributes
         let adServicesToken = self.attribution.unsyncedAdServicesToken
+        let transactionData: PurchasedTransactionData = .init(
+            appUserID: self.appUserID,
+            presentedOfferingID: nil,
+            unsyncedAttributes: subscriberAttributes,
+            aadAttributionToken: adServicesToken,
+            storefront: storefront,
+            source: .init(
+                isRestore: self.allowSharingAppStoreAccount,
+                initiationSource: .queue
+            )
+        )
 
         let result: Result<CustomerInfo, BackendError> = await Async.call { completed in
             self.transactionPoster.handlePurchasedTransaction(
                 StoreTransaction.from(transaction: transaction),
-                data: .init(
-                    appUserID: self.appUserID,
-                    presentedOfferingID: nil,
-                    unsyncedAttributes: subscriberAttributes,
-                    aadAttributionToken: adServicesToken,
-                    storefront: storefront,
-                    source: .init(
-                        isRestore: self.allowSharingAppStoreAccount,
-                        initiationSource: .queue
-                    )
-                )
+                data: transactionData
             ) { result in
                 completed(result)
             }
         }
 
         self.handlePostReceiptResult(result,
+                                     transactionData: transactionData,
                                      subscriberAttributes: subscriberAttributes,
                                      adServicesToken: adServicesToken)
 
@@ -978,6 +994,7 @@ private extension PurchasesOrchestrator {
         }
     }
 
+    // swiftlint:disable:next function_body_length
     func syncPurchases(receiptRefreshPolicy: ReceiptRefreshPolicy,
                        isRestore: Bool,
                        initiationSource: ProductRequestData.InitiationSource,
@@ -1024,17 +1041,20 @@ private extension PurchasesOrchestrator {
                 }
 
                 self.createProductRequestData(with: receiptData) { productRequestData in
+                    let transactionData: PurchasedTransactionData = .init(
+                        appUserID: currentAppUserID,
+                        presentedOfferingID: nil,
+                        unsyncedAttributes: unsyncedAttributes,
+                        storefront: productRequestData?.storefront,
+                        source: .init(isRestore: isRestore, initiationSource: initiationSource)
+                    )
+
                     self.backend.post(receiptData: receiptData,
                                       productData: productRequestData,
-                                      transactionData: .init(
-                                        appUserID: currentAppUserID,
-                                        presentedOfferingID: nil,
-                                        unsyncedAttributes: unsyncedAttributes,
-                                        storefront: productRequestData?.storefront,
-                                        source: .init(isRestore: isRestore, initiationSource: initiationSource)
-                                      ),
+                                      transactionData: transactionData,
                                       observerMode: self.observerMode) { result in
                         self.handleReceiptPost(result: result,
+                                               transactionData: transactionData,
                                                subscriberAttributes: unsyncedAttributes,
                                                adServicesToken: adServicesToken,
                                                completion: completion)
@@ -1045,11 +1065,13 @@ private extension PurchasesOrchestrator {
     }
 
     func handleReceiptPost(result: Result<CustomerInfo, BackendError>,
+                           transactionData: PurchasedTransactionData,
                            subscriberAttributes: SubscriberAttribute.Dictionary,
                            adServicesToken: String?,
                            completion: (@Sendable (Result<CustomerInfo, PurchasesError>) -> Void)?) {
         self.handlePostReceiptResult(
             result,
+            transactionData: transactionData,
             subscriberAttributes: subscriberAttributes,
             adServicesToken: adServicesToken
         )
@@ -1062,10 +1084,18 @@ private extension PurchasesOrchestrator {
     }
 
     func handlePostReceiptResult(_ result: Result<CustomerInfo, BackendError>,
+                                 transactionData: PurchasedTransactionData,
                                  subscriberAttributes: SubscriberAttribute.Dictionary,
                                  adServicesToken: String?) {
-        if let customerInfo = result.value {
+        switch result {
+        case let .success(customerInfo):
             self.customerInfoManager.cache(customerInfo: customerInfo, appUserID: self.appUserID)
+
+        case .failure:
+            // Cache paywall again in case purchase is retried.
+            if let paywall = transactionData.presentedPaywall {
+                self.cachePresentedPaywall(paywall)
+            }
         }
 
         self.markSyncedIfNeeded(subscriberAttributes: subscriberAttributes,
@@ -1077,22 +1107,26 @@ private extension PurchasesOrchestrator {
                                     storefront: StorefrontType?,
                                     restored: Bool) {
         let offeringID = self.getAndRemovePresentedOfferingIdentifier(for: purchasedTransaction)
+        let paywall = self.getAndRemovePresentedPaywall()
         let unsyncedAttributes = self.unsyncedAttributes
         let adServicesToken = self.attribution.unsyncedAdServicesToken
+        let transactionData: PurchasedTransactionData = .init(
+            appUserID: self.appUserID,
+            presentedOfferingID: offeringID,
+            presentedPaywall: paywall,
+            unsyncedAttributes: unsyncedAttributes,
+            aadAttributionToken: adServicesToken,
+            storefront: storefront,
+            source: self.purchaseSource(for: purchasedTransaction.productIdentifier,
+                                        restored: restored)
+        )
 
         self.transactionPoster.handlePurchasedTransaction(
             purchasedTransaction,
-            data: .init(
-                appUserID: self.appUserID,
-                presentedOfferingID: offeringID,
-                unsyncedAttributes: unsyncedAttributes,
-                aadAttributionToken: adServicesToken,
-                storefront: storefront,
-                source: self.purchaseSource(for: purchasedTransaction.productIdentifier,
-                                            restored: restored)
-            )
+            data: transactionData
         ) { result in
             self.handlePostReceiptResult(result,
+                                         transactionData: transactionData,
                                          subscriberAttributes: unsyncedAttributes,
                                          adServicesToken: adServicesToken)
 
@@ -1133,6 +1167,16 @@ private extension PurchasesOrchestrator {
         }
     }
 
+    func cachePresentedPaywall(_ paywall: PaywallEvent.Data) {
+        Logger.verbose(Strings.paywalls.caching_presented_paywall)
+        self.presentedPaywall.value = paywall
+    }
+
+    func clearPresentedPaywall() {
+        Logger.verbose(Strings.paywalls.clearing_presented_paywall)
+        self.presentedPaywall.value = nil
+    }
+
     func getAndRemovePresentedOfferingIdentifier(for productIdentifier: String) -> String? {
         return self.presentedOfferingIDsByProductID.modify {
             $0.removeValue(forKey: productIdentifier)
@@ -1141,6 +1185,10 @@ private extension PurchasesOrchestrator {
 
     func getAndRemovePresentedOfferingIdentifier(for transaction: StoreTransaction) -> String? {
         return self.getAndRemovePresentedOfferingIdentifier(for: transaction.productIdentifier)
+    }
+
+    func getAndRemovePresentedPaywall() -> PaywallEvent.Data? {
+        return self.presentedPaywall.getAndSet(nil)
     }
 
     /// Computes a `ProductRequestData` for an active subscription found in the receipt,
@@ -1207,23 +1255,27 @@ extension PurchasesOrchestrator {
     ) async throws -> CustomerInfo {
         let storefront = await Storefront.currentStorefront
         let offeringID = self.getAndRemovePresentedOfferingIdentifier(for: transaction)
+        let paywall = self.getAndRemovePresentedPaywall()
         let unsyncedAttributes = self.unsyncedAttributes
         let adServicesToken = self.attribution.unsyncedAdServicesToken
+        let transactionData: PurchasedTransactionData = .init(
+            appUserID: self.appUserID,
+            presentedOfferingID: offeringID,
+            presentedPaywall: paywall,
+            unsyncedAttributes: unsyncedAttributes,
+            aadAttributionToken: adServicesToken,
+            storefront: storefront,
+            source: .init(isRestore: self.allowSharingAppStoreAccount,
+                          initiationSource: initiationSource)
+        )
 
         let result = await self.transactionPoster.handlePurchasedTransaction(
             transaction,
-            data: .init(
-                appUserID: self.appUserID,
-                presentedOfferingID: offeringID,
-                unsyncedAttributes: unsyncedAttributes,
-                aadAttributionToken: adServicesToken,
-                storefront: storefront,
-                source: .init(isRestore: self.allowSharingAppStoreAccount,
-                              initiationSource: initiationSource)
-            )
+            data: transactionData
         )
 
         self.handlePostReceiptResult(result,
+                                     transactionData: transactionData,
                                      subscriberAttributes: unsyncedAttributes,
                                      adServicesToken: adServicesToken)
 

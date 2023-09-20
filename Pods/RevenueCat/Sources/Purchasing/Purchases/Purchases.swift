@@ -237,6 +237,7 @@ public typealias StartPurchaseBlock = (@escaping PurchaseCompletedBlock) -> Void
     private let attributionPoster: AttributionPoster
     private let backend: Backend
     private let deviceCache: DeviceCache
+    private let paywallCache: PaywallCacheWarmingType?
     private let identityManager: IdentityManager
     private let userDefaults: UserDefaults
     private let notificationCenter: NotificationCenter
@@ -245,6 +246,7 @@ public typealias StartPurchaseBlock = (@escaping PurchaseCompletedBlock) -> Void
     private let offlineEntitlementsManager: OfflineEntitlementsManager
     private let productsManager: ProductsManagerType
     private let customerInfoManager: CustomerInfoManager
+    private let paywallEventsManager: PaywallEventsManagerType?
     private let trialOrIntroPriceEligibilityChecker: CachingTrialOrIntroPriceEligibilityChecker
     private let purchasedProductsFetcher: PurchasedProductsFetcherType?
     private let purchasesOrchestrator: PurchasesOrchestrator
@@ -258,6 +260,7 @@ public typealias StartPurchaseBlock = (@escaping PurchaseCompletedBlock) -> Void
     convenience init(apiKey: String,
                      appUserID: String?,
                      userDefaults: UserDefaults? = nil,
+                     documentsDirectory: URL? = nil,
                      observerMode: Bool = false,
                      platformInfo: PlatformInfo? = Purchases.platformInfo,
                      responseVerificationMode: Signing.ResponseVerificationMode,
@@ -338,6 +341,7 @@ public typealias StartPurchaseBlock = (@escaping PurchaseCompletedBlock) -> Void
                                                       transactionFetcher: StoreKit2TransactionFetcher(),
                                                       transactionPoster: transactionPoster,
                                                       systemInfo: systemInfo)
+
         let attributionDataMigrator = AttributionDataMigrator()
         let subscriberAttributesManager = SubscriberAttributesManager(backend: backend,
                                                                       deviceCache: deviceCache,
@@ -349,6 +353,24 @@ public typealias StartPurchaseBlock = (@escaping PurchaseCompletedBlock) -> Void
                                               customerInfoManager: customerInfoManager,
                                               attributeSyncing: subscriberAttributesManager,
                                               appUserID: appUserID)
+
+        let paywallEventsManager: PaywallEventsManagerType?
+        do {
+            if #available(iOS 15.0, tvOS 15.0, macOS 12.0, watchOS 8.0, *) {
+                paywallEventsManager = PaywallEventsManager(
+                    internalAPI: backend.internalAPI,
+                    userProvider: identityManager,
+                    store: try PaywallEventStore.createDefault(documentsDirectory: documentsDirectory)
+                )
+                Logger.verbose(Strings.paywalls.event_manager_initialized)
+            } else {
+                Logger.verbose(Strings.paywalls.event_manager_not_initialized_not_available)
+                paywallEventsManager = nil
+            }
+        } catch {
+            Logger.verbose(Strings.paywalls.event_manager_failed_to_initialize(error))
+            paywallEventsManager = nil
+        }
 
         let attributionPoster = AttributionPoster(deviceCache: deviceCache,
                                                   currentUserProvider: identityManager,
@@ -417,13 +439,23 @@ public typealias StartPurchaseBlock = (@escaping PurchaseCompletedBlock) -> Void
             }
         }()
 
-        let trialOrIntroPriceChecker = TrialOrIntroPriceEligibilityChecker(systemInfo: systemInfo,
-                                                                           receiptFetcher: receiptFetcher,
-                                                                           introEligibilityCalculator: introCalculator,
-                                                                           backend: backend,
-                                                                           currentUserProvider: identityManager,
-                                                                           operationDispatcher: operationDispatcher,
-                                                                           productsManager: productsManager)
+        let trialOrIntroPriceChecker = CachingTrialOrIntroPriceEligibilityChecker.create(
+            with: TrialOrIntroPriceEligibilityChecker(systemInfo: systemInfo,
+                                                      receiptFetcher: receiptFetcher,
+                                                      introEligibilityCalculator: introCalculator,
+                                                      backend: backend,
+                                                      currentUserProvider: identityManager,
+                                                      operationDispatcher: operationDispatcher,
+                                                      productsManager: productsManager)
+        )
+
+        let paywallCache: PaywallCacheWarmingType?
+
+        if #available(iOS 15.0, macOS 12.0, watchOS 8.0, tvOS 15.0, *) {
+            paywallCache = PaywallCacheWarming(introEligibiltyChecker: trialOrIntroPriceChecker)
+        } else {
+            paywallCache = nil
+        }
 
         self.init(appUserID: appUserID,
                   requestFetcher: fetcher,
@@ -437,10 +469,12 @@ public typealias StartPurchaseBlock = (@escaping PurchaseCompletedBlock) -> Void
                   systemInfo: systemInfo,
                   offeringsFactory: offeringsFactory,
                   deviceCache: deviceCache,
+                  paywallCache: paywallCache,
                   identityManager: identityManager,
                   subscriberAttributes: subscriberAttributes,
                   operationDispatcher: operationDispatcher,
                   customerInfoManager: customerInfoManager,
+                  paywallEventsManager: paywallEventsManager,
                   productsManager: productsManager,
                   offeringsManager: offeringsManager,
                   offlineEntitlementsManager: offlineEntitlementsManager,
@@ -448,6 +482,7 @@ public typealias StartPurchaseBlock = (@escaping PurchaseCompletedBlock) -> Void
                   purchasedProductsFetcher: purchasedProductsFetcher,
                   trialOrIntroPriceEligibilityChecker: trialOrIntroPriceChecker)
     }
+
     // swiftlint:disable:next function_body_length
     init(appUserID: String?,
          requestFetcher: StoreKitRequestFetcher,
@@ -461,16 +496,18 @@ public typealias StartPurchaseBlock = (@escaping PurchaseCompletedBlock) -> Void
          systemInfo: SystemInfo,
          offeringsFactory: OfferingsFactory,
          deviceCache: DeviceCache,
+         paywallCache: PaywallCacheWarmingType?,
          identityManager: IdentityManager,
          subscriberAttributes: Attribution,
          operationDispatcher: OperationDispatcher,
          customerInfoManager: CustomerInfoManager,
+         paywallEventsManager: PaywallEventsManagerType?,
          productsManager: ProductsManagerType,
          offeringsManager: OfferingsManager,
          offlineEntitlementsManager: OfflineEntitlementsManager,
          purchasesOrchestrator: PurchasesOrchestrator,
          purchasedProductsFetcher: PurchasedProductsFetcherType?,
-         trialOrIntroPriceEligibilityChecker: TrialOrIntroPriceEligibilityCheckerType
+         trialOrIntroPriceEligibilityChecker: CachingTrialOrIntroPriceEligibilityChecker
     ) {
 
         if systemInfo.dangerousSettings.customEntitlementComputation {
@@ -504,6 +541,7 @@ public typealias StartPurchaseBlock = (@escaping PurchaseCompletedBlock) -> Void
         self.paymentQueueWrapper = paymentQueueWrapper
         self.offeringsFactory = offeringsFactory
         self.deviceCache = deviceCache
+        self.paywallCache = paywallCache
         self.identityManager = identityManager
         self.userDefaults = userDefaults
         self.notificationCenter = notificationCenter
@@ -511,12 +549,13 @@ public typealias StartPurchaseBlock = (@escaping PurchaseCompletedBlock) -> Void
         self.attribution = subscriberAttributes
         self.operationDispatcher = operationDispatcher
         self.customerInfoManager = customerInfoManager
+        self.paywallEventsManager = paywallEventsManager
         self.productsManager = productsManager
         self.offeringsManager = offeringsManager
         self.offlineEntitlementsManager = offlineEntitlementsManager
         self.purchasesOrchestrator = purchasesOrchestrator
         self.purchasedProductsFetcher = purchasedProductsFetcher
-        self.trialOrIntroPriceEligibilityChecker = .create(with: trialOrIntroPriceEligibilityChecker)
+        self.trialOrIntroPriceEligibilityChecker = trialOrIntroPriceEligibilityChecker
 
         super.init()
 
@@ -670,9 +709,7 @@ public extension Purchases {
             }
 
             self.systemInfo.isApplicationBackgrounded { isAppBackgrounded in
-                self.offeringsManager.updateOfferingsCache(appUserID: self.appUserID,
-                                                           isAppBackgrounded: isAppBackgrounded,
-                                                           completion: nil)
+                self.updateOfferingsCache(isAppBackgrounded: isAppBackgrounded)
             }
         }
     }
@@ -893,6 +930,18 @@ public extension Purchases {
         return await checkTrialOrIntroductoryDiscountEligibilityAsync(productIdentifiers)
     }
 
+    @available(iOS 13.0, tvOS 13.0, macOS 10.15, watchOS 6.2, *)
+    func checkTrialOrIntroDiscountEligibility(packages: [Package]) async -> [Package: IntroEligibility] {
+        let result = await self.checkTrialOrIntroDiscountEligibility(
+            productIdentifiers: packages.map(\.storeProduct.productIdentifier)
+        )
+
+        return Set(packages)
+            .dictionaryWithValues { (package: Package) in
+                result[package.storeProduct.productIdentifier] ?? .init(eligibilityStatus: .unknown)
+            }
+    }
+
     @objc(checkTrialOrIntroDiscountEligibilityForProduct:completion:)
     func checkTrialOrIntroDiscountEligibility(product: StoreProduct,
                                               completion: @escaping (IntroEligibilityStatus) -> Void) {
@@ -1005,6 +1054,19 @@ public extension Purchases {
 }
 
 // swiftlint:enable missing_docs
+
+// MARK: - Paywalls
+
+@available(iOS 15.0, tvOS 15.0, macOS 12.0, watchOS 8.0, *)
+public extension Purchases {
+
+    /// Used by `RevenueCatUI` to keep track of ``PaywallEvent``s.
+    func track(paywallEvent: PaywallEvent) async {
+        self.purchasesOrchestrator.track(paywallEvent: paywallEvent)
+        await self.paywallEventsManager?.track(paywallEvent: paywallEvent)
+    }
+
+}
 
 // MARK: Configuring Purchases
 
@@ -1205,6 +1267,7 @@ public extension Purchases {
         appUserID: String?,
         observerMode: Bool,
         userDefaults: UserDefaults?,
+        documentsDirectory: URL? = nil,
         platformInfo: PlatformInfo?,
         responseVerificationMode: Signing.ResponseVerificationMode,
         storeKit2Setting: StoreKit2Setting,
@@ -1216,6 +1279,7 @@ public extension Purchases {
             .init(apiKey: apiKey,
                   appUserID: appUserID,
                   userDefaults: userDefaults,
+                  documentsDirectory: documentsDirectory,
                   observerMode: observerMode,
                   platformInfo: platformInfo,
                   responseVerificationMode: responseVerificationMode,
@@ -1366,7 +1430,7 @@ extension Purchases: InternalPurchasesType {
     @available(iOS 15.0, tvOS 15.0, watchOS 8.0, macOS 12.0, *)
     func productEntitlementMapping() async throws -> ProductEntitlementMapping {
         let response = try await Async.call { completion in
-            self.backend.offlineEntitlements.getProductEntitlementMapping(withRandomDelay: false) { result in
+            self.backend.offlineEntitlements.getProductEntitlementMapping(isAppBackgrounded: false) { result in
                 completion(result.mapError(\.asPublicError))
             }
         }
@@ -1470,6 +1534,13 @@ internal extension Purchases {
         self.offeringsManager.invalidateCachedOfferings(appUserID: self.appUserID)
     }
 
+    /// - Throws: if posting events fails
+    /// - Returns: the number of events posted
+    @available(iOS 15.0, tvOS 15.0, macOS 12.0, watchOS 8.0, *)
+    func flushPaywallEvents(count: Int) async throws -> Int {
+        return try await self.paywallEventsManager?.flushEvents(count: count) ?? 0
+    }
+
 }
 
 #endif
@@ -1504,6 +1575,8 @@ private extension Purchases {
             self.attribution.postAdServicesTokenOncePerInstallIfNeeded()
         }
         #endif
+
+        self.postPaywallEventsIfNeeded()
 
         #endif
     }
@@ -1602,9 +1675,27 @@ private extension Purchases {
     }
 
     private func updateOfferingsCache(isAppBackgrounded: Bool) {
-        self.offeringsManager.updateOfferingsCache(appUserID: self.appUserID,
-                                                   isAppBackgrounded: isAppBackgrounded,
-                                                   completion: nil)
+        self.offeringsManager.updateOfferingsCache(
+            appUserID: self.appUserID,
+            isAppBackgrounded: isAppBackgrounded
+        ) { [cache = self.paywallCache] offerings in
+            if #available(iOS 15.0, macOS 12.0, watchOS 8.0, tvOS 15.0, *),
+               let cache = cache, let offerings = offerings.value {
+                self.operationDispatcher.dispatchOnWorkerThread {
+                    await cache.warmUpEligibilityCache(offerings: offerings)
+                    await cache.warmUpPaywallImagesCache(offerings: offerings)
+                }
+            }
+        }
+    }
+
+    private func postPaywallEventsIfNeeded() {
+        guard #available(iOS 15.0, tvOS 15.0, macOS 12.0, watchOS 8.0, *),
+              let manager = self.paywallEventsManager else { return }
+
+        self.operationDispatcher.dispatchOnWorkerThread(delay: .long) {
+            _ = try? await manager.flushEvents(count: PaywallEventsManager.defaultEventFlushCount)
+        }
     }
 
 }

@@ -114,6 +114,10 @@ The AppLovin SDK is available under a commercial license (https://www.applovin.c
 
 
 
+## AppsFlyerFramework
+
+Copyright 2018 AppsFlyer Ltd. All rights reserved.
+
 ## FBAEMKit
 
 Copyright (c) Meta Platforms, Inc. and affiliates. All rights reserved.

@@ -23,6 +23,8 @@ target 'ENG' do
   pod 'AppLovinMediationVungleAdapter'
   
   pod 'AppLovinSDK'
-  pod 'Purchasely', '~> 3.7.2'
+  pod 'Purchasely' 
+  
+  pod 'AppsFlyerFramework'
  
 end

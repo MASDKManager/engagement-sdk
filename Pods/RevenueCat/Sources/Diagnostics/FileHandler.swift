@@ -15,7 +15,25 @@ import Foundation
 
 /// A wrapper that allows basic operations on a file, synchronized as an `actor`.
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.2, *)
-actor FileHandler {
+protocol FileHandlerType: Sendable {
+
+    /// Returns an async sequence for every line in the file
+    @available(iOS 15.0, tvOS 15.0, macOS 12.0, watchOS 8.0, *)
+    func readLines() async throws -> AsyncLineSequence<FileHandle.AsyncBytes>
+
+    /// Adds a line at the end of the file
+    func append(line: String) async
+
+    /// Removes the contents of the file
+    func emptyFile() async throws
+
+    /// Deletes the first N lines from the file, without loading the entire file in memory.
+    func removeFirstLines(_ count: Int) async throws
+
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.2, *)
+actor FileHandler: FileHandlerType {
 
     private var fileHandle: FileHandle
 
@@ -38,6 +56,8 @@ actor FileHandler {
     /// - Note: this loads the entire file in memory
     /// For newer versions, consider using `readLines` instead.
     func readFile() throws -> Data {
+        RCTestAssertNotMainThread()
+
         try self.moveToBeginningOfFile()
 
         return self.fileHandle.availableData
@@ -46,6 +66,8 @@ actor FileHandler {
     /// Returns an async sequence for every line in the file
     @available(iOS 15.0, tvOS 15.0, macOS 12.0, watchOS 8.0, *)
     func readLines() throws -> AsyncLineSequence<FileHandle.AsyncBytes> {
+        RCTestAssertNotMainThread()
+
         try self.moveToBeginningOfFile()
 
         return self.fileHandle.bytes.lines
@@ -53,6 +75,8 @@ actor FileHandler {
 
     /// Adds a line at the end of the file
     func append(line: String) {
+        RCTestAssertNotMainThread()
+
         self.fileHandle.seekToEndOfFile()
         self.fileHandle.write(line.asData)
         self.fileHandle.write(Self.lineBreakData)

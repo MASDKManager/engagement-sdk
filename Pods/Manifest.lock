@@ -27,6 +27,9 @@ PODS:
     - AppLovinSDK
     - VungleAds (= 7.0.1)
   - AppLovinSDK (11.11.3)
+  - AppsFlyerFramework (6.12.2):
+    - AppsFlyerFramework/Main (= 6.12.2)
+  - AppsFlyerFramework/Main (6.12.2)
   - BURelyFoundation_Global/AFNetworking (0.1.2.5)
   - BURelyFoundation_Global/APM (0.1.2.5)
   - BURelyFoundation_Global/Foundation (0.1.2.5):
@@ -215,8 +218,8 @@ PODS:
   - PromisesObjC (2.3.1)
   - PromisesSwift (2.3.1):
     - PromisesObjC (= 2.3.1)
-  - Purchasely (3.7.4)
-  - RevenueCat (4.25.9)
+  - Purchasely (4.0.1)
+  - RevenueCat (4.26.0)
   - UnityAds (4.8.0)
   - VungleAds (7.0.1)
 
@@ -229,6 +232,7 @@ DEPENDENCIES:
   - AppLovinMediationUnityAdsAdapter
   - AppLovinMediationVungleAdapter
   - AppLovinSDK
+  - AppsFlyerFramework
   - FBAudienceNetwork
   - FBSDKCoreKit
   - FirebaseAnalytics
@@ -236,7 +240,7 @@ DEPENDENCIES:
   - FirebaseRemoteConfig
   - MailchimpSDK
   - OneSignalXCFramework
-  - Purchasely (~> 3.7.2)
+  - Purchasely
   - RevenueCat
 
 SPEC REPOS:
@@ -250,6 +254,7 @@ SPEC REPOS:
     - AppLovinMediationUnityAdsAdapter
     - AppLovinMediationVungleAdapter
     - AppLovinSDK
+    - AppsFlyerFramework
     - BURelyFoundation_Global
     - FBAEMKit
     - FBAudienceNetwork
@@ -290,6 +295,7 @@ SPEC CHECKSUMS:
   AppLovinMediationUnityAdsAdapter: b372cde7ee94362aed39cc4bf46408cd978f35d0
   AppLovinMediationVungleAdapter: fa3e9ef18d47419db9cbabdcc7662ada68b8d9f8
   AppLovinSDK: 623ef78363c0dd2c3ff5446cde37e4920a96b7e0
+  AppsFlyerFramework: 6eb4d89d2eb9a6632317f1055b359d9fd85fd5ff
   BURelyFoundation_Global: cd9e09f6c9c1fc42944af4fdaef0b60a24a0bc39
   FBAEMKit: af2972f39bb0f3f7c45998f435b007833c32ffb2
   FBAudienceNetwork: 4d6223a9a88a22e9dca8c9e6c1829a8745b86228
@@ -315,11 +321,11 @@ SPEC CHECKSUMS:
   OneSignalXCFramework: 8429bc2456554da1b09b17135621087152ad05a0
   PromisesObjC: c50d2056b5253dadbd6c2bea79b0674bd5a52fa4
   PromisesSwift: 28dca69a9c40779916ac2d6985a0192a5cb4a265
-  Purchasely: f4b46f04897bc11764a1da6176268f0bae3e61e4
-  RevenueCat: 4160d04575059fc1edbb973981f541b705ddebef
+  Purchasely: 4dc91cdd02dd458b846ec84e05f574f6f739c9d7
+  RevenueCat: 1f3a5a1c3899cb27ef9279d77a01a807d489a240
   UnityAds: 390144b2029ac9ce2ec81c3cfd0007686b59236a
   VungleAds: 49e2cbb981c1efa0086029d2dcec8a7322105809
 
-PODFILE CHECKSUM: b1136b70f791cc4e3d5efc38bbb33374ad4b8a51
+PODFILE CHECKSUM: 89b539a1afce5ab7fd585f9ae2a22e12d1758d2c
 
 COCOAPODS: 1.12.1

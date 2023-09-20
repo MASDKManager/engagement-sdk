@@ -17,5 +17,7 @@ final class Constant {
     var applovinInterstitialKey = String()
     var applovinBannerKey = String()
     var appLovinSdkKey = String()
+    var appsFlyerDevKey = String()
+    var appsFlyerAppleAppID = String()
  
 }

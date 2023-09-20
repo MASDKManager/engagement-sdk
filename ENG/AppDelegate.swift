@@ -45,7 +45,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, EMobiDelegate {
         // Call your custom method from the module
         return EMobi.handleOpenURL(app, open: url, options: options)
     }
-    
+      
     // MARK: UISceneSession Lifecycle
     
     func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {

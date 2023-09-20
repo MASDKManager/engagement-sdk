@@ -45,20 +45,12 @@ func checkSubscriptionStatus() -> Bool {
     return defaults.bool(forKey: "IsSubscribedUser")
 }
  
-enum BannerPosition {
-    case top
-    case bottom
+enum MMP {
+    case adjust
+    case appsflyer
 }
 
 extension Notification.Name {
     public static let sdkInitializedNotification = Notification.Name("SDKInitializedNotification")
 }
 
-extension ViewController: PaywallViewControllerDelegate {
-
-    func paywallViewController(_ controller: PaywallViewController,
-                               didFinishPurchasingWith customerInfo: CustomerInfo) {
-
-    }
-
-}

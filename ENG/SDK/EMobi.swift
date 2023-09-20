@@ -17,6 +17,7 @@ import OneSignalFramework
 import RevenueCat 
 import MailchimpSDK
 import AppLovinSDK
+import AppsFlyerLib
 
 public class EMobi: NSObject, PurchasesDelegate {
     
@@ -43,6 +44,7 @@ public class EMobi: NSObject, PurchasesDelegate {
     private var showATTonLaunch = false
     private var launchOptions : [UIApplication.LaunchOptionsKey: Any]?
     public weak var delegate: EMobiDelegate?
+    private var mmp : MMP = .adjust
     
     private var adjustDelegateHandler: AdjustDelegateHandler?
     
@@ -144,6 +146,8 @@ public class EMobi: NSObject, PurchasesDelegate {
             "applovinInterstitialKey": Constant.shared.applovinInterstitialKey,
             "applovinBannerKey": Constant.shared.applovinBannerKey,
             "appLovinSdkKey": Constant.shared.appLovinSdkKey,
+            "appsflyerKey": Constant.shared.appsFlyerDevKey,
+            "appsFlyerAppleAppID": Constant.shared.appsFlyerAppleAppID,
             "showATTonLaunch": ""
         ]
         
@@ -184,6 +188,10 @@ public class EMobi: NSObject, PurchasesDelegate {
                     Constant.shared.applovinBannerKey = stringValue
                 case "appLovinSdkKey":
                     Constant.shared.appLovinSdkKey = stringValue
+                case "appsflyerKey":
+                    Constant.shared.appsFlyerDevKey = stringValue
+                case "appsFlyerAppleAppID":
+                    Constant.shared.appsFlyerAppleAppID = stringValue
                 case "showATTonLaunch":
                     showATTonLaunch = remoteConfig[key].boolValue
                 default:
@@ -194,6 +202,11 @@ public class EMobi: NSObject, PurchasesDelegate {
         
         if !Constant.shared.adjustAppToken.isEmpty {
             configureAdjust()
+        }
+        
+        if !Constant.shared.appsFlyerDevKey.isEmpty && !Constant.shared.appsFlyerAppleAppID.isEmpty {
+            mmp = .appsflyer
+            configureAppsFlyer()
         }
         
         if !Constant.shared.revenuecatAPIKey.isEmpty {
@@ -277,10 +290,15 @@ public class EMobi: NSObject, PurchasesDelegate {
         // REQUIRED: Set the Facebook anonymous Id
         Purchases.shared.attribution.setFBAnonymousID(FBSDKCoreKit.AppEvents.shared.anonymousID)
         
-        if let adjustId = Adjust.adid() {
-            Purchases.shared.attribution.setAdjustID(adjustId)
+        if self.mmp == .adjust {
+            if let adjustId = Adjust.adid() {
+                Purchases.shared.attribution.setAdjustID(adjustId)
+            }
+        }else if self.mmp == .appsflyer {
+            Purchases.shared.attribution.setAppsflyerID(AppsFlyerLib.shared().getAppsFlyerUID()) 
         }
-         
+
+        
         Purchases.shared.delegate = self
         
         // Set the reserved $firebaseAppInstanceId subscriber attribute from Firebase Analytics
@@ -384,6 +402,37 @@ public class EMobi: NSObject, PurchasesDelegate {
         
         Adjust.trackEvent(adjustEvent)
         
+    }
+    
+    
+    private func configureAppsFlyer() {
+        if Constant.shared.appsFlyerDevKey.isEmpty || Constant.shared.appsFlyerAppleAppID.isEmpty
+        {
+            print( "Facebook sdk keys are empty")
+            return
+        }
+        
+        AppsFlyerLib.shared().appsFlyerDevKey = Constant.shared.appsFlyerDevKey
+        AppsFlyerLib.shared().appleAppID = Constant.shared.appsFlyerAppleAppID
+        
+        AppsFlyerLib.shared().customerUserID = getUserID()
+
+        NotificationCenter.default.addObserver(self, selector: NSSelectorFromString("sendLaunch"), name: UIApplication.didBecomeActiveNotification, object: nil)
+
+    }
+    
+    @objc func sendLaunch() {
+        AppsFlyerLib.shared().start()
+        AppsFlyerLib.shared().waitForATTUserAuthorization(timeoutInterval: 60)
+        
+        var eventValues = [String: Any]()
+        eventValues["eventValue"] = Analytics.appInstanceID() ?? ""
+        eventValues["click_id"] = getUserID()
+ 
+        AppsFlyerLib.shared().logEvent("start_event", withValues: eventValues)
+        
+        
+  
     }
     
     private func configureFacebook() {
@@ -531,4 +580,16 @@ public class EMobi: NSObject, PurchasesDelegate {
         return true
     }
     
+    
+    public func applicationDidBecomeActive() {
+        AppsFlyerLib.shared().start(completionHandler: { (dictionary, error) in
+            if (error != nil){
+                print(error ?? "")
+                return
+            } else {
+                print(dictionary ?? "")
+                return
+            }
+        })
+    }
 }
