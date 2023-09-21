@@ -45,7 +45,7 @@ func checkSubscriptionStatus() -> Bool {
     return defaults.bool(forKey: "IsSubscribedUser")
 }
  
-enum MMP {
+public enum MMP {
     case adjust
     case appsflyer
 }

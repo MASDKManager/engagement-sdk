@@ -66,7 +66,12 @@ class PurchaselyManager {
                 print("User purchased: \(plan?.name ?? "")")
                 EMobi.shared.setSubscribedUser(isSubscribed: true)
                 saveSubscriptionStatus(isSubscribed: EMobi.shared.isSubscribedUser())
-                AdjustManager.shared.trackPurchaseEvent(purchaseToken: Constant.shared.adjustSubscriptionToken, productID: plan?.appleProductId ?? "", transactionID: "")
+                
+                if EMobi.shared.getMMP() == MMP.adjust {
+                    AdjustManager.shared.trackPurchaseEvent(purchaseToken: Constant.shared.adjustSubscriptionToken, productID: plan?.appleProductId ?? "", transactionID: "")
+                }else if EMobi.shared.getMMP() == MMP.appsflyer {
+                    AppsFlyersManager.shared.trackPurchaseEvent(productID: plan?.appleProductId ?? "", amount: plan?.amount as! Double  )
+                }
                   
                 guard let completionSuccess else { return }
                 completionSuccess()
@@ -75,7 +80,7 @@ class PurchaselyManager {
                 print("User restored: \(plan?.name ?? "")")  
                 EMobi.shared.setSubscribedUser(isSubscribed: true)
                 saveSubscriptionStatus(isSubscribed: EMobi.shared.isSubscribedUser())
-                AdjustManager.shared.trackPurchaseEvent(purchaseToken: Constant.shared.adjustRestoreToken, productID: plan?.appleProductId ?? "", transactionID: "")
+               // AdjustManager.shared.trackPurchaseEvent(purchaseToken: Constant.shared.adjustRestoreToken, productID: plan?.appleProductId ?? "", transactionID: "")
                  
                 
                 guard let completionSuccess else { return }

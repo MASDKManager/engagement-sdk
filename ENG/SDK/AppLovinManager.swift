@@ -6,6 +6,8 @@
 
 import Foundation
 import AppLovinSDK
+import AppsFlyerLib
+import AppsFlyerAdRevenue
 import AdSupport
 import UIKit
 
@@ -61,9 +63,7 @@ extension AppLovinManager {
             if (Constant.shared.applovinInterstitialKey != "") {
                 AppLovinManager.shared.loadInterestialAd()
             }
-//            if (Constant.shared.interestialKey != "") {
-//                AppLovinManager.shared.loadRewardedAd()
-//            }
+ 
             
         })
     }
@@ -91,13 +91,7 @@ extension AppLovinManager {
         AppLovinManager.shared.interestialAdView?.delegate = self
         AppLovinManager.shared.interestialAdView?.load()
     }
-    
-    private func loadRewardedAd() {
-//        AppLovinManager.shared.rewardedAdView = MARewardedAd.shared(withAdUnitIdentifier: Constant.shared.interestialKey)
-//        AppLovinManager.shared.rewardedAdView?.delegate = self
-//        AppLovinManager.shared.rewardedAdView?.load()
-    }
-    
+   
     func showInterestialAd(onClose : @escaping (Bool) -> ()) {
         
         if !keyExists{
@@ -131,7 +125,6 @@ extension AppLovinManager: MAAdDelegate {
     
     func didLoad(_ ad: MAAd) {
         print("Ad didLoad id: \(ad.adUnitIdentifier)")
-      //  EMobi.shared.delegate?.bannerAdDidLoad(adUnitIdentifier: ad.adUnitIdentifier)
     }
     
     func didFailToLoadAd(forAdUnitIdentifier adUnitIdentifier: String, withError error: MAError) {
@@ -140,8 +133,7 @@ extension AppLovinManager: MAAdDelegate {
         print("Ad didFailToLoadAd with id:\(adUnitIdentifier)")
         if (adUnitIdentifier == Constant.shared.applovinInterstitialKey) {
             // Interstitial ad failed to load
-            // We recommend retrying with exponentially higher delays up to a maximum delay (in this case 64 seconds)
-            
+       
             AppLovinManager.shared.retryInterestialAttempt += 1
             let delaySec = pow(2.0, min(6.0, AppLovinManager.shared.retryInterestialAttempt))
             
@@ -149,30 +141,33 @@ extension AppLovinManager: MAAdDelegate {
                 AppLovinManager.shared.interestialAdView?.load()
             }
         }
-//        } else if (adUnitIdentifier == Constant.shared.interestialKey) {
-//            // Interstitial ad failed to load
-//            // We recommend retrying with exponentially higher delays up to a maximum delay (in this case 64 seconds)
-//
-//            AppLovinManager.shared.retryRewardedAttempt += 1
-//            let delaySec = pow(2.0, min(6.0, AppLovinManager.shared.retryRewardedAttempt))
-//
-//            DispatchQueue.main.asyncAfter(deadline: .now() + delaySec) {
-//                AppLovinManager.shared.rewardedAdView?.load()
-//            }
-//        }
+ 
     }
     
     func didDisplay(_ ad: MAAd) {
+        
+        if EMobi.shared.getMMP() == MMP.appsflyer {
+            let adRevenueParams:[AnyHashable: Any] = [
+                                kAppsFlyerAdRevenueAdUnit : ad.adUnitIdentifier,
+                                kAppsFlyerAdRevenueAdType : ad.placement ?? "",
+                                kAppsFlyerAdRevenuePlacement : ad.networkPlacement
+                            ]
+                            
+            AppsFlyerAdRevenue.shared().logAdRevenue(
+                monetizationNetwork: ad.networkName,
+                mediationNetwork: MediationNetworkType.googleAdMob,
+                eventRevenue: ad.revenue as NSNumber,
+                revenueCurrency: "USD",
+                additionalParameters: adRevenueParams)
+            
+        }
+       
         print("Ad didDisplay \(ad.adUnitIdentifier)")
     }
     
     func didHide(_ ad: MAAd) {
         print("Ad didHide \(ad.adUnitIdentifier)")
-//        if (ad.adUnitIdentifier == Constant.shared.interestialKey) {
-//            AppLovinManager.shared.onClose?(AppLovinManager.shared.rewardUser)
-//        } else {
-            AppLovinManager.shared.onClose?(true)
-//        }
+        AppLovinManager.shared.onClose?(true)
     }
     
     func didClick(_ ad: MAAd) {
@@ -185,8 +180,7 @@ extension AppLovinManager: MAAdDelegate {
     }
     
 }
-
-
+ 
 extension AppLovinManager : MARewardedAdDelegate {
     
     func didStartRewardedVideo(for ad: MAAd) {

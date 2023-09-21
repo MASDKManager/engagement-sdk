@@ -26,5 +26,6 @@ target 'ENG' do
   pod 'Purchasely' 
   
   pod 'AppsFlyerFramework'
+  pod 'AppsFlyer-AdRevenue'
  
 end

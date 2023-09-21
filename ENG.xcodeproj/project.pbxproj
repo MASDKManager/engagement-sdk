@@ -28,6 +28,7 @@
 		0DAEB37D2A5AF14E00C38DD9 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DAEB3792A5AF14E00C38DD9 /* Constants.swift */; };
 		0DAEB37F2A5AF14E00C38DD9 /* EMobi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DAEB37B2A5AF14E00C38DD9 /* EMobi.swift */; };
 		0DAEB3822A5AF19400C38DD9 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0DAEB3812A5AF19400C38DD9 /* StoreKit.framework */; };
+		0DD5DA2B2ABC68060054C5D9 /* AppsFlyersManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DD5DA2A2ABC68060054C5D9 /* AppsFlyersManager.swift */; };
 		BE8D9FF85DC9C4D37EA455D4 /* Pods_ENG.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F2F520D506DAAFC89A040939 /* Pods_ENG.framework */; };
 /* End PBXBuildFile section */
 
@@ -55,6 +56,7 @@
 		0DAEB37B2A5AF14E00C38DD9 /* EMobi.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EMobi.swift; sourceTree = "<group>"; };
 		0DAEB3802A5AF18A00C38DD9 /* ENG.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ENG.entitlements; sourceTree = "<group>"; };
 		0DAEB3812A5AF19400C38DD9 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		0DD5DA2A2ABC68060054C5D9 /* AppsFlyersManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppsFlyersManager.swift; sourceTree = "<group>"; };
 		20AF035DFE4D759535EBEDFA /* Pods-ENG.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ENG.debug.xcconfig"; path = "Target Support Files/Pods-ENG/Pods-ENG.debug.xcconfig"; sourceTree = "<group>"; };
 		A437839E04ABC7AB7B73121B /* Pods-ENG.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ENG.release.xcconfig"; path = "Target Support Files/Pods-ENG/Pods-ENG.release.xcconfig"; sourceTree = "<group>"; };
 		F2F520D506DAAFC89A040939 /* Pods_ENG.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ENG.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -124,6 +126,7 @@
 				0D0C04A02A657EB3003FADC8 /* EMobiDelegate.swift */,
 				0D4B919F2A6814DF004EC582 /* PurchaselyManager.swift */,
 				0D4B91A12A681877004EC582 /* AdjustManager.swift */,
+				0DD5DA2A2ABC68060054C5D9 /* AppsFlyersManager.swift */,
 			);
 			path = SDK;
 			sourceTree = "<group>";
@@ -299,6 +302,7 @@
 				0DAEB3662A5AF08A00C38DD9 /* SceneDelegate.swift in Sources */,
 				0D0C049D2A6521AF003FADC8 /* SecondViewController.swift in Sources */,
 				0DAEB37C2A5AF14E00C38DD9 /* Utils.swift in Sources */,
+				0DD5DA2B2ABC68060054C5D9 /* AppsFlyersManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -2,14 +2,14 @@ PODS:
   - Adjust (4.35.0):
     - Adjust/Core (= 4.35.0)
   - Adjust/Core (4.35.0)
-  - Ads-Global/BUAdSDK_Compatible (5.4.1.1):
+  - Ads-Global/BUAdSDK_Compatible (5.5.0.5):
     - Ads-Global/BURelyAdSDK
     - Ads-Global/Dep_Compatible
-  - Ads-Global/BURelyAdSDK (5.4.1.1)
-  - Ads-Global/Dep_Compatible (5.4.1.1):
-    - BURelyFoundation_Global/Pangle (~> 0.1.2.5)
-  - AppLovinMediationByteDanceAdapter (5.4.1.1.0):
-    - Ads-Global/BUAdSDK_Compatible (= 5.4.1.1)
+  - Ads-Global/BURelyAdSDK (5.5.0.5)
+  - Ads-Global/Dep_Compatible (5.5.0.5):
+    - BURelyFoundation_Global/Pangle (~> 0.1.2.6)
+  - AppLovinMediationByteDanceAdapter (5.5.0.5.0):
+    - Ads-Global/BUAdSDK_Compatible (= 5.5.0.5)
     - AppLovinSDK
   - AppLovinMediationGoogleAdapter (10.10.0.0):
     - AppLovinSDK
@@ -23,23 +23,25 @@ PODS:
   - AppLovinMediationUnityAdsAdapter (4.8.0.1):
     - AppLovinSDK
     - UnityAds (= 4.8.0)
-  - AppLovinMediationVungleAdapter (7.0.1.0):
+  - AppLovinMediationVungleAdapter (7.1.0.0):
     - AppLovinSDK
-    - VungleAds (= 7.0.1)
+    - VungleAds (= 7.1.0)
   - AppLovinSDK (11.11.3)
-  - AppsFlyerFramework (6.12.2):
-    - AppsFlyerFramework/Main (= 6.12.2)
-  - AppsFlyerFramework/Main (6.12.2)
-  - BURelyFoundation_Global/AFNetworking (0.1.2.5)
-  - BURelyFoundation_Global/APM (0.1.2.5)
-  - BURelyFoundation_Global/Foundation (0.1.2.5):
+  - AppsFlyer-AdRevenue (6.12.1):
+    - AppsFlyerFramework (= 6.12.1)
+  - AppsFlyerFramework (6.12.1):
+    - AppsFlyerFramework/Main (= 6.12.1)
+  - AppsFlyerFramework/Main (6.12.1)
+  - BURelyFoundation_Global/AFNetworking (0.1.2.6)
+  - BURelyFoundation_Global/APM (0.1.2.6)
+  - BURelyFoundation_Global/Foundation (0.1.2.6):
     - BURelyFoundation_Global/NETWork
-  - BURelyFoundation_Global/Gecko (0.1.2.5):
+  - BURelyFoundation_Global/Gecko (0.1.2.6):
     - BURelyFoundation_Global/Foundation
-  - BURelyFoundation_Global/Header (0.1.2.5)
-  - BURelyFoundation_Global/NETWork (0.1.2.5):
+  - BURelyFoundation_Global/Header (0.1.2.6)
+  - BURelyFoundation_Global/NETWork (0.1.2.6):
     - BURelyFoundation_Global/AFNetworking
-  - BURelyFoundation_Global/Pangle (0.1.2.5):
+  - BURelyFoundation_Global/Pangle (0.1.2.6):
     - BURelyFoundation_Global/AFNetworking
     - BURelyFoundation_Global/APM
     - BURelyFoundation_Global/Foundation
@@ -50,13 +52,13 @@ PODS:
     - BURelyFoundation_Global/YYModel
     - BURelyFoundation_Global/ZFPlayer
     - BURelyFoundation_Global/Zip
-  - BURelyFoundation_Global/SDWebImage (0.1.2.5):
+  - BURelyFoundation_Global/SDWebImage (0.1.2.6):
     - BURelyFoundation_Global/Foundation
-  - BURelyFoundation_Global/YYModel (0.1.2.5)
-  - BURelyFoundation_Global/ZFPlayer (0.1.2.5):
+  - BURelyFoundation_Global/YYModel (0.1.2.6)
+  - BURelyFoundation_Global/ZFPlayer (0.1.2.6):
     - BURelyFoundation_Global/Foundation
     - BURelyFoundation_Global/Zip
-  - BURelyFoundation_Global/Zip (0.1.2.5):
+  - BURelyFoundation_Global/Zip (0.1.2.6):
     - BURelyFoundation_Global/Foundation
   - FBAEMKit (16.1.3):
     - FBSDKCoreKit_Basics (= 16.1.3)
@@ -218,10 +220,10 @@ PODS:
   - PromisesObjC (2.3.1)
   - PromisesSwift (2.3.1):
     - PromisesObjC (= 2.3.1)
-  - Purchasely (4.0.1)
-  - RevenueCat (4.26.0)
+  - Purchasely (4.0.2)
+  - RevenueCat (4.26.1)
   - UnityAds (4.8.0)
-  - VungleAds (7.0.1)
+  - VungleAds (7.1.0)
 
 DEPENDENCIES:
   - Adjust
@@ -232,6 +234,7 @@ DEPENDENCIES:
   - AppLovinMediationUnityAdsAdapter
   - AppLovinMediationVungleAdapter
   - AppLovinSDK
+  - AppsFlyer-AdRevenue
   - AppsFlyerFramework
   - FBAudienceNetwork
   - FBSDKCoreKit
@@ -254,6 +257,7 @@ SPEC REPOS:
     - AppLovinMediationUnityAdsAdapter
     - AppLovinMediationVungleAdapter
     - AppLovinSDK
+    - AppsFlyer-AdRevenue
     - AppsFlyerFramework
     - BURelyFoundation_Global
     - FBAEMKit
@@ -287,16 +291,17 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
   Adjust: 17a9c4f481065eb717aacdf4a0ab84a55c8fdf39
-  Ads-Global: a2e122070602c95b4faa9ef0ad693c95cee9c482
-  AppLovinMediationByteDanceAdapter: a48cfc4e41f3431eee9df1bcf0a83e79694846da
+  Ads-Global: 740342c06299444a709eb9d64882632e82106fe5
+  AppLovinMediationByteDanceAdapter: 961b51c790278aa4937ba1e6f2a821c11c07b4b3
   AppLovinMediationGoogleAdapter: d68fb452e9d58ffaa6a7d63aad1b10903575dc06
   AppLovinMediationGoogleAdManagerAdapter: 3f9f54c405d7542317db0feb0496cf4caa88907b
   AppLovinMediationMaioAdapter: 1a20424ae86142826a139a718033fec4344ca3e9
   AppLovinMediationUnityAdsAdapter: b372cde7ee94362aed39cc4bf46408cd978f35d0
-  AppLovinMediationVungleAdapter: fa3e9ef18d47419db9cbabdcc7662ada68b8d9f8
+  AppLovinMediationVungleAdapter: 7d5477509454f70d29e84eccb338aeb1f191c156
   AppLovinSDK: 623ef78363c0dd2c3ff5446cde37e4920a96b7e0
-  AppsFlyerFramework: 6eb4d89d2eb9a6632317f1055b359d9fd85fd5ff
-  BURelyFoundation_Global: cd9e09f6c9c1fc42944af4fdaef0b60a24a0bc39
+  AppsFlyer-AdRevenue: 6868785475e1fc35e1839a0998178daaf34f7537
+  AppsFlyerFramework: e29b63fc5441400a38a31c5501c1da500b9d53d0
+  BURelyFoundation_Global: e37e57df2e0d1cee6ba841524f6bda75d1499969
   FBAEMKit: af2972f39bb0f3f7c45998f435b007833c32ffb2
   FBAudienceNetwork: 4d6223a9a88a22e9dca8c9e6c1829a8745b86228
   FBSDKCoreKit: 19e2e18b3be578d7a51fed8fdd8c152bef0b9511
@@ -321,11 +326,11 @@ SPEC CHECKSUMS:
   OneSignalXCFramework: 8429bc2456554da1b09b17135621087152ad05a0
   PromisesObjC: c50d2056b5253dadbd6c2bea79b0674bd5a52fa4
   PromisesSwift: 28dca69a9c40779916ac2d6985a0192a5cb4a265
-  Purchasely: 4dc91cdd02dd458b846ec84e05f574f6f739c9d7
-  RevenueCat: 1f3a5a1c3899cb27ef9279d77a01a807d489a240
+  Purchasely: d026812649491627a3e2aa473612727926760e8c
+  RevenueCat: 4e8899a69fd57180ef166237d1eb670023be05de
   UnityAds: 390144b2029ac9ce2ec81c3cfd0007686b59236a
-  VungleAds: 49e2cbb981c1efa0086029d2dcec8a7322105809
+  VungleAds: e13f0ea8facb05d5511e31c5abcced79a82409e7
 
-PODFILE CHECKSUM: 89b539a1afce5ab7fd585f9ae2a22e12d1758d2c
+PODFILE CHECKSUM: 5f590770a0549298aa1ce2b3906012321d6ec826
 
 COCOAPODS: 1.12.1

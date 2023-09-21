@@ -18,6 +18,8 @@ import RevenueCat
 import MailchimpSDK
 import AppLovinSDK
 import AppsFlyerLib
+import AppsFlyerAdRevenue
+
 
 public class EMobi: NSObject, PurchasesDelegate {
     
@@ -48,9 +50,14 @@ public class EMobi: NSObject, PurchasesDelegate {
     
     private var adjustDelegateHandler: AdjustDelegateHandler?
     
+    public func getMMP() -> MMP{
+        return self.mmp
+    }
+    
     public override init() {
         adjustDelegateHandler = AdjustDelegateHandler()
     }
+    
     
     public func start( launchOptions: [UIApplication.LaunchOptionsKey: Any]? , completion: @escaping (Bool) -> Void) {
         print( tag + "EMobi SDK started.")
@@ -411,6 +418,8 @@ public class EMobi: NSObject, PurchasesDelegate {
             print( "Facebook sdk keys are empty")
             return
         }
+        
+        AppsFlyerAdRevenue.start()
         
         AppsFlyerLib.shared().appsFlyerDevKey = Constant.shared.appsFlyerDevKey
         AppsFlyerLib.shared().appleAppID = Constant.shared.appsFlyerAppleAppID
