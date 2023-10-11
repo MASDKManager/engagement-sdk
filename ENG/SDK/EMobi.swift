@@ -247,6 +247,7 @@ public class EMobi: NSObject, PurchasesDelegate  {
         }
         
         if !Constant.shared.adaptyKey.isEmpty {
+            self.currentlyPaywall = .adapty
             AdaptyManager.shared.initializeAdapty()
         }
         
