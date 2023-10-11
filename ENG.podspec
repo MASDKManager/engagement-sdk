@@ -33,7 +33,8 @@ Pod::Spec.new do |spec|
   spec.dependency 'AppLovinSDK'
   spec.dependency 'MailchimpSDK'
   spec.dependency 'Purchasely', '3.7.2'
-    
+  spec.dependency 'AppsFlyerFramework'
+  spec.dependency 'AppsFlyer-AdRevenue'  
   spec.dependency 'Adapty', '2.7.0'
   spec.dependency 'AdaptyUI', '2.0.1'
  
