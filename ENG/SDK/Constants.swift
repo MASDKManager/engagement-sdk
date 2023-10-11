@@ -19,5 +19,9 @@ final class Constant {
     var appLovinSdkKey = String()
     var appsFlyerDevKey = String()
     var appsFlyerAppleAppID = String()
+    var adaptyKey = String()
+    var adaptlyAccessLevel = String()
  
+    
+    
 }

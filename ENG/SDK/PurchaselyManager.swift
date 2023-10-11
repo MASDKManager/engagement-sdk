@@ -45,11 +45,10 @@ class PurchaselyManager {
          
     }
   
-    func showPurchaselyPaywall(type: PaywallType = .paywall, completionSuccess: (() -> ())?, completionFailure: (() -> ())?)-> UIViewController? {
+    func showPaywall(type: PaywallType = .paywall, completionSuccess: @escaping (UIViewController?) -> Void, completionFailure: (() -> Void)?) {
      
-        guard firebaseRemoteConfigLoaded else {
-            // In case Firebase Remote Config is not loaded, do nothing and return nil
-            return nil
+        guard firebaseRemoteConfigLoaded else { 
+            return
         }
             
         let placementId = (type == .onboarding) ? onboardPaywallPlacementID : premiumPaywallPlacementID
@@ -72,19 +71,14 @@ class PurchaselyManager {
                 }else if EMobi.shared.getMMP() == MMP.appsflyer {
                     AppsFlyersManager.shared.trackPurchaseEvent(productID: plan?.appleProductId ?? "", amount: plan?.amount as! Double  )
                 }
-                  
-                guard let completionSuccess else { return }
-                completionSuccess()
+                    
                 break
             case .restored:
                 print("User restored: \(plan?.name ?? "")")  
                 EMobi.shared.setSubscribedUser(isSubscribed: true)
                 saveSubscriptionStatus(isSubscribed: EMobi.shared.isSubscribedUser())
                // AdjustManager.shared.trackPurchaseEvent(purchaseToken: Constant.shared.adjustRestoreToken, productID: plan?.appleProductId ?? "", transactionID: "")
-                 
-                
-                guard let completionSuccess else { return }
-                completionSuccess()
+                  
                 break
             case .cancelled:
                 print("User cancelled: \(plan?.name ?? "")")
@@ -95,8 +89,8 @@ class PurchaselyManager {
                 break
             }
         })
-          
-        return purhchasely
+        
+        completionSuccess(purhchasely)
         
     }
     
@@ -110,7 +104,6 @@ class PurchaselyManager {
             // Display error
         })
         
-
     }
 
     func checkSubscription(){

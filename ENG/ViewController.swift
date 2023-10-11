@@ -26,8 +26,6 @@ class ViewController: UIViewController {
     }
     
     func handleSDKInitialized() {
-        // Your code here
-        
         
         // Create and configure the eventLabel
         eventLabel = UILabel()
@@ -118,23 +116,21 @@ class ViewController: UIViewController {
         DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
             
             // Call the showPaywall function
-            if let paywallViewController = EMobi.shared.showPaywall(type: .onboarding, completionSuccess: {
-                // This block is executed when the user completes a successful purchase or restore
-                // Present the premium content or any other view controller you want to show after purchase or restore
-                print("Purchase Success")
+            EMobi.shared.showPaywall(type: .onboarding, completionSuccess: { visualPaywall in
+            
+                print("Success")
                 let isActive = EMobi.shared.isSubscribedUser()
                 self.activeUserLabel.text = "Is Subscribed User: \(isActive)"
                 
+                if let paywallViewController = visualPaywall { 
+                    paywallViewController.modalPresentationStyle = .fullScreen
+                    self.present(paywallViewController, animated: true, completion: nil)
+                }
+                
             }, completionFailure: {
-                // This block is executed when the user cancels the purchase
-                // Handle the cancellation behavior or show any relevant message
+                // This block is executed when the user cancels the purchase 
                 print("Purchase Cancelled")
-            }) {
-                // If the paywallViewController is not nil, it means the paywall presentation was successful
-                // You can present the paywallViewController in your desired way
-                paywallViewController.modalPresentationStyle = .fullScreen
-                self.present(paywallViewController, animated: true, completion: nil)
-            }
+            })
             
         } 
     }

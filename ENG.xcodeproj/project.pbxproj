@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		0D0C049D2A6521AF003FADC8 /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D0C049C2A6521AF003FADC8 /* SecondViewController.swift */; };
 		0D0C04A12A657EB3003FADC8 /* EMobiDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D0C04A02A657EB3003FADC8 /* EMobiDelegate.swift */; };
+		0D1890322AD0258000667B66 /* AdaptyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D1890312AD0258000667B66 /* AdaptyManager.swift */; };
 		0D36D3AC2AA9DC8000A964D1 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0D36D3AB2AA9DC8000A964D1 /* GoogleService-Info.plist */; };
 		0D3801AE2A6124F400EFE050 /* AppLovinManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D3801AD2A6124F400EFE050 /* AppLovinManager.swift */; };
 		0D3A01442A5D458B001D974E /* AdjustDelegateHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D3A01432A5D458B001D974E /* AdjustDelegateHandler.swift */; };
@@ -35,6 +36,7 @@
 /* Begin PBXFileReference section */
 		0D0C049C2A6521AF003FADC8 /* SecondViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondViewController.swift; sourceTree = "<group>"; };
 		0D0C04A02A657EB3003FADC8 /* EMobiDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EMobiDelegate.swift; sourceTree = "<group>"; };
+		0D1890312AD0258000667B66 /* AdaptyManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdaptyManager.swift; sourceTree = "<group>"; };
 		0D36D3AB2AA9DC8000A964D1 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		0D3801AD2A6124F400EFE050 /* AppLovinManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLovinManager.swift; sourceTree = "<group>"; };
 		0D3A01432A5D458B001D974E /* AdjustDelegateHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdjustDelegateHandler.swift; sourceTree = "<group>"; };
@@ -124,6 +126,7 @@
 				0D3A01432A5D458B001D974E /* AdjustDelegateHandler.swift */,
 				0D3801AD2A6124F400EFE050 /* AppLovinManager.swift */,
 				0D0C04A02A657EB3003FADC8 /* EMobiDelegate.swift */,
+				0D1890312AD0258000667B66 /* AdaptyManager.swift */,
 				0D4B919F2A6814DF004EC582 /* PurchaselyManager.swift */,
 				0D4B91A12A681877004EC582 /* AdjustManager.swift */,
 				0DD5DA2A2ABC68060054C5D9 /* AppsFlyersManager.swift */,
@@ -300,6 +303,7 @@
 				0DAEB3682A5AF08A00C38DD9 /* ViewController.swift in Sources */,
 				0DAEB3642A5AF08A00C38DD9 /* AppDelegate.swift in Sources */,
 				0DAEB3662A5AF08A00C38DD9 /* SceneDelegate.swift in Sources */,
+				0D1890322AD0258000667B66 /* AdaptyManager.swift in Sources */,
 				0D0C049D2A6521AF003FADC8 /* SecondViewController.swift in Sources */,
 				0DAEB37C2A5AF14E00C38DD9 /* Utils.swift in Sources */,
 				0DD5DA2B2ABC68060054C5D9 /* AppsFlyersManager.swift in Sources */,
@@ -459,16 +463,39 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"${TOOLCHAIN_DIR}/usr/lib/swift/${PLATFORM_NAME}\"",
+					"\"${PODS_XCFRAMEWORKS_BUILD_DIR}/AppLovinMediationGoogleAdManagerAdapter\"",
+					"\"${PODS_XCFRAMEWORKS_BUILD_DIR}/AppLovinMediationGoogleAdapter\"",
+					"\"${PODS_XCFRAMEWORKS_BUILD_DIR}/AppLovinMediationMaioAdapter\"",
+					"\"${PODS_XCFRAMEWORKS_BUILD_DIR}/AppLovinMediationUnityAdsAdapter\"",
+					"\"${PODS_XCFRAMEWORKS_BUILD_DIR}/AppLovinMediationVungleAdapter\"",
+					"\"${PODS_XCFRAMEWORKS_BUILD_DIR}/BURelyFoundation_Global/AFNetworking\"",
+					"\"${PODS_XCFRAMEWORKS_BUILD_DIR}/BURelyFoundation_Global/APM\"",
+					"\"${PODS_XCFRAMEWORKS_BUILD_DIR}/BURelyFoundation_Global/Foundation\"",
+					"\"${PODS_XCFRAMEWORKS_BUILD_DIR}/BURelyFoundation_Global/Gecko\"",
+					"\"${PODS_XCFRAMEWORKS_BUILD_DIR}/BURelyFoundation_Global/Header\"",
+					"\"${PODS_XCFRAMEWORKS_BUILD_DIR}/BURelyFoundation_Global/NETWork\"",
+					"\"${PODS_XCFRAMEWORKS_BUILD_DIR}/BURelyFoundation_Global/SDWebImage\"",
+					"\"${PODS_XCFRAMEWORKS_BUILD_DIR}/BURelyFoundation_Global/YYModel\"",
+					"\"${PODS_XCFRAMEWORKS_BUILD_DIR}/BURelyFoundation_Global/ZFPlayer\"",
+					"\"${PODS_XCFRAMEWORKS_BUILD_DIR}/BURelyFoundation_Global/Zip\"",
+					/usr/lib/swift,
+				);
 				MARKETING_VERSION = 0.9.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.smartmobile.voicechanger;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -492,16 +519,40 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"${PODS_XCFRAMEWORKS_BUILD_DIR}/AppLovinMediationByteDanceAdapter\"",
+					"\"${PODS_XCFRAMEWORKS_BUILD_DIR}/AppLovinMediationGoogleAdManagerAdapter\"",
+					"\"${PODS_XCFRAMEWORKS_BUILD_DIR}/AppLovinMediationGoogleAdapter\"",
+					"\"${PODS_XCFRAMEWORKS_BUILD_DIR}/AppLovinMediationMaioAdapter\"",
+					"\"${PODS_XCFRAMEWORKS_BUILD_DIR}/AppLovinMediationUnityAdsAdapter\"",
+					"\"${PODS_XCFRAMEWORKS_BUILD_DIR}/AppLovinMediationVungleAdapter\"",
+					"\"${PODS_XCFRAMEWORKS_BUILD_DIR}/BURelyFoundation_Global/AFNetworking\"",
+					"\"${PODS_XCFRAMEWORKS_BUILD_DIR}/BURelyFoundation_Global/APM\"",
+					"\"${PODS_XCFRAMEWORKS_BUILD_DIR}/BURelyFoundation_Global/Foundation\"",
+					"\"${PODS_XCFRAMEWORKS_BUILD_DIR}/BURelyFoundation_Global/Gecko\"",
+					"\"${PODS_XCFRAMEWORKS_BUILD_DIR}/BURelyFoundation_Global/Header\"",
+					"\"${PODS_XCFRAMEWORKS_BUILD_DIR}/BURelyFoundation_Global/NETWork\"",
+					"\"${PODS_XCFRAMEWORKS_BUILD_DIR}/BURelyFoundation_Global/SDWebImage\"",
+					"\"${PODS_XCFRAMEWORKS_BUILD_DIR}/BURelyFoundation_Global/YYModel\"",
+					"\"${PODS_XCFRAMEWORKS_BUILD_DIR}/BURelyFoundation_Global/ZFPlayer\"",
+					"\"${PODS_XCFRAMEWORKS_BUILD_DIR}/BURelyFoundation_Global/Zip\"",
+					/usr/lib/swift,
+					"\"${TOOLCHAIN_DIR}/usr/lib/swift/${PLATFORM_NAME}\"",
+				);
 				MARKETING_VERSION = 0.9.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.smartmobile.voicechanger;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

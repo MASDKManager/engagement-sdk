@@ -50,6 +50,11 @@ public enum MMP {
     case appsflyer
 }
 
+public enum PAYWALLS {
+    case adapty
+    case purchasely
+}
+
 extension Notification.Name {
     public static let sdkInitializedNotification = Notification.Name("SDKInitializedNotification")
 }

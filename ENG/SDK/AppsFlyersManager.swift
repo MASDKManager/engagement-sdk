@@ -11,15 +11,14 @@ import AppsFlyerAdRevenue
  
 class AppsFlyersManager {
     static let shared = AppsFlyersManager()
-    
-    
+     
     func trackPurchaseEvent( productID: String, amount : Double) {
         
         AppsFlyerLib.shared().logEvent(AFEventPurchase,
         withValues: [
             AFEventParamContentId: productID,
             AFEventParamContentType : "Purchase",
-            AFEventParamRevenue: amount,
+            AFEventParamRevenue: amount, 
             AFEventParamCurrency:"USD"
         ]);
          
@@ -27,11 +26,7 @@ class AppsFlyersManager {
     }
     
     func sendConversionEvent(productID: String, amount : Double, eventData: [String: String]) {
-        
-//        if let swiftDictionary = nsDictionary as? [String: Int] {
-//            
-//        }
-  
+          
         AppsFlyerLib.shared().logEvent(AFEventPurchase,
         withValues: [
             AFEventParamContentId: productID,

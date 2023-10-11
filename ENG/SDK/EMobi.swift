@@ -19,10 +19,12 @@ import MailchimpSDK
 import AppLovinSDK
 import AppsFlyerLib
 import AppsFlyerAdRevenue
+import Adapty
+import AdaptyUI
 
 
-public class EMobi: NSObject, PurchasesDelegate {
-    
+public class EMobi: NSObject, PurchasesDelegate  {
+ 
     public static let shared = EMobi()
     
     private var isSubscribed = false {
@@ -40,13 +42,14 @@ public class EMobi: NSObject, PurchasesDelegate {
             }
         }
     }
-    
+     
     private var PurchasesIsConfigured = false
     private var OneSignalIsConfigured = false
     private var showATTonLaunch = false
     private var launchOptions : [UIApplication.LaunchOptionsKey: Any]?
     public weak var delegate: EMobiDelegate?
     private var mmp : MMP = .adjust
+    private var currentlyPaywall : PAYWALLS = .purchasely
     
     private var adjustDelegateHandler: AdjustDelegateHandler?
     
@@ -54,15 +57,16 @@ public class EMobi: NSObject, PurchasesDelegate {
         return self.mmp
     }
     
+    public func getPAYWALL() -> PAYWALLS{
+        return self.currentlyPaywall
+    }
+    
     public override init() {
         adjustDelegateHandler = AdjustDelegateHandler()
     }
-    
-    
+     
     public func start( launchOptions: [UIApplication.LaunchOptionsKey: Any]? , completion: @escaping (Bool) -> Void) {
         print( tag + "EMobi SDK started.")
-        
-        // Constant.shared.getValuesFromPlist()
         
         checkUserSubscription()
         
@@ -72,14 +76,12 @@ public class EMobi: NSObject, PurchasesDelegate {
             if success {
                 completion(true)
                 print("Remote config fetch and activation succeeded.")
-                // Do something on success
             } else {
                 completion(false)
                 print("Remote config fetch and activation failed.")
-                // Do something on failure
             }
         }
-         
+        
     }
     
     func configureFirebaseAndFetchRemoteConfig(completion: @escaping (Bool) -> Void) {
@@ -155,6 +157,8 @@ public class EMobi: NSObject, PurchasesDelegate {
             "appLovinSdkKey": Constant.shared.appLovinSdkKey,
             "appsflyerKey": Constant.shared.appsFlyerDevKey,
             "appsFlyerAppleAppID": Constant.shared.appsFlyerAppleAppID,
+            "adaptyKey": Constant.shared.adaptyKey,
+            "adaptlyAccessLevel": Constant.shared.adaptlyAccessLevel,
             "showATTonLaunch": ""
         ]
         
@@ -163,8 +167,10 @@ public class EMobi: NSObject, PurchasesDelegate {
                 switch key {
                 case "onboardPaywallPlacementID":
                     PurchaselyManager.shared.onboardPaywallPlacementID = stringValue
+                    AdaptyManager.shared.onboardPaywallPlacementID = stringValue
                 case "premiumPaywallPlacementID":
                     PurchaselyManager.shared.premiumPaywallPlacementID = stringValue
+                    AdaptyManager.shared.premiumPaywallPlacementID = stringValue
                 case "adjustAppToken":
                     Constant.shared.adjustAppToken = stringValue
                 case "adjustEventToken":
@@ -199,6 +205,10 @@ public class EMobi: NSObject, PurchasesDelegate {
                     Constant.shared.appsFlyerDevKey = stringValue
                 case "appsFlyerAppleAppID":
                     Constant.shared.appsFlyerAppleAppID = stringValue
+                case "adaptyKey":
+                    Constant.shared.adaptyKey = stringValue
+                case "adaptlyAccessLevel":
+                    Constant.shared.adaptlyAccessLevel = stringValue
                 case "showATTonLaunch":
                     showATTonLaunch = remoteConfig[key].boolValue
                 default:
@@ -236,6 +246,10 @@ public class EMobi: NSObject, PurchasesDelegate {
             AppLovinManager.shared.initializeAppLovin()
         }
         
+        if !Constant.shared.adaptyKey.isEmpty {
+            AdaptyManager.shared.initializeAdapty()
+        }
+        
         if !Constant.shared.facebookAppID.isEmpty &&
             !Constant.shared.facebookClientToken.isEmpty &&
             !Constant.shared.facebookDisplayName.isEmpty {
@@ -248,8 +262,7 @@ public class EMobi: NSObject, PurchasesDelegate {
         
         PurchaselyManager.shared.firebaseRemoteConfigLoaded = true
     }
-    
-    
+     
     private func checkUserSubscription(){
         isPremium =  checkPremiumStatus()
         isSubscribed =  checkSubscriptionStatus()
@@ -266,10 +279,7 @@ public class EMobi: NSObject, PurchasesDelegate {
         
         // OneSignal initialization
         OneSignal.initialize(Constant.shared.oneSignalKey, withLaunchOptions: launchOptions)
-        
-        // promptForPushNotifications will show the native iOS notification permission prompt.
-        // We recommend removing the following code and instead using an In-App Message to prompt for notification permission (See step 8)
-        
+           
         if (!showATTonLaunch){
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                 OneSignal.User.pushSubscription.optIn()
@@ -277,6 +287,19 @@ public class EMobi: NSObject, PurchasesDelegate {
         }
         
         if let onesignalId = OneSignal.User.pushSubscription.id {
+            
+            if self.currentlyPaywall == .adapty{
+              
+                  let params = AdaptyProfileParameters.Builder()
+                      .with(oneSignalPlayerId: onesignalId)
+                      .build()
+
+                  Adapty.updateProfile(params:params) { error in
+                      // check error
+                  }
+         
+            }
+            
             Purchases.shared.attribution.setOnesignalID(onesignalId)
         }
         
@@ -297,22 +320,39 @@ public class EMobi: NSObject, PurchasesDelegate {
         // REQUIRED: Set the Facebook anonymous Id
         Purchases.shared.attribution.setFBAnonymousID(FBSDKCoreKit.AppEvents.shared.anonymousID)
         
+        if self.currentlyPaywall == .adapty {
+        let builder = AdaptyProfileParameters.Builder()
+            .with(facebookAnonymousId: FBSDKCoreKit.AppEvents.shared.anonymousID)
+            
+        Adapty.updateProfile(params: builder.build()) { error in
+            if error != nil {
+                // handle the error
+            }
+        }
+    }
+        
         if self.mmp == .adjust {
             if let adjustId = Adjust.adid() {
                 Purchases.shared.attribution.setAdjustID(adjustId)
             }
         }else if self.mmp == .appsflyer {
-            Purchases.shared.attribution.setAppsflyerID(AppsFlyerLib.shared().getAppsFlyerUID()) 
+            Purchases.shared.attribution.setAppsflyerID(AppsFlyerLib.shared().getAppsFlyerUID())
         }
 
-        
         Purchases.shared.delegate = self
         
-        // Set the reserved $firebaseAppInstanceId subscriber attribute from Firebase Analytics
+        //Firebase Analytics
         let instanceID = Analytics.appInstanceID();
         if let unwrapped = instanceID {
             print( tag + "Instance ID -> " + unwrapped);
             print( tag + "Setting Attributes");
+            
+            do {
+                try AdaptyProfileParameters.Builder().with(customAttribute: unwrapped, forKey: "FirebaseAppInstanceID")
+            } catch {
+                 // handle key/value validation error
+            }
+            
             Purchases.shared.attribution.setFirebaseAppInstanceID(unwrapped)
         } else {
             print( tag + "Instance ID -> NOT FOUND!");
@@ -321,6 +361,7 @@ public class EMobi: NSObject, PurchasesDelegate {
         Purchases.shared.attribution.setAttributes(["user_uuid" : getUserID()])
         PurchasesIsConfigured = true
         
+
     }
     
     public func requestIDFA(fromInside: Bool = false) {
@@ -364,16 +405,29 @@ public class EMobi: NSObject, PurchasesDelegate {
     
     private func setPurchasesEmail(email : String){
         Purchases.shared.attribution.setEmail(email)
+        
+        AdaptyProfileParameters.Builder().with(email: email)
+       
     }
     
     private func checkSubscription(){
-        
-        Purchases.shared.getCustomerInfo { (customerInfo, error) in
-            if ((customerInfo?.activeSubscriptions.count ?? 0) != 0){
-                self.isSubscribed = true
+         
+        if self.currentlyPaywall == .adapty {
+            Adapty.getProfile { result in
+                if let profile = try? result.get(),
+                       profile.accessLevels[Constant.shared.adaptlyAccessLevel]?.isActive ?? false {
+                       self.isSubscribed = true
+                }
             }
         }
-        
+        else{
+            Purchases.shared.getCustomerInfo { (customerInfo, error) in
+                if ((customerInfo?.activeSubscriptions.count ?? 0) != 0){
+                    self.isSubscribed = true
+                }
+            }
+        }
+          
     }
     
     private func configureAdjust() {
@@ -406,12 +460,13 @@ public class EMobi: NSObject, PurchasesDelegate {
         let adjustEvent = ADJEvent(eventToken: Constant.shared.adjustEventToken)
         adjustEvent?.addCallbackParameter("eventValue", value: faid) // Firebase Instance Id
         adjustEvent?.addCallbackParameter("click_id", value: getUserID())
+         
+        Adjust.addSessionCallbackParameter("eventValue", value: faid)
         
         Adjust.trackEvent(adjustEvent)
         
     }
-    
-    
+     
     private func configureAppsFlyer() {
         if Constant.shared.appsFlyerDevKey.isEmpty || Constant.shared.appsFlyerAppleAppID.isEmpty
         {
@@ -429,7 +484,7 @@ public class EMobi: NSObject, PurchasesDelegate {
         NotificationCenter.default.addObserver(self, selector: NSSelectorFromString("sendLaunch"), name: UIApplication.didBecomeActiveNotification, object: nil)
 
     }
-    
+ 
     @objc func sendLaunch() {
         AppsFlyerLib.shared().start()
         AppsFlyerLib.shared().waitForATTUserAuthorization(timeoutInterval: 60)
@@ -439,9 +494,7 @@ public class EMobi: NSObject, PurchasesDelegate {
         eventValues["click_id"] = getUserID()
  
         AppsFlyerLib.shared().logEvent("start_event", withValues: eventValues)
-        
-        
-  
+         
     }
     
     private func configureFacebook() {
@@ -533,24 +586,68 @@ public class EMobi: NSObject, PurchasesDelegate {
     }
     
     public func getAllPurchasedProductIdentifiers(completion: @escaping (Set<String>?) -> Void) {
-        Purchases.shared.getCustomerInfo { (customerInfo, error) in
-            if let customerInfo = customerInfo {
-                completion(customerInfo.allPurchasedProductIdentifiers)
-            } else {
-                completion(nil)
+        
+        if self.currentlyPaywall == .adapty{
+         
+            // Use Locale.preferredLanguages to find out which languages the user prefers using
+            let locale = Locale.current.identifier
+            Adapty.getPaywall(PurchaselyManager.shared.onboardPaywallPlacementID , locale: locale) { result in
+                switch result {
+                    case let .success(paywall):
+                        Adapty.getPaywallProducts(paywall: paywall) { result in
+                            switch result {
+                            case let .success(products):
+                                 
+                                let vendorProductIds = Set(products.map { $0.vendorProductId })
+                                completion(vendorProductIds)
+                                break
+                                // the requested products array
+                            case let .failure(error):
+                                completion(nil)
+                                break
+                            }
+                        }
+                        
+                    break
+                        // the requested paywall
+                    case let .failure(error):
+                    completion(nil)
+                    break
+                }
+            }
+
+        }else{
+            Purchases.shared.getCustomerInfo { (customerInfo, error) in
+                if let customerInfo = customerInfo {
+                    completion(customerInfo.allPurchasedProductIdentifiers)
+                } else {
+                    completion(nil)
+                }
             }
         }
     }
-    
-    
+     
     public func restorePurchases(success: @escaping () -> Void, failure: @escaping (Error) -> Void) {
-        PurchaselyManager.shared.restoreAllProducts(success: {
-            // Reload content and display a success / thank you message to the user
-            success() // Call the success callback
-        }, failure: { error in
-            // Display error
-            failure(error) // Call the failure callback and pass the error
-        })
+        
+        if self.currentlyPaywall == .adapty {
+            AdaptyManager.shared.restoreAllProducts(success: {
+                // Reload content and display a success / thank you message to the user
+                success() // Call the success callback
+            }, failure: { error in
+                // Display error
+                failure(error) // Call the failure callback and pass the error
+            })
+            
+        }else{
+            PurchaselyManager.shared.restoreAllProducts(success: {
+                // Reload content and display a success / thank you message to the user
+                success() // Call the success callback
+            }, failure: { error in
+                // Display error
+                failure(error) // Call the failure callback and pass the error
+            })
+        }
+        
     }
     
     public  func loadBannerAd(vc : UIViewController, bannerView: UIView  ) {
@@ -568,18 +665,35 @@ public class EMobi: NSObject, PurchasesDelegate {
         
         AppLovinManager.shared.showInterestialAd(onClose: onClose)
     }
-    
-    public func showPaywall(type: PaywallType = .paywall, completionSuccess: (() -> Void)? = nil, completionFailure: (() -> Void)? = nil) -> UIViewController? {
-        if isPremium || isSubscribed {
-            // Do something else here or just return nil if you don't need to show any paywall.
-            return nil
-        }
+     
 
-        return PurchaselyManager.shared.showPurchaselyPaywall(type: type, completionSuccess: completionSuccess, completionFailure: completionFailure)
- 
+    public func showPaywall(type: PaywallType = .paywall, completionSuccess: @escaping (UIViewController?) -> Void, completionFailure: @escaping (() -> Void) = {}) {
+        if isPremium || isSubscribed {
+            completionFailure()
+        }
+        
+        if self.currentlyPaywall == .adapty {
+            AdaptyManager.shared.showPaywall(type: type, completionSuccess: { visualPaywall in
+                completionSuccess(visualPaywall)
+            }, completionFailure: {
+                completionFailure()
+            })
+        }else{
+            PurchaselyManager.shared.showPaywall(type: type, completionSuccess: { visualPaywall in
+                completionSuccess(visualPaywall)
+            }, completionFailure: {
+                completionFailure()
+            })
+        }
+   
     }
     
-   
+    func adjustAttributionChanged(_ attribution: ADJAttribution?) {
+        if let attribution = attribution?.dictionary() {
+            Adapty.updateAttribution(attribution, source: .adjust)
+        }
+    }
+  
     public static func handleOpenURL(
         _ app: UIApplication,
         open url: URL,
@@ -588,8 +702,7 @@ public class EMobi: NSObject, PurchasesDelegate {
         // Custom handling code here
         return true
     }
-    
-    
+     
     public func applicationDidBecomeActive() {
         AppsFlyerLib.shared().start(completionHandler: { (dictionary, error) in
             if (error != nil){
