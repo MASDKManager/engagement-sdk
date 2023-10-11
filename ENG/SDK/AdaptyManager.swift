@@ -138,6 +138,7 @@ class AdaptyManager : NSObject, AdaptyPaywallControllerDelegate  {
             
         }
         
+        controller.dismiss(animated: true)
                      
     }
     
