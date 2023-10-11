@@ -2,7 +2,7 @@ Pod::Spec.new do |spec|
 
   spec.platform = :ios
   spec.name         = "ENG"
-  spec.version      = "0.9.8"
+  spec.version      = "0.9.9"
   spec.requires_arc =  true
   spec.summary      = "ENG - Boost User Engagement."
   spec.description  = <<-DESC
@@ -34,7 +34,7 @@ Pod::Spec.new do |spec|
   spec.dependency 'MailchimpSDK'
   spec.dependency 'Purchasely', '3.7.2'
     
-  spec.dependency 'Adapty', '3.7.2'
+  spec.dependency 'Adapty', '2.7.0'
   spec.dependency 'AdaptyUI', '2.0.1'
  
   spec.source_files  = "ENG/SDK/**/*.{h,m,swift}"
