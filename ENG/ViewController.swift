@@ -133,6 +133,19 @@ class ViewController: UIViewController {
             })
             
         } 
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(dismissPaywall), name: Notification.Name("DismissPaywall"), object: nil)
+
+    }
+    
+    @objc func dismissPaywall() {
+        // Dismiss the paywall view controller
+       print("dismiss Paywall")
+    }
+
+    deinit {
+        // Remove observer when the view controller is deallocated
+        NotificationCenter.default.removeObserver(self)
     }
     
 }

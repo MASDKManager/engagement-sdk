@@ -686,7 +686,7 @@ public class EMobi: NSObject, PurchasesDelegate  {
                 completionFailure()
             })
         }
-   
+         
     }
     
     func adjustAttributionChanged(_ attribution: ADJAttribution?) {

@@ -56,6 +56,7 @@ class AdaptyManager : NSObject, AdaptyPaywallControllerDelegate  {
             case let .failure(error):
                 completionFailure?()
             }
+            
         }
     }
 
@@ -84,7 +85,7 @@ class AdaptyManager : NSObject, AdaptyPaywallControllerDelegate  {
             viewConfiguration: lvconfig!,
             delegate: self
         )
-        
+         
         completionSuccess(visualPaywall)
     }
 
@@ -139,6 +140,8 @@ class AdaptyManager : NSObject, AdaptyPaywallControllerDelegate  {
         }
         
         controller.dismiss(animated: true)
+        NotificationCenter.default.post(name: Notification.Name("DismissPaywall"), object: nil)
+
                      
     }
     
@@ -163,6 +166,8 @@ class AdaptyManager : NSObject, AdaptyPaywallControllerDelegate  {
     }
     
     func paywallController(_ controller: AdaptyPaywallController, didPerform action: AdaptyUI.Action) {
+        NotificationCenter.default.post(name: Notification.Name("DismissPaywall"), object: nil)
+
         controller.dismiss(animated: true)
     }
     
