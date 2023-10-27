@@ -60,7 +60,12 @@ class PurchaselyManager {
             print("is presentation controller loaded: \(isLoaded)")
 
         },completion:  { result, plan in
+            
+            
+            NotificationCenter.default.post(name: Notification.Name("DismissPaywall"), object: nil)
+            
             switch result {
+               
             case .purchased:
                 print("User purchased: \(plan?.name ?? "")")
                 EMobi.shared.setSubscribedUser(isSubscribed: true)

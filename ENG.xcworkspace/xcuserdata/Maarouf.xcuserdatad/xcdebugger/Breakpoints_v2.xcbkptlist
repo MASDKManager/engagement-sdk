@@ -167,47 +167,62 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "5A6949FD-AF8C-41A1-80A0-65C6CE9B1654"
+            uuid = "5CE0319E-D351-4FE8-BB2E-C50463456A1C"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "ENG/SDK/EMobi.swift"
+            filePath = "ENG/SDK/AdaptyManager.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "676"
-            endingLineNumber = "676"
-            landmarkName = "showPaywall(type:completionSuccess:completionFailure:)"
+            startingLineNumber = "127"
+            endingLineNumber = "127"
+            landmarkName = "paywallController(_:didFinishPurchase:purchasedInfo:)"
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "5A6949FD-AF8C-41A1-80A0-65C6CE9B1654 - df0434a1d4dc5146"
+                  uuid = "5CE0319E-D351-4FE8-BB2E-C50463456A1C - 4329e73a8a40209f"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "ENG.EMobi.showPaywall(type: ENG.PaywallType, completionSuccess: (Swift.Optional&lt;__C.UIViewController&gt;) -&gt; (), completionFailure: () -&gt; ()) -&gt; ()"
+                  symbolName = "ENG.AdaptyManager.paywallController(_: AdaptyUI.AdaptyPaywallController, didFinishPurchase: Adapty.AdaptyPaywallProduct, purchasedInfo: Adapty.AdaptyPurchasedInfo) -&gt; ()"
                   moduleName = "ENG"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/Maarouf/Documents/Engagement%20SDK/ios/engagement-sdk/ENG/SDK/EMobi.swift"
+                  urlString = "file:///Users/Maarouf/Documents/Engagement%20SDK/ios/engagement-sdk/ENG/SDK/AdaptyManager.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "676"
-                  endingLineNumber = "676"
-                  offsetFromSymbolStart = "276">
+                  startingLineNumber = "126"
+                  endingLineNumber = "126"
+                  offsetFromSymbolStart = "136">
                </Location>
                <Location
-                  uuid = "5A6949FD-AF8C-41A1-80A0-65C6CE9B1654 - 9edcba4ba83392f3"
+                  uuid = "5CE0319E-D351-4FE8-BB2E-C50463456A1C - 4329e73a8a40209f"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Swift.Optional&lt;__C.UIViewController&gt;) -&gt; () in ENG.EMobi.showPaywall(type: ENG.PaywallType, completionSuccess: (Swift.Optional&lt;__C.UIViewController&gt;) -&gt; (), completionFailure: () -&gt; ()) -&gt; ()"
+                  symbolName = "ENG.AdaptyManager.paywallController(_: AdaptyUI.AdaptyPaywallController, didFinishPurchase: Adapty.AdaptyPaywallProduct, purchasedInfo: Adapty.AdaptyPurchasedInfo) -&gt; ()"
                   moduleName = "ENG"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/Maarouf/Documents/Engagement%20SDK/ios/engagement-sdk/ENG/SDK/EMobi.swift"
+                  urlString = "file:///Users/Maarouf/Documents/Engagement%20SDK/ios/engagement-sdk/ENG/SDK/AdaptyManager.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "677"
-                  endingLineNumber = "677"
-                  offsetFromSymbolStart = "60">
+                  startingLineNumber = "126"
+                  endingLineNumber = "126"
+                  offsetFromSymbolStart = "140">
+               </Location>
+               <Location
+                  uuid = "5CE0319E-D351-4FE8-BB2E-C50463456A1C - 4329e73a8a4020fc"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "ENG.AdaptyManager.paywallController(_: AdaptyUI.AdaptyPaywallController, didFinishPurchase: Adapty.AdaptyPaywallProduct, purchasedInfo: Adapty.AdaptyPurchasedInfo) -&gt; ()"
+                  moduleName = "ENG"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Maarouf/Documents/Engagement%20SDK/ios/engagement-sdk/ENG/SDK/AdaptyManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "127"
+                  endingLineNumber = "127"
+                  offsetFromSymbolStart = "148">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -215,113 +230,113 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "63B579EB-0243-44DF-9FE6-14B553C758E8"
-            shouldBeEnabled = "Yes"
+            uuid = "6C00038F-E064-42D0-8FCE-B519E7BA37EC"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ENG/SDK/EMobi.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "682"
-            endingLineNumber = "682"
+            startingLineNumber = "352"
+            endingLineNumber = "352"
+            landmarkName = "configureRevenueCat()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "4D3CE247-CA58-4060-B819-7FF04431A97F"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ENG/ViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "143"
+            endingLineNumber = "143"
+            landmarkName = "dismissPaywall()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "193B3EB3-6D23-4975-8C83-44C7FB340EC7"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ENG/SDK/PurchaselyManager.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "58"
+            endingLineNumber = "58"
+            landmarkName = "showPaywall(type:completionSuccess:completionFailure:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "FA68193D-9EB2-4E37-99F8-39D0E8E515DC"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ENG/SDK/PurchaselyManager.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "67"
+            endingLineNumber = "67"
+            landmarkName = "showPaywall(type:completionSuccess:completionFailure:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "AE2A415D-A907-40A1-850C-67C77C7FD09C"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ENG/SDK/PurchaselyManager.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "98"
+            endingLineNumber = "98"
             landmarkName = "showPaywall(type:completionSuccess:completionFailure:)"
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "63B579EB-0243-44DF-9FE6-14B553C758E8 - df0434a1d4dc5608"
+                  uuid = "AE2A415D-A907-40A1-850C-67C77C7FD09C - a518aa60a896a0c0"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "ENG.EMobi.showPaywall(type: ENG.PaywallType, completionSuccess: (Swift.Optional&lt;__C.UIViewController&gt;) -&gt; (), completionFailure: () -&gt; ()) -&gt; ()"
+                  symbolName = "ENG.PurchaselyManager.restoreAllProducts(success: () -&gt; (), failure: (Swift.Error) -&gt; ()) -&gt; ()"
                   moduleName = "ENG"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/Maarouf/Documents/Engagement%20SDK/ios/engagement-sdk/ENG/SDK/EMobi.swift"
+                  urlString = "file:///Users/Maarouf/Documents/Engagement%20SDK/ios/engagement-sdk/ENG/SDK/PurchaselyManager.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "682"
-                  endingLineNumber = "682"
-                  offsetFromSymbolStart = "508">
+                  startingLineNumber = "99"
+                  endingLineNumber = "99"
+                  offsetFromSymbolStart = "80">
                </Location>
                <Location
-                  uuid = "63B579EB-0243-44DF-9FE6-14B553C758E8 - 6159702bb1c0d9bb"
+                  uuid = "AE2A415D-A907-40A1-850C-67C77C7FD09C - 2ed042782e0a65d2"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "closure #3 (Swift.Optional&lt;__C.UIViewController&gt;) -&gt; () in ENG.EMobi.showPaywall(type: ENG.PaywallType, completionSuccess: (Swift.Optional&lt;__C.UIViewController&gt;) -&gt; (), completionFailure: () -&gt; ()) -&gt; ()"
+                  symbolName = "closure #1 () -&gt; () in ENG.PurchaselyManager.restoreAllProducts(success: () -&gt; (), failure: (Swift.Error) -&gt; ()) -&gt; ()"
                   moduleName = "ENG"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/Maarouf/Documents/Engagement%20SDK/ios/engagement-sdk/ENG/SDK/EMobi.swift"
+                  urlString = "file:///Users/Maarouf/Documents/Engagement%20SDK/ios/engagement-sdk/ENG/SDK/PurchaselyManager.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "683"
-                  endingLineNumber = "683"
-                  offsetFromSymbolStart = "60">
+                  startingLineNumber = "100"
+                  endingLineNumber = "100"
+                  offsetFromSymbolStart = "56">
                </Location>
             </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "8598443D-B2E4-491F-83B9-994866403920"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "ENG/SDK/EMobi.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "677"
-            endingLineNumber = "677"
-            landmarkName = "showPaywall(type:completionSuccess:completionFailure:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "6CB784AF-E14C-4F78-883C-525F9E1DBB06"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "ENG/SDK/EMobi.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "679"
-            endingLineNumber = "679"
-            landmarkName = "showPaywall(type:completionSuccess:completionFailure:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "598D3745-17D9-42FD-9801-06EEA41E2A48"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "ENG/SDK/EMobi.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "683"
-            endingLineNumber = "683"
-            landmarkName = "showPaywall(type:completionSuccess:completionFailure:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "8FFBCB37-FC0E-4185-AA80-33864B75EA12"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "ENG/SDK/EMobi.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "685"
-            endingLineNumber = "685"
-            landmarkName = "showPaywall(type:completionSuccess:completionFailure:)"
-            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
