@@ -62,7 +62,6 @@ class PurchaselyManager {
         },completion:  { result, plan in
             
             
-            NotificationCenter.default.post(name: Notification.Name("DismissPaywall"), object: nil)
             
             switch result {
                
@@ -76,14 +75,16 @@ class PurchaselyManager {
                 }else if EMobi.shared.getMMP() == MMP.appsflyer {
                     AppsFlyersManager.shared.trackPurchaseEvent(productID: plan?.appleProductId ?? "", amount: plan?.amount as! Double  )
                 }
-                    
+                NotificationCenter.default.post(name: Notification.Name("DismissPaywall"), object: nil)
+               
                 break
             case .restored:
                 print("User restored: \(plan?.name ?? "")")  
                 EMobi.shared.setSubscribedUser(isSubscribed: true)
                 saveSubscriptionStatus(isSubscribed: EMobi.shared.isSubscribedUser())
                // AdjustManager.shared.trackPurchaseEvent(purchaseToken: Constant.shared.adjustRestoreToken, productID: plan?.appleProductId ?? "", transactionID: "")
-                  
+                NotificationCenter.default.post(name: Notification.Name("DismissPaywall"), object: nil)
+               
                 break
             case .cancelled:
                 print("User cancelled: \(plan?.name ?? "")")
