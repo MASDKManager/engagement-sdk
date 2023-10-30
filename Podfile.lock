@@ -248,7 +248,7 @@ DEPENDENCIES:
   - FirebaseRemoteConfig
   - MailchimpSDK
   - OneSignalXCFramework
-  - Purchasely
+  - Purchasely (~> 4.1.0)
   - RevenueCat
 
 SPEC REPOS:
@@ -340,6 +340,6 @@ SPEC CHECKSUMS:
   UnityAds: 7ad8cbe9fb294aba005e508ccf803a8e5dbb2bbf
   VungleAds: e13f0ea8facb05d5511e31c5abcced79a82409e7
 
-PODFILE CHECKSUM: 6aa08b84ee990e0d42f3e3c40eca721e6abcd92c
+PODFILE CHECKSUM: 493576f7426397d583dff78b4f976a6d067f72ae
 
-COCOAPODS: 1.13.0
+COCOAPODS: 1.14.2

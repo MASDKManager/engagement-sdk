@@ -285,8 +285,8 @@
             filePath = "ENG/SDK/PurchaselyManager.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "67"
-            endingLineNumber = "67"
+            startingLineNumber = "82"
+            endingLineNumber = "82"
             landmarkName = "showPaywall(type:completionSuccess:completionFailure:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -301,8 +301,8 @@
             filePath = "ENG/SDK/PurchaselyManager.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "98"
-            endingLineNumber = "98"
+            startingLineNumber = "99"
+            endingLineNumber = "99"
             landmarkName = "showPaywall(type:completionSuccess:completionFailure:)"
             landmarkType = "7">
             <Locations>
@@ -336,7 +336,69 @@
                   endingLineNumber = "100"
                   offsetFromSymbolStart = "56">
                </Location>
+               <Location
+                  uuid = "AE2A415D-A907-40A1-850C-67C77C7FD09C - 65e041ffa14c4bc1"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "ENG.PurchaselyManager.showPaywall(type: ENG.PaywallType, completionSuccess: (Swift.Optional&lt;__C.UIViewController&gt;) -&gt; (), completionFailure: Swift.Optional&lt;() -&gt; ()&gt;) -&gt; ()"
+                  moduleName = "ENG"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Maarouf/Documents/Engagement%20SDK/ios/engagement-sdk/ENG/SDK/PurchaselyManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "98"
+                  endingLineNumber = "98"
+                  offsetFromSymbolStart = "724">
+               </Location>
+               <Location
+                  uuid = "AE2A415D-A907-40A1-850C-67C77C7FD09C - 65e041ffa14c4be0"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "ENG.PurchaselyManager.showPaywall(type: ENG.PaywallType, completionSuccess: (Swift.Optional&lt;__C.UIViewController&gt;) -&gt; (), completionFailure: Swift.Optional&lt;() -&gt; ()&gt;) -&gt; ()"
+                  moduleName = "ENG"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Maarouf/Documents/Engagement%20SDK/ios/engagement-sdk/ENG/SDK/PurchaselyManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "99"
+                  endingLineNumber = "99"
+                  offsetFromSymbolStart = "724">
+               </Location>
             </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "09A8D14C-10E6-4227-B57D-D97084B7CE85"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ENG/SDK/PurchaselyManager.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "69"
+            endingLineNumber = "69"
+            landmarkName = "showPaywall(type:completionSuccess:completionFailure:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "D29B51C7-0302-4113-B719-60C7BB9ED688"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ENG/SDK/PurchaselyManager.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "90"
+            endingLineNumber = "90"
+            landmarkName = "showPaywall(type:completionSuccess:completionFailure:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
