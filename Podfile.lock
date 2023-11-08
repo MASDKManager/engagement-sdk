@@ -106,6 +106,8 @@ PODS:
     - GoogleUtilities/Environment (~> 7.8)
     - nanopb (< 2.30910.0, >= 2.30908.0)
     - PromisesObjC (~> 2.1)
+  - FirebaseDynamicLinks (10.17.0):
+    - FirebaseCore (~> 10.0)
   - FirebaseInstallations (10.15.0):
     - FirebaseCore (~> 10.0)
     - GoogleUtilities/Environment (~> 7.8)
@@ -223,7 +225,7 @@ PODS:
   - PromisesObjC (2.3.1)
   - PromisesSwift (2.3.1):
     - PromisesObjC (= 2.3.1)
-  - Purchasely (4.1.0)
+  - Purchasely (3.7.4)
   - RevenueCat (4.26.1)
   - UnityAds (4.9.0)
   - VungleAds (7.1.0)
@@ -245,10 +247,11 @@ DEPENDENCIES:
   - FBSDKCoreKit
   - FirebaseAnalytics
   - FirebaseCrashlytics
+  - FirebaseDynamicLinks
   - FirebaseRemoteConfig
   - MailchimpSDK
   - OneSignalXCFramework
-  - Purchasely (~> 4.1.0)
+  - Purchasely (~> 3.7.2)
   - RevenueCat
 
 SPEC REPOS:
@@ -277,6 +280,7 @@ SPEC REPOS:
     - FirebaseCoreExtension
     - FirebaseCoreInternal
     - FirebaseCrashlytics
+    - FirebaseDynamicLinks
     - FirebaseInstallations
     - FirebaseRemoteConfig
     - FirebaseSessions
@@ -321,6 +325,7 @@ SPEC CHECKSUMS:
   FirebaseCoreExtension: d3f1ea3725fb41f56e8fbfb29eeaff54e7ffb8f6
   FirebaseCoreInternal: 2f4bee5ed00301b5e56da0849268797a2dd31fb4
   FirebaseCrashlytics: a83f26fb922a3fe181eb738fb4dcf0c92bba6455
+  FirebaseDynamicLinks: 66878206d55d4aba6e63744f57151a80d76e472e
   FirebaseInstallations: cae95cab0f965ce05b805189de1d4c70b11c76fb
   FirebaseRemoteConfig: 64b6ada098c649304114a817effd7e5f87229b11
   FirebaseSessions: ee59a7811bef4c15f65ef6472f3210faa293f9c8
@@ -335,11 +340,11 @@ SPEC CHECKSUMS:
   OneSignalXCFramework: d47a350b15e106a5dc310e3f97867e28dad6589e
   PromisesObjC: c50d2056b5253dadbd6c2bea79b0674bd5a52fa4
   PromisesSwift: 28dca69a9c40779916ac2d6985a0192a5cb4a265
-  Purchasely: 8ca39d1dab534bf65b9a8c9704b06ce261a43cf8
+  Purchasely: f4b46f04897bc11764a1da6176268f0bae3e61e4
   RevenueCat: 4e8899a69fd57180ef166237d1eb670023be05de
   UnityAds: 7ad8cbe9fb294aba005e508ccf803a8e5dbb2bbf
   VungleAds: e13f0ea8facb05d5511e31c5abcced79a82409e7
 
-PODFILE CHECKSUM: 493576f7426397d583dff78b4f976a6d067f72ae
+PODFILE CHECKSUM: e0035ad641c053ec43094a15c39b219538cd8c17
 
 COCOAPODS: 1.14.2

@@ -700,7 +700,10 @@ public class EMobi: NSObject, PurchasesDelegate  {
         open url: URL,
         options: [UIApplication.OpenURLOptionsKey: Any] = [:]
     ) -> Bool {
-        // Custom handling code here
+        
+        EMobi.shared.setPremiumUser(isPremium: true)
+        savePremiumStatus(isPremium: EMobi.shared.isPremiumUser())
+      
         return true
     }
      

@@ -10,6 +10,7 @@ target 'ENG' do
   pod 'FirebaseAnalytics'
   pod 'FirebaseCrashlytics'
   pod 'FirebaseRemoteConfig'
+  pod 'FirebaseDynamicLinks'
   pod 'FBSDKCoreKit'
   pod 'FBAudienceNetwork'
   pod 'OneSignalXCFramework'

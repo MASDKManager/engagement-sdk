@@ -116,7 +116,7 @@ class ViewController: UIViewController {
         DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
             
             // Call the showPaywall function
-            EMobi.shared.showPaywall(type: .onboarding, completionSuccess: { visualPaywall in
+            EMobi.shared.showPaywall(type: .paywall, completionSuccess: { visualPaywall in
             
                 print("Success")
                 let isActive = EMobi.shared.isSubscribedUser()
